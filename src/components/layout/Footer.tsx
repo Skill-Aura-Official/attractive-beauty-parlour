@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
-import { Phone, MessageCircle, MapPin, Instagram, Facebook, Mail } from "lucide-react";
+import { Phone, MessageCircle, MapPin, Instagram, Facebook } from "lucide-react";
 import logo from "@/assets/logo.png";
+import { CONTACT_INFO, BRAND } from "@/lib/constants";
 
 export const Footer = () => {
   return (
@@ -9,20 +10,20 @@ export const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
           {/* Brand Column */}
           <div className="space-y-6">
-            <img src={logo} alt="Attractive Beauty Parlour" className="h-16 w-auto" />
+            <img src={logo} alt={BRAND.name} className="h-16 w-auto" />
             <p className="text-muted-foreground text-sm leading-relaxed">
               Where luxury meets artistry. Premium beauty services for ladies and kids 
               in a warm, welcoming environment.
             </p>
             <div className="flex items-center gap-4">
               <a
-                href="#"
+                href={CONTACT_INFO.instagramUrl}
                 className="w-10 h-10 flex items-center justify-center rounded-full border border-primary/30 text-primary hover:bg-primary hover:text-primary-foreground transition-all duration-300"
               >
                 <Instagram size={18} />
               </a>
               <a
-                href="#"
+                href={CONTACT_INFO.facebookUrl}
                 className="w-10 h-10 flex items-center justify-center rounded-full border border-primary/30 text-primary hover:bg-primary hover:text-primary-foreground transition-all duration-300"
               >
                 <Facebook size={18} />
@@ -39,6 +40,7 @@ export const Footer = () => {
                 { name: "Our Services", path: "/services" },
                 { name: "Special Offers", path: "/offers" },
                 { name: "Kids Zone", path: "/kids" },
+                { name: "FAQ", path: "/faq" },
                 { name: "Blog", path: "/blog" },
                 { name: "Contact", path: "/contact" },
               ].map((link) => (
@@ -67,7 +69,9 @@ export const Footer = () => {
                 "Kids Haircuts",
               ].map((service) => (
                 <li key={service}>
-                  <span className="text-muted-foreground text-sm">{service}</span>
+                  <Link to="/services" className="text-muted-foreground hover:text-primary text-sm transition-colors">
+                    {service}
+                  </Link>
                 </li>
               ))}
             </ul>
@@ -81,8 +85,8 @@ export const Footer = () => {
                 <Phone size={18} className="text-primary mt-1 flex-shrink-0" />
                 <div>
                   <p className="text-sm text-muted-foreground">Call Us</p>
-                  <a href="tel:+919876543210" className="text-foreground hover:text-primary transition-colors">
-                    +91 98765 43210
+                  <a href={CONTACT_INFO.phoneLink} className="text-foreground hover:text-primary transition-colors">
+                    {CONTACT_INFO.phone}
                   </a>
                 </div>
               </li>
@@ -91,24 +95,12 @@ export const Footer = () => {
                 <div>
                   <p className="text-sm text-muted-foreground">WhatsApp</p>
                   <a
-                    href="https://wa.me/919876543210"
+                    href={CONTACT_INFO.whatsappLink}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-foreground hover:text-primary transition-colors"
                   >
-                    +91 98765 43210
-                  </a>
-                </div>
-              </li>
-              <li className="flex items-start gap-3">
-                <Mail size={18} className="text-primary mt-1 flex-shrink-0" />
-                <div>
-                  <p className="text-sm text-muted-foreground">Email</p>
-                  <a
-                    href="mailto:hello@attractivebeautyparlour.com"
-                    className="text-foreground hover:text-primary transition-colors text-sm"
-                  >
-                    hello@attractivebeautyparlour.com
+                    {CONTACT_INFO.whatsapp}
                   </a>
                 </div>
               </li>
@@ -117,8 +109,7 @@ export const Footer = () => {
                 <div>
                   <p className="text-sm text-muted-foreground">Visit Us</p>
                   <address className="text-foreground not-italic text-sm">
-                    123 Beauty Lane, Fashion District,<br />
-                    City - 400001
+                    {CONTACT_INFO.address}
                   </address>
                 </div>
               </li>
@@ -132,14 +123,14 @@ export const Footer = () => {
         {/* Bottom Section */}
         <div className="flex flex-col md:flex-row items-center justify-between gap-4">
           <p className="text-muted-foreground text-sm">
-            © {new Date().getFullYear()} Attractive Beauty Parlour. All rights reserved.
+            © {new Date().getFullYear()} {BRAND.name}. All rights reserved.
           </p>
           <div className="flex items-center gap-6">
-            <Link to="/privacy" className="text-muted-foreground hover:text-primary text-sm transition-colors">
-              Privacy Policy
+            <Link to="/faq" className="text-muted-foreground hover:text-primary text-sm transition-colors">
+              FAQ
             </Link>
-            <Link to="/terms" className="text-muted-foreground hover:text-primary text-sm transition-colors">
-              Terms of Service
+            <Link to="/contact" className="text-muted-foreground hover:text-primary text-sm transition-colors">
+              Contact Us
             </Link>
           </div>
         </div>

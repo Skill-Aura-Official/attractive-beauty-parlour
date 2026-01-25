@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { Phone, MessageCircle, MapPin } from "lucide-react";
+import { CONTACT_INFO } from "@/lib/constants";
 
 export const CTASection = () => {
   return (

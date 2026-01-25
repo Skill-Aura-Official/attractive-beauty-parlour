@@ -1,11 +1,12 @@
 import { motion } from "framer-motion";
 import { Phone, MessageCircle } from "lucide-react";
+import { CONTACT_INFO } from "@/lib/constants";
 
 export const FloatingCTA = () => {
   return (
     <div className="fixed bottom-6 right-6 z-50 flex flex-col gap-3 lg:hidden">
       <motion.a
-        href="tel:+919876543210"
+        href={CONTACT_INFO.phoneLink}
         initial={{ scale: 0, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
         transition={{ delay: 1, duration: 0.3 }}
@@ -16,7 +17,7 @@ export const FloatingCTA = () => {
         <Phone size={24} />
       </motion.a>
       <motion.a
-        href="https://wa.me/919876543210"
+        href={CONTACT_INFO.whatsappLink}
         target="_blank"
         rel="noopener noreferrer"
         initial={{ scale: 0, opacity: 0 }}
