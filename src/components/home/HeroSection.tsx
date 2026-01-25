@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import { Phone, MessageCircle, ChevronDown } from "lucide-react";
 import heroBg from "@/assets/hero-bg.jpg";
 import logo from "@/assets/logo.png";
+import { CONTACT_INFO } from "@/lib/constants";
 
 export const HeroSection = () => {
   const scrollToServices = () => {
@@ -77,7 +78,7 @@ export const HeroSection = () => {
           className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6"
         >
           <a
-            href="tel:+919876543210"
+            href={CONTACT_INFO.phoneLink}
             className="btn-hero group w-full sm:w-auto"
           >
             <span className="relative z-10 flex items-center justify-center gap-3">
@@ -86,7 +87,7 @@ export const HeroSection = () => {
             </span>
           </a>
           <a
-            href="https://wa.me/919876543210"
+            href={CONTACT_INFO.whatsappLink}
             target="_blank"
             rel="noopener noreferrer"
             className="w-full sm:w-auto px-8 py-4 text-sm font-semibold uppercase tracking-widest bg-primary text-primary-foreground hover:shadow-gold transition-all duration-300"

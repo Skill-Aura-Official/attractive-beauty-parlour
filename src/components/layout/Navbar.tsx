@@ -3,6 +3,7 @@ import { Link, useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, Phone, MessageCircle } from "lucide-react";
 import logo from "@/assets/logo.png";
+import { CONTACT_INFO } from "@/lib/constants";
 
 const navLinks = [
   { name: "Home", path: "/" },
@@ -82,14 +83,14 @@ export const Navbar = () => {
           {/* CTA Buttons */}
           <div className="hidden lg:flex items-center gap-4">
             <a
-              href="tel:+919876543210"
+              href={CONTACT_INFO.phoneLink}
               className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-primary border border-primary/30 rounded-full hover:bg-primary/10 transition-all duration-300"
             >
               <Phone size={16} />
               <span>Call Now</span>
             </a>
             <a
-              href="https://wa.me/919876543210"
+              href={CONTACT_INFO.whatsappLink}
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center gap-2 px-6 py-2 text-sm font-medium bg-primary text-primary-foreground rounded-full hover:shadow-gold transition-all duration-300"
@@ -147,14 +148,14 @@ export const Navbar = () => {
                 className="flex flex-col gap-4 mt-8 w-full max-w-xs"
               >
                 <a
-                  href="tel:+919876543210"
+                  href={CONTACT_INFO.phoneLink}
                   className="flex items-center justify-center gap-2 px-6 py-3 text-sm font-medium text-primary border border-primary rounded-full"
                 >
                   <Phone size={18} />
                   <span>Call Now</span>
                 </a>
                 <a
-                  href="https://wa.me/919876543210"
+                  href={CONTACT_INFO.whatsappLink}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center justify-center gap-2 px-6 py-3 text-sm font-medium bg-primary text-primary-foreground rounded-full"
