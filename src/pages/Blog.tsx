@@ -1,10 +1,16 @@
+import { useState } from "react";
 import { motion } from "framer-motion";
 import { Layout } from "@/components/layout/Layout";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { Link } from "react-router-dom";
 import { ArrowRight, Calendar, User } from "lucide-react";
+import blogBridalTrends from "@/assets/blog-bridal-trends.jpg";
+import blogWinterHair from "@/assets/blog-winter-hair.jpg";
+import blogSkincare from "@/assets/blog-skincare.jpg";
+import blogKidsHaircut from "@/assets/blog-kids-haircut.jpg";
+import blogNailArt from "@/assets/blog-nail-art.jpg";
+import blogFacials from "@/assets/blog-facials.jpg";
 
-// Placeholder blog posts (will be fetched from database in future)
 const blogPosts = [
   {
     id: 1,
@@ -15,6 +21,7 @@ const blogPosts = [
     date: "January 20, 2025",
     slug: "bridal-makeup-trends-2025",
     featured: true,
+    image: blogBridalTrends,
   },
   {
     id: 2,
@@ -25,6 +32,7 @@ const blogPosts = [
     date: "January 15, 2025",
     slug: "winter-hair-care-tips",
     featured: false,
+    image: blogWinterHair,
   },
   {
     id: 3,
@@ -35,6 +43,7 @@ const blogPosts = [
     date: "January 10, 2025",
     slug: "pre-bridal-skincare-guide",
     featured: false,
+    image: blogSkincare,
   },
   {
     id: 4,
@@ -45,6 +54,7 @@ const blogPosts = [
     date: "January 5, 2025",
     slug: "kids-haircut-tips",
     featured: false,
+    image: blogKidsHaircut,
   },
   {
     id: 5,
@@ -55,6 +65,7 @@ const blogPosts = [
     date: "December 28, 2024",
     slug: "nail-art-trends",
     featured: false,
+    image: blogNailArt,
   },
   {
     id: 6,
@@ -65,14 +76,22 @@ const blogPosts = [
     date: "December 20, 2024",
     slug: "importance-of-regular-facials",
     featured: false,
+    image: blogFacials,
   },
 ];
 
 const categories = ["All", "Bridal", "Hair Care", "Skincare", "Nails", "Kids"];
 
 const Blog = () => {
-  const featuredPost = blogPosts.find((post) => post.featured);
-  const regularPosts = blogPosts.filter((post) => !post.featured);
+  const [activeCategory, setActiveCategory] = useState("All");
+
+  const filteredPosts =
+    activeCategory === "All"
+      ? blogPosts
+      : blogPosts.filter((post) => post.category === activeCategory);
+
+  const featuredPost = filteredPosts.find((post) => post.featured);
+  const regularPosts = filteredPosts.filter((post) => !post.featured);
 
   return (
     <Layout>
@@ -113,8 +132,9 @@ const Blog = () => {
             {categories.map((category) => (
               <button
                 key={category}
+                onClick={() => setActiveCategory(category)}
                 className={`px-6 py-2 text-sm font-medium uppercase tracking-wider transition-all duration-300 ${
-                  category === "All"
+                  activeCategory === category
                     ? "bg-primary text-primary-foreground"
                     : "border border-border text-muted-foreground hover:border-primary hover:text-primary"
                 }`}
@@ -137,8 +157,12 @@ const Blog = () => {
               transition={{ duration: 0.7 }}
               className="luxury-card lg:flex gap-8 overflow-hidden"
             >
-              <div className="lg:w-1/2 aspect-[16/10] lg:aspect-auto bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center">
-                <span className="text-6xl">✨</span>
+              <div className="lg:w-1/2 aspect-[16/10] lg:aspect-auto overflow-hidden">
+                <img
+                  src={featuredPost.image}
+                  alt={featuredPost.title}
+                  className="w-full h-full object-cover hover:scale-105 transition-transform duration-700"
+                />
               </div>
               <div className="lg:w-1/2 p-8 flex flex-col justify-center">
                 <span className="text-primary text-xs uppercase tracking-widest mb-3">
@@ -192,8 +216,12 @@ const Blog = () => {
                 transition={{ duration: 0.5, delay: index * 0.1 }}
                 className="luxury-card group"
               >
-                <div className="aspect-[16/10] mb-5 bg-gradient-to-br from-primary/10 to-accent/10 rounded-md flex items-center justify-center">
-                  <span className="text-4xl opacity-50">📝</span>
+                <div className="aspect-[16/10] mb-5 rounded-md overflow-hidden">
+                  <img
+                    src={post.image}
+                    alt={post.title}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                  />
                 </div>
                 <span className="text-primary text-xs uppercase tracking-widest mb-2 block">
                   {post.category}
@@ -220,6 +248,12 @@ const Blog = () => {
               </motion.article>
             ))}
           </div>
+
+          {regularPosts.length === 0 && !featuredPost && (
+            <div className="text-center py-16">
+              <p className="text-muted-foreground text-lg">No posts found in this category.</p>
+            </div>
+          )}
         </div>
       </section>
 
