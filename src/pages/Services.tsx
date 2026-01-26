@@ -4,12 +4,18 @@ import { Layout } from "@/components/layout/Layout";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { Phone, MessageCircle } from "lucide-react";
 import { CONTACT_INFO } from "@/lib/constants";
-import serviceMakeup from "@/assets/service-makeup.jpg";
-import serviceHair from "@/assets/service-hair.jpg";
-import serviceSkin from "@/assets/service-skin.jpg";
-import serviceNails from "@/assets/service-nails.jpg";
-import serviceWaxing from "@/assets/service-waxing.jpg";
-import serviceMehendi from "@/assets/service-mehendi.jpg";
+import serviceBridalMakeup from "@/assets/service-bridal-makeup.jpg";
+import servicePartyMakeup from "@/assets/service-party-makeup.jpg";
+import serviceHairStyling from "@/assets/service-hair-styling.jpg";
+import serviceHairColor from "@/assets/service-hair-color.jpg";
+import serviceHairSpa from "@/assets/service-hair-spa.jpg";
+import serviceFacial from "@/assets/service-facial.jpg";
+import serviceSkinBrightening from "@/assets/service-skin-brightening.jpg";
+import serviceManicure from "@/assets/service-manicure.jpg";
+import servicePedicure from "@/assets/service-pedicure.jpg";
+import serviceWaxing from "@/assets/service-waxing-new.jpg";
+import serviceThreading from "@/assets/service-threading.jpg";
+import serviceMehendi from "@/assets/service-mehendi-new.jpg";
 
 const categories = ["All", "Makeup", "Hair", "Skin", "Nails", "Waxing", "Styling"];
 
@@ -19,91 +25,91 @@ const services = [
     name: "Bridal Makeup",
     category: "Makeup",
     description: "Complete bridal makeup with HD finish, including pre-bridal consultation, trial session, and day-of flawless application for your special day.",
-    image: serviceMakeup,
+    image: serviceBridalMakeup,
   },
   {
     id: 2,
     name: "Party Makeup",
     category: "Makeup",
     description: "Glamorous party looks with long-lasting formulas. Perfect for weddings, receptions, and special occasions.",
-    image: serviceMakeup,
+    image: servicePartyMakeup,
   },
   {
     id: 3,
     name: "Engagement Makeup",
     category: "Makeup",
     description: "Subtle yet stunning makeup for your engagement ceremony, designed to photograph beautifully.",
-    image: serviceMakeup,
+    image: serviceBridalMakeup,
   },
   {
     id: 4,
     name: "Hair Styling",
     category: "Hair",
     description: "Professional hair styling for all occasions - from elegant updos to trendy hairstyles.",
-    image: serviceHair,
+    image: serviceHairStyling,
   },
   {
     id: 5,
     name: "Hair Coloring",
     category: "Hair",
     description: "Premium hair coloring with international products including highlights, balayage, and global colors.",
-    image: serviceHair,
+    image: serviceHairColor,
   },
   {
     id: 6,
     name: "Hair Treatments",
     category: "Hair",
     description: "Deep conditioning, keratin treatments, and hair spa for healthy, lustrous locks.",
-    image: serviceHair,
+    image: serviceHairSpa,
   },
   {
     id: 7,
     name: "Haircut & Trim",
     category: "Hair",
     description: "Expert haircuts tailored to your face shape and style preferences.",
-    image: serviceHair,
+    image: serviceHairColor,
   },
   {
     id: 8,
     name: "Facial Treatments",
     category: "Skin",
     description: "Rejuvenating facials including cleanup, gold facial, diamond facial, and anti-aging treatments.",
-    image: serviceSkin,
+    image: serviceFacial,
   },
   {
     id: 9,
     name: "Skin Brightening",
     category: "Skin",
     description: "Advanced skin brightening and whitening treatments for radiant, glowing skin.",
-    image: serviceSkin,
+    image: serviceSkinBrightening,
   },
   {
     id: 10,
     name: "Acne Treatment",
     category: "Skin",
     description: "Specialized treatments to combat acne and achieve clear, healthy skin.",
-    image: serviceSkin,
+    image: serviceFacial,
   },
   {
     id: 11,
     name: "Manicure",
     category: "Nails",
     description: "Classic and spa manicures with premium nail care products for beautiful hands.",
-    image: serviceNails,
+    image: serviceManicure,
   },
   {
     id: 12,
     name: "Pedicure",
     category: "Nails",
     description: "Relaxing pedicure treatments including spa pedicure and foot care therapy.",
-    image: serviceNails,
+    image: servicePedicure,
   },
   {
     id: 13,
     name: "Nail Art",
     category: "Nails",
     description: "Creative nail art designs from simple to intricate patterns and gel extensions.",
-    image: serviceNails,
+    image: serviceManicure,
   },
   {
     id: 14,
@@ -124,14 +130,14 @@ const services = [
     name: "Threading",
     category: "Styling",
     description: "Expert eyebrow and face threading for perfectly shaped brows.",
-    image: serviceMakeup,
+    image: serviceThreading,
   },
   {
     id: 17,
     name: "Bleaching",
     category: "Styling",
     description: "Face and body bleaching treatments for an even, radiant skin tone.",
-    image: serviceSkin,
+    image: serviceSkinBrightening,
   },
   {
     id: 18,
@@ -242,7 +248,7 @@ const Services = () => {
                     Call
                   </a>
                   <a
-                    href={`${CONTACT_INFO.whatsappLink}?text=Hi, I'm interested in ${service.name}`}
+                    href={`${CONTACT_INFO.whatsappLink}?text=${encodeURIComponent(`Hi, I'm interested in ${service.name}`)}`}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex-1 flex items-center justify-center gap-2 px-4 py-2 bg-primary text-primary-foreground text-sm hover:shadow-gold transition-all duration-300"

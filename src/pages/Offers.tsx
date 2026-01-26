@@ -3,7 +3,7 @@ import { Layout } from "@/components/layout/Layout";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { Crown, Sparkles, Gift, Star, MessageCircle } from "lucide-react";
 import { CONTACT_INFO } from "@/lib/constants";
-import bridalPackage from "@/assets/bridal-package.jpg";
+import bridalPackage from "@/assets/bridal-package-new.jpg";
 
 const packages = [
   {
@@ -103,6 +103,11 @@ const packages = [
 ];
 
 const Offers = () => {
+  const handleWhatsAppClick = (packageTitle: string) => {
+    const message = encodeURIComponent(`Hi, I'm interested in the ${packageTitle}. Please share more details.`);
+    window.open(`${CONTACT_INFO.whatsappLink}?text=${message}`, '_blank');
+  };
+
   return (
     <Layout>
       {/* Hero Section */}
@@ -189,15 +194,13 @@ const Offers = () => {
                 ))}
               </ul>
 
-              <a
-                href={`${CONTACT_INFO.whatsappLink}?text=Hi, I'm interested in the Bridal Bliss Package. Please share more details.`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-3 px-8 py-4 bg-primary text-primary-foreground font-medium text-sm uppercase tracking-wider hover:shadow-gold transition-all duration-300"
+              <button
+                onClick={() => handleWhatsAppClick("Bridal Bliss Package")}
+                className="inline-flex items-center gap-3 px-8 py-4 bg-primary text-primary-foreground font-medium text-sm uppercase tracking-wider hover:shadow-gold transition-all duration-300 cursor-pointer"
               >
                 <MessageCircle size={18} />
                 Enquire Now
-              </a>
+              </button>
             </motion.div>
           </div>
         </div>
@@ -249,15 +252,13 @@ const Offers = () => {
                   )}
                 </ul>
 
-                <a
-                  href={`${CONTACT_INFO.whatsappLink}?text=Hi, I'm interested in the ${pkg.title}. Please share more details.`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-full flex items-center justify-center gap-2 px-6 py-3 border border-primary text-primary text-sm hover:bg-primary hover:text-primary-foreground transition-all duration-300"
+                <button
+                  onClick={() => handleWhatsAppClick(pkg.title)}
+                  className="w-full flex items-center justify-center gap-2 px-6 py-3 border border-primary text-primary text-sm hover:bg-primary hover:text-primary-foreground transition-all duration-300 cursor-pointer"
                 >
                   <MessageCircle size={16} />
                   Enquire
-                </a>
+                </button>
               </motion.div>
             ))}
           </div>
@@ -280,15 +281,13 @@ const Offers = () => {
               Can't find exactly what you need? Let us create a personalized package 
               tailored to your specific requirements and occasion.
             </p>
-            <a
-              href={`${CONTACT_INFO.whatsappLink}?text=Hi, I'd like to discuss a custom beauty package.`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-3 px-8 py-4 bg-primary text-primary-foreground font-medium text-sm uppercase tracking-wider hover:shadow-gold transition-all duration-300"
+            <button
+              onClick={() => handleWhatsAppClick("Custom Beauty Package")}
+              className="inline-flex items-center gap-3 px-8 py-4 bg-primary text-primary-foreground font-medium text-sm uppercase tracking-wider hover:shadow-gold transition-all duration-300 cursor-pointer"
             >
               <MessageCircle size={18} />
               Create Custom Package
-            </a>
+            </button>
           </motion.div>
         </div>
       </section>
