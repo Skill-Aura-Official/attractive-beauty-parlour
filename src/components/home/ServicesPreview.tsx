@@ -2,38 +2,38 @@ import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
 import { SectionHeading } from "../ui/section-heading";
-import serviceMakeup from "@/assets/service-makeup.jpg";
-import serviceHair from "@/assets/service-hair.jpg";
-import serviceSkin from "@/assets/service-skin.jpg";
-import serviceNails from "@/assets/service-nails.jpg";
+import serviceBridalMakeup from "@/assets/service-bridal-makeup.jpg";
+import serviceHairStyling from "@/assets/service-hair-styling.jpg";
+import serviceFacial from "@/assets/service-facial.jpg";
+import serviceManicure from "@/assets/service-manicure.jpg";
 
 const services = [
   {
     id: 1,
     title: "Makeup Artistry",
     description: "Bridal & party makeup with HD finish",
-    image: serviceMakeup,
+    image: serviceBridalMakeup,
     category: "Makeup",
   },
   {
     id: 2,
     title: "Hair Styling",
     description: "Cuts, coloring & elegant updos",
-    image: serviceHair,
+    image: serviceHairStyling,
     category: "Hair",
   },
   {
     id: 3,
     title: "Skin Treatments",
     description: "Facials & rejuvenating therapies",
-    image: serviceSkin,
+    image: serviceFacial,
     category: "Skin",
   },
   {
     id: 4,
     title: "Nail Care",
     description: "Manicures, pedicures & nail art",
-    image: serviceNails,
+    image: serviceManicure,
     category: "Nails",
   },
 ];

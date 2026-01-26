@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { Phone, MessageCircle, ChevronDown } from "lucide-react";
-import heroBg from "@/assets/hero-bg.jpg";
+import heroBg from "@/assets/hero-salon.jpg";
 import logo from "@/assets/logo.png";
 import { CONTACT_INFO } from "@/lib/constants";
 

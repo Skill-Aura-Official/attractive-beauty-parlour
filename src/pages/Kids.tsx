@@ -3,7 +3,8 @@ import { Layout } from "@/components/layout/Layout";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { Heart, Smile, Scissors, Star, Sparkles, MessageCircle, Phone } from "lucide-react";
 import { CONTACT_INFO } from "@/lib/constants";
-import kidsSection from "@/assets/kids-section.jpg";
+import kidsHaircut from "@/assets/service-kids-haircut.jpg";
+import kidsMomDaughter from "@/assets/kids-mom-daughter.jpg";
 
 const kidsServices = [
   {
@@ -64,13 +65,18 @@ const whyKidsLoveUs = [
 ];
 
 const Kids = () => {
+  const handleWhatsAppClick = (serviceTitle: string) => {
+    const message = encodeURIComponent(`Hi, I'd like to book ${serviceTitle} for my child.`);
+    window.open(`${CONTACT_INFO.whatsappLink}?text=${message}`, '_blank');
+  };
+
   return (
     <Layout>
       {/* Hero Section */}
       <section className="relative min-h-[60vh] flex items-center justify-center overflow-hidden pt-24">
         <div className="absolute inset-0">
           <img
-            src={kidsSection}
+            src={kidsHaircut}
             alt="Kids at Attractive Beauty Parlour"
             className="w-full h-full object-cover"
           />
@@ -156,7 +162,7 @@ const Kids = () => {
             >
               <div className="relative overflow-hidden rounded-lg">
                 <img
-                  src={kidsSection}
+                  src={kidsMomDaughter}
                   alt="Happy kids at salon"
                   className="w-full h-auto rounded-lg"
                 />
@@ -195,15 +201,13 @@ const Kids = () => {
                 </div>
                 <h3 className="font-display text-xl text-foreground mb-3">{service.title}</h3>
                 <p className="text-muted-foreground text-sm mb-5">{service.description}</p>
-                <a
-                  href={`${CONTACT_INFO.whatsappLink}?text=Hi, I'd like to book ${service.title} for my child.`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 text-primary text-sm hover:gap-3 transition-all duration-300"
+                <button
+                  onClick={() => handleWhatsAppClick(service.title)}
+                  className="inline-flex items-center gap-2 text-primary text-sm hover:gap-3 transition-all duration-300 cursor-pointer"
                 >
                   Book Now
                   <MessageCircle size={14} />
-                </a>
+                </button>
               </motion.div>
             ))}
           </div>
@@ -238,15 +242,13 @@ const Kids = () => {
                 <Phone size={16} className="inline mr-2" />
                 Call to Enquire
               </a>
-              <a
-                href={`${CONTACT_INFO.whatsappLink}?text=Hi, I'd like to enquire about the Kids Birthday Party Package.`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="px-8 py-4 bg-primary text-primary-foreground font-medium text-sm uppercase tracking-wider hover:shadow-gold transition-all duration-300"
+              <button
+                onClick={() => handleWhatsAppClick("Kids Birthday Party Package")}
+                className="px-8 py-4 bg-primary text-primary-foreground font-medium text-sm uppercase tracking-wider hover:shadow-gold transition-all duration-300 cursor-pointer"
               >
                 <MessageCircle size={16} className="inline mr-2" />
                 WhatsApp Us
-              </a>
+              </button>
             </div>
           </motion.div>
         </div>
