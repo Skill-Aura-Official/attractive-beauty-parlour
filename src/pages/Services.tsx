@@ -8,6 +8,8 @@ import serviceMakeup from "@/assets/service-makeup.jpg";
 import serviceHair from "@/assets/service-hair.jpg";
 import serviceSkin from "@/assets/service-skin.jpg";
 import serviceNails from "@/assets/service-nails.jpg";
+import serviceWaxing from "@/assets/service-waxing.jpg";
+import serviceMehendi from "@/assets/service-mehendi.jpg";
 
 const categories = ["All", "Makeup", "Hair", "Skin", "Nails", "Waxing", "Styling"];
 
@@ -108,14 +110,14 @@ const services = [
     name: "Full Body Waxing",
     category: "Waxing",
     description: "Gentle and effective full body waxing using premium wax for smooth, lasting results.",
-    image: serviceSkin,
+    image: serviceWaxing,
   },
   {
     id: 15,
     name: "Face Waxing",
     category: "Waxing",
     description: "Precise face waxing including eyebrows, upper lip, and chin for a clean look.",
-    image: serviceSkin,
+    image: serviceWaxing,
   },
   {
     id: 16,
@@ -136,7 +138,7 @@ const services = [
     name: "Mehendi",
     category: "Styling",
     description: "Traditional and modern mehendi designs for bridal and festive occasions.",
-    image: serviceMakeup,
+    image: serviceMehendi,
   },
 ];
 
