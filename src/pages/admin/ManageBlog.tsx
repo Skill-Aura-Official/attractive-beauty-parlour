@@ -11,6 +11,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { toast } from "sonner";
 import { Plus, Pencil, Trash2 } from "lucide-react";
+import { ImageUpload } from "@/components/admin/ImageUpload";
 import type { Tables } from "@/integrations/supabase/types";
 
 type BlogPost = Tables<"blog_posts">;
@@ -59,7 +60,6 @@ const ManageBlog = () => {
     setOpen(true);
   };
   const close = () => { setOpen(false); setEditing(null); };
-
   const autoSlug = (title: string) => title.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
   const submit = (e: React.FormEvent) => { e.preventDefault(); upsert.mutate(editing ? { ...form, id: editing.id } : form); };
 
@@ -80,7 +80,7 @@ const ManageBlog = () => {
               </div>
               <div><Label>Excerpt</Label><Textarea value={form.excerpt} onChange={(e) => setForm({ ...form, excerpt: e.target.value })} rows={2} /></div>
               <div><Label>Content</Label><Textarea value={form.content} onChange={(e) => setForm({ ...form, content: e.target.value })} rows={10} placeholder="Write your post content here..." /></div>
-              <div><Label>Featured Image URL</Label><Input value={form.featured_image} onChange={(e) => setForm({ ...form, featured_image: e.target.value })} /></div>
+              <div><Label>Featured Image</Label><ImageUpload value={form.featured_image} onChange={(url) => setForm({ ...form, featured_image: url })} folder="blog" /></div>
               <div className="grid grid-cols-2 gap-4">
                 <div><Label>Meta Title</Label><Input value={form.meta_title} onChange={(e) => setForm({ ...form, meta_title: e.target.value })} /></div>
                 <div><Label>Meta Description</Label><Input value={form.meta_description} onChange={(e) => setForm({ ...form, meta_description: e.target.value })} /></div>
@@ -96,10 +96,11 @@ const ManageBlog = () => {
       </div>
       <Card><CardContent className="p-0">
         <Table>
-          <TableHeader><TableRow><TableHead>Title</TableHead><TableHead>Category</TableHead><TableHead>Published</TableHead><TableHead>Featured</TableHead><TableHead className="text-right">Actions</TableHead></TableRow></TableHeader>
+          <TableHeader><TableRow><TableHead>Image</TableHead><TableHead>Title</TableHead><TableHead>Category</TableHead><TableHead>Published</TableHead><TableHead>Featured</TableHead><TableHead className="text-right">Actions</TableHead></TableRow></TableHeader>
           <TableBody>
-            {isLoading ? <TableRow><TableCell colSpan={5} className="text-center py-8">Loading...</TableCell></TableRow> : posts?.map((p) => (
+            {isLoading ? <TableRow><TableCell colSpan={6} className="text-center py-8">Loading...</TableCell></TableRow> : posts?.map((p) => (
               <TableRow key={p.id}>
+                <TableCell>{p.featured_image ? <img src={p.featured_image} alt={p.title} className="h-10 w-10 rounded object-cover" /> : <div className="h-10 w-10 rounded bg-muted" />}</TableCell>
                 <TableCell className="font-medium max-w-xs truncate">{p.title}</TableCell>
                 <TableCell>{p.category}</TableCell>
                 <TableCell><span className={`px-2 py-1 rounded text-xs ${p.is_published ? "bg-primary/20 text-primary" : "bg-muted text-muted-foreground"}`}>{p.is_published ? "Yes" : "Draft"}</span></TableCell>
