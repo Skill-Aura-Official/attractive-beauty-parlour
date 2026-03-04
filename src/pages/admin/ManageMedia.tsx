@@ -1,18 +1,19 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent } from "@/components/ui/card";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { toast } from "sonner";
-import { Plus, Trash2, Copy } from "lucide-react";
+import { Plus, Trash2, Copy, Upload } from "lucide-react";
 
 const ManageMedia = () => {
   const qc = useQueryClient();
-  const [open, setOpen] = useState(false);
-  const [form, setForm] = useState({ file_name: "", file_url: "", file_type: "", alt_text: "", category: "" });
+  const [uploading, setUploading] = useState(false);
+  const [filterCat, setFilterCat] = useState("all");
+  const fileRef = useRef<HTMLInputElement>(null);
 
   const { data: media, isLoading } = useQuery({
     queryKey: ["admin-media"],
@@ -23,14 +24,44 @@ const ManageMedia = () => {
     },
   });
 
-  const add = useMutation({
-    mutationFn: async () => {
-      const { error } = await supabase.from("media").insert(form);
-      if (error) throw error;
-    },
-    onSuccess: () => { qc.invalidateQueries({ queryKey: ["admin-media"] }); toast.success("Added"); setOpen(false); setForm({ file_name: "", file_url: "", file_type: "", alt_text: "", category: "" }); },
-    onError: (e: Error) => toast.error(e.message),
-  });
+  const filtered = filterCat === "all" ? media : media?.filter((m) => m.category === filterCat);
+  const categories = [...new Set(media?.map((m) => m.category).filter(Boolean))];
+
+  const handleUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files;
+    if (!files?.length) return;
+
+    setUploading(true);
+    for (const file of Array.from(files)) {
+      if (!file.type.startsWith("image/") && !file.type.startsWith("video/")) {
+        toast.error(`${file.name} is not a supported file type`);
+        continue;
+      }
+
+      const ext = file.name.split(".").pop();
+      const path = `uploads/${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`;
+
+      const { error } = await supabase.storage.from("media").upload(path, file);
+      if (error) {
+        toast.error(`Failed to upload ${file.name}: ${error.message}`);
+        continue;
+      }
+
+      const { data: urlData } = supabase.storage.from("media").getPublicUrl(path);
+      await supabase.from("media").insert({
+        file_name: file.name,
+        file_url: urlData.publicUrl,
+        file_type: file.type,
+        file_size: file.size,
+        category: "uploads",
+      });
+    }
+
+    qc.invalidateQueries({ queryKey: ["admin-media"] });
+    toast.success("Upload complete!");
+    setUploading(false);
+    if (fileRef.current) fileRef.current.value = "";
+  };
 
   const remove = useMutation({
     mutationFn: async (id: string) => { const { error } = await supabase.from("media").delete().eq("id", id); if (error) throw error; },
@@ -43,28 +74,29 @@ const ManageMedia = () => {
   return (
     <div>
       <div className="flex items-center justify-between mb-6">
-        <h2 className="font-display text-2xl text-foreground">Media Library</h2>
-        <Dialog open={open} onOpenChange={setOpen}>
-          <DialogTrigger asChild><Button><Plus className="mr-2 h-4 w-4" />Add Media</Button></DialogTrigger>
-          <DialogContent>
-            <DialogHeader><DialogTitle>Add Media</DialogTitle></DialogHeader>
-            <form onSubmit={(e) => { e.preventDefault(); add.mutate(); }} className="space-y-4">
-              <div><Label>File Name</Label><Input value={form.file_name} onChange={(e) => setForm({ ...form, file_name: e.target.value })} required /></div>
-              <div><Label>File URL</Label><Input value={form.file_url} onChange={(e) => setForm({ ...form, file_url: e.target.value })} required placeholder="https://..." /></div>
-              <div><Label>Alt Text</Label><Input value={form.alt_text} onChange={(e) => setForm({ ...form, alt_text: e.target.value })} /></div>
-              <div className="grid grid-cols-2 gap-4">
-                <div><Label>Type</Label><Input value={form.file_type} onChange={(e) => setForm({ ...form, file_type: e.target.value })} placeholder="image/jpeg" /></div>
-                <div><Label>Category</Label><Input value={form.category} onChange={(e) => setForm({ ...form, category: e.target.value })} placeholder="e.g. services" /></div>
-              </div>
-              <Button type="submit" className="w-full" disabled={add.isPending}>{add.isPending ? "Adding..." : "Add"}</Button>
-            </form>
-          </DialogContent>
-        </Dialog>
+        <div>
+          <h2 className="font-display text-2xl text-foreground">Media Library</h2>
+          <p className="text-sm text-muted-foreground mt-1">{media?.length ?? 0} files</p>
+        </div>
+        <div className="flex items-center gap-3">
+          <Select value={filterCat} onValueChange={setFilterCat}>
+            <SelectTrigger className="w-32"><SelectValue placeholder="Filter" /></SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">All</SelectItem>
+              {categories.map((c) => <SelectItem key={c} value={c!}>{c}</SelectItem>)}
+            </SelectContent>
+          </Select>
+          <input ref={fileRef} type="file" accept="image/*,video/*" multiple onChange={handleUpload} className="hidden" />
+          <Button onClick={() => fileRef.current?.click()} disabled={uploading}>
+            {uploading ? <div className="animate-spin h-4 w-4 border-2 border-primary-foreground border-t-transparent rounded-full mr-2" /> : <Upload className="mr-2 h-4 w-4" />}
+            {uploading ? "Uploading..." : "Upload Files"}
+          </Button>
+        </div>
       </div>
 
       {isLoading ? <p className="text-muted-foreground">Loading...</p> : (
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-          {media?.map((m) => (
+          {filtered?.map((m) => (
             <Card key={m.id} className="overflow-hidden group">
               <div className="aspect-square bg-muted relative">
                 <img src={m.file_url} alt={m.alt_text || m.file_name} className="w-full h-full object-cover" />

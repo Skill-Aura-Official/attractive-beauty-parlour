@@ -22,6 +22,9 @@ import ManageTestimonials from "./pages/admin/ManageTestimonials";
 import ManageBlog from "./pages/admin/ManageBlog";
 import ManageMedia from "./pages/admin/ManageMedia";
 import ManageContact from "./pages/admin/ManageContact";
+import ManageHeroSlides from "./pages/admin/ManageHeroSlides";
+import ManageFAQ from "./pages/admin/ManageFAQ";
+import ManagePages from "./pages/admin/ManagePages";
 
 const queryClient = new QueryClient();
 
@@ -47,10 +50,13 @@ const App = () => (
           <Route path="/admin/login" element={<AdminLogin />} />
           <Route path="/admin" element={<AdminLayout />}>
             <Route index element={<Dashboard />} />
+            <Route path="hero" element={<ManageHeroSlides />} />
             <Route path="services" element={<ManageServices />} />
             <Route path="offers" element={<ManageOffers />} />
             <Route path="testimonials" element={<ManageTestimonials />} />
             <Route path="blog" element={<ManageBlog />} />
+            <Route path="faq" element={<ManageFAQ />} />
+            <Route path="pages" element={<ManagePages />} />
             <Route path="media" element={<ManageMedia />} />
             <Route path="contact" element={<ManageContact />} />
           </Route>
