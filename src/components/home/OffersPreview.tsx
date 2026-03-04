@@ -1,8 +1,14 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import { ArrowRight, Sparkles, Crown } from "lucide-react";
+import { ArrowRight, Sparkles, Crown, MessageCircle } from "lucide-react";
 import { SectionHeading } from "../ui/section-heading";
+import { CONTACT_INFO } from "@/lib/constants";
 import bridalPackage from "@/assets/bridal-package.jpg";
+
+const handleWhatsAppClick = (packageName: string) => {
+  const message = encodeURIComponent(`Hi, I'm interested in the ${packageName}. Please share more details.`);
+  window.open(`${CONTACT_INFO.whatsappLink}?text=${message}`, '_blank');
+};
 
 export const OffersPreview = () => {
   return (
@@ -33,26 +39,20 @@ export const OffersPreview = () => {
               <div className="absolute bottom-0 left-0 right-0 p-8">
                 <div className="flex items-center gap-2 mb-3">
                   <Crown size={20} className="text-primary" />
-                  <span className="text-primary text-sm uppercase tracking-widest">
-                    Bridal Special
-                  </span>
+                  <span className="text-primary text-sm uppercase tracking-widest">Bridal Special</span>
                 </div>
-                <h3 className="font-display text-3xl text-foreground mb-3">
-                  Bridal Bliss Package
-                </h3>
+                <h3 className="font-display text-3xl text-foreground mb-3">Bridal Bliss Package</h3>
                 <p className="text-muted-foreground mb-6">
                   Complete bridal makeover including pre-bridal treatments, HD makeup, 
                   hair styling, and mehendi services for your magical day.
                 </p>
-                <a
-                  href="https://wa.me/919876543210?text=I'm interested in the Bridal Bliss Package"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 px-6 py-3 bg-primary text-primary-foreground font-medium text-sm uppercase tracking-wider hover:shadow-gold transition-all duration-300"
+                <button
+                  onClick={() => handleWhatsAppClick("Bridal Bliss Package")}
+                  className="inline-flex items-center gap-2 px-6 py-3 bg-primary text-primary-foreground font-medium text-sm uppercase tracking-wider hover:shadow-gold transition-all duration-300 cursor-pointer"
                 >
+                  <MessageCircle size={16} />
                   Enquire Now
-                  <ArrowRight size={16} />
-                </a>
+                </button>
               </div>
             </div>
           </motion.div>
@@ -71,25 +71,20 @@ export const OffersPreview = () => {
                   <Sparkles size={24} />
                 </div>
                 <div className="flex-1">
-                  <span className="text-primary text-xs uppercase tracking-widest mb-2 block">
-                    Party Ready
-                  </span>
-                  <h3 className="font-display text-2xl text-foreground mb-2">
-                    Party Glam Package
-                  </h3>
+                  <span className="text-primary text-xs uppercase tracking-widest mb-2 block">Party Ready</span>
+                  <h3 className="font-display text-2xl text-foreground mb-2">Party Glam Package</h3>
                   <p className="text-muted-foreground mb-4">
                     Professional makeup, elegant hair styling, and manicure combo 
                     to make you shine at any celebration.
                   </p>
-                  <a
-                    href="https://wa.me/919876543210?text=I'm interested in the Party Glam Package"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 text-primary font-medium text-sm hover:gap-3 transition-all duration-300"
+                  <button
+                    onClick={() => handleWhatsAppClick("Party Glam Package")}
+                    className="inline-flex items-center gap-2 text-primary font-medium text-sm hover:gap-3 transition-all duration-300 cursor-pointer"
                   >
+                    <MessageCircle size={14} />
                     Book Now
                     <ArrowRight size={16} />
-                  </a>
+                  </button>
                 </div>
               </div>
             </motion.div>
@@ -106,25 +101,20 @@ export const OffersPreview = () => {
                   <Sparkles size={24} />
                 </div>
                 <div className="flex-1">
-                  <span className="text-primary text-xs uppercase tracking-widest mb-2 block">
-                    Seasonal Offer
-                  </span>
-                  <h3 className="font-display text-2xl text-foreground mb-2">
-                    Festive Glow Package
-                  </h3>
+                  <span className="text-primary text-xs uppercase tracking-widest mb-2 block">Seasonal Offer</span>
+                  <h3 className="font-display text-2xl text-foreground mb-2">Festive Glow Package</h3>
                   <p className="text-muted-foreground mb-4">
                     Complete skin prep, facial, and makeup combo to get you 
                     festival-ready with a radiant glow.
                   </p>
-                  <a
-                    href="https://wa.me/919876543210?text=I'm interested in the Festive Glow Package"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 text-primary font-medium text-sm hover:gap-3 transition-all duration-300"
+                  <button
+                    onClick={() => handleWhatsAppClick("Festive Glow Package")}
+                    className="inline-flex items-center gap-2 text-primary font-medium text-sm hover:gap-3 transition-all duration-300 cursor-pointer"
                   >
+                    <MessageCircle size={14} />
                     Book Now
                     <ArrowRight size={16} />
-                  </a>
+                  </button>
                 </div>
               </div>
             </motion.div>

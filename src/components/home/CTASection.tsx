@@ -1,11 +1,11 @@
 import { motion } from "framer-motion";
-import { Phone, MessageCircle, MapPin } from "lucide-react";
+import { Phone, MessageCircle, MapPin, ArrowRight } from "lucide-react";
+import { Link } from "react-router-dom";
 import { CONTACT_INFO } from "@/lib/constants";
 
 export const CTASection = () => {
   return (
     <section className="section-padding bg-background relative overflow-hidden">
-      {/* Background Elements */}
       <div className="absolute inset-0 bg-gradient-glow opacity-30" />
       <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent" />
       <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent" />
@@ -30,9 +30,9 @@ export const CTASection = () => {
             We're here to help you look and feel your absolute best.
           </p>
 
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6 mb-16">
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6 mb-8">
             <motion.a
-              href="tel:+919876543210"
+              href={CONTACT_INFO.phoneLink}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               className="w-full sm:w-auto px-8 py-4 flex items-center justify-center gap-3 border border-primary text-primary font-body text-sm uppercase tracking-widest hover:bg-primary hover:text-primary-foreground transition-all duration-300"
@@ -41,7 +41,7 @@ export const CTASection = () => {
               Call Now
             </motion.a>
             <motion.a
-              href="https://wa.me/919876543210"
+              href={`${CONTACT_INFO.whatsappLink}?text=${encodeURIComponent("Hi, I'd like to book an appointment at Attractive Beauty Parlour.")}`}
               target="_blank"
               rel="noopener noreferrer"
               whileHover={{ scale: 1.05 }}
@@ -53,7 +53,19 @@ export const CTASection = () => {
             </motion.a>
           </div>
 
-          {/* Address */}
+          {/* Quick links */}
+          <div className="flex flex-wrap items-center justify-center gap-6 mb-16">
+            <Link to="/services" className="text-muted-foreground hover:text-primary text-sm flex items-center gap-1 transition-colors">
+              View Services <ArrowRight size={14} />
+            </Link>
+            <Link to="/offers" className="text-muted-foreground hover:text-primary text-sm flex items-center gap-1 transition-colors">
+              Special Offers <ArrowRight size={14} />
+            </Link>
+            <Link to="/contact" className="text-muted-foreground hover:text-primary text-sm flex items-center gap-1 transition-colors">
+              Get Directions <ArrowRight size={14} />
+            </Link>
+          </div>
+
           <motion.div
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
@@ -62,9 +74,7 @@ export const CTASection = () => {
             className="flex items-center justify-center gap-3 text-muted-foreground"
           >
             <MapPin size={18} className="text-primary" />
-            <address className="not-italic">
-              123 Beauty Lane, Fashion District, City - 400001
-            </address>
+            <address className="not-italic text-sm">{CONTACT_INFO.address}</address>
           </motion.div>
         </motion.div>
       </div>

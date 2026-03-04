@@ -1,53 +1,70 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronLeft, ChevronRight, Star, Quote } from "lucide-react";
 import { SectionHeading } from "../ui/section-heading";
+import { useTestimonials } from "@/hooks/useTestimonials";
 
-const testimonials = [
+const fallbackTestimonials = [
   {
-    id: 1,
-    name: "Priya Sharma",
-    text: "Absolutely loved my bridal makeup! The team at Attractive Beauty Parlour made me feel like a queen on my special day. The attention to detail was impeccable.",
+    id: "1",
+    client_name: "Priya Sharma",
+    review_text: "Absolutely loved my bridal makeup! The team at Attractive Beauty Parlour made me feel like a queen on my special day. The attention to detail was impeccable.",
     rating: 5,
-    occasion: "Bridal Makeup",
+    image_url: null,
+    is_visible: true,
+    created_at: "",
+    updated_at: "",
   },
   {
-    id: 2,
-    name: "Anita Reddy",
-    text: "Best salon in the city! The ambiance is so luxurious and the staff is incredibly skilled. I've been coming here for over a year now and wouldn't go anywhere else.",
+    id: "2",
+    client_name: "Anita Reddy",
+    review_text: "Best salon in the city! The ambiance is so luxurious and the staff is incredibly skilled. I've been coming here for over a year now and wouldn't go anywhere else.",
     rating: 5,
-    occasion: "Regular Client",
+    image_url: null,
+    is_visible: true,
+    created_at: "",
+    updated_at: "",
   },
   {
-    id: 3,
-    name: "Meera Patel",
-    text: "My daughter loves coming here for her haircuts. They are so patient with kids and make the experience fun. The kids' section is adorable!",
+    id: "3",
+    client_name: "Meera Patel",
+    review_text: "My daughter loves coming here for her haircuts. They are so patient with kids and make the experience fun. The kids' section is adorable!",
     rating: 5,
-    occasion: "Kids Services",
+    image_url: null,
+    is_visible: true,
+    created_at: "",
+    updated_at: "",
   },
   {
-    id: 4,
-    name: "Kavitha Nair",
-    text: "The facial treatments here are divine. My skin has never looked better. The products they use are top-notch and the results speak for themselves.",
+    id: "4",
+    client_name: "Kavitha Nair",
+    review_text: "The facial treatments here are divine. My skin has never looked better. The products they use are top-notch and the results speak for themselves.",
     rating: 5,
-    occasion: "Skin Treatment",
+    image_url: null,
+    is_visible: true,
+    created_at: "",
+    updated_at: "",
   },
 ];
 
 export const TestimonialsSection = () => {
+  const { data: dbTestimonials } = useTestimonials();
+  const testimonials = dbTestimonials && dbTestimonials.length > 0 ? dbTestimonials : fallbackTestimonials;
   const [current, setCurrent] = useState(0);
 
-  const next = () => {
-    setCurrent((prev) => (prev + 1) % testimonials.length);
-  };
+  // Auto-play carousel
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrent((prev) => (prev + 1) % testimonials.length);
+    }, 5000);
+    return () => clearInterval(timer);
+  }, [testimonials.length]);
 
-  const prev = () => {
-    setCurrent((prev) => (prev - 1 + testimonials.length) % testimonials.length);
-  };
+  const next = () => setCurrent((prev) => (prev + 1) % testimonials.length);
+  const prev = () => setCurrent((prev) => (prev - 1 + testimonials.length) % testimonials.length);
 
   return (
     <section className="section-padding bg-charcoal-light relative overflow-hidden">
-      {/* Decorative Quote */}
       <div className="absolute top-10 left-10 opacity-5">
         <Quote size={200} className="text-primary" />
       </div>
@@ -69,35 +86,24 @@ export const TestimonialsSection = () => {
               transition={{ duration: 0.5 }}
               className="text-center"
             >
-              {/* Stars */}
               <div className="flex items-center justify-center gap-1 mb-8">
-                {[...Array(testimonials[current].rating)].map((_, i) => (
-                  <Star
-                    key={i}
-                    size={20}
-                    className="text-primary fill-primary"
-                  />
+                {[...Array(testimonials[current]?.rating || 5)].map((_, i) => (
+                  <Star key={i} size={20} className="text-primary fill-primary" />
                 ))}
               </div>
 
-              {/* Quote */}
               <blockquote className="font-elegant text-2xl md:text-3xl lg:text-4xl text-foreground leading-relaxed mb-8 italic">
-                "{testimonials[current].text}"
+                "{testimonials[current]?.review_text}"
               </blockquote>
 
-              {/* Author */}
               <div>
                 <p className="font-display text-xl text-primary mb-1">
-                  {testimonials[current].name}
-                </p>
-                <p className="text-muted-foreground text-sm uppercase tracking-widest">
-                  {testimonials[current].occasion}
+                  {testimonials[current]?.client_name}
                 </p>
               </div>
             </motion.div>
           </AnimatePresence>
 
-          {/* Navigation */}
           <div className="flex items-center justify-center gap-4 mt-12">
             <button
               onClick={prev}
@@ -111,9 +117,7 @@ export const TestimonialsSection = () => {
                   key={index}
                   onClick={() => setCurrent(index)}
                   className={`w-2 h-2 rounded-full transition-all duration-300 ${
-                    index === current
-                      ? "w-8 bg-primary"
-                      : "bg-primary/30 hover:bg-primary/50"
+                    index === current ? "w-8 bg-primary" : "bg-primary/30 hover:bg-primary/50"
                   }`}
                 />
               ))}
