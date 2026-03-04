@@ -137,6 +137,84 @@ export type Database = {
         }
         Relationships: []
       }
+      faq_items: {
+        Row: {
+          answer: string
+          category: string
+          created_at: string
+          display_order: number | null
+          id: string
+          is_visible: boolean
+          question: string
+          updated_at: string
+        }
+        Insert: {
+          answer: string
+          category?: string
+          created_at?: string
+          display_order?: number | null
+          id?: string
+          is_visible?: boolean
+          question: string
+          updated_at?: string
+        }
+        Update: {
+          answer?: string
+          category?: string
+          created_at?: string
+          display_order?: number | null
+          id?: string
+          is_visible?: boolean
+          question?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      hero_slides: {
+        Row: {
+          created_at: string
+          cta_link: string | null
+          cta_text: string | null
+          description: string | null
+          display_order: number | null
+          highlight: string | null
+          id: string
+          image_url: string | null
+          is_active: boolean
+          subtitle: string | null
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          cta_link?: string | null
+          cta_text?: string | null
+          description?: string | null
+          display_order?: number | null
+          highlight?: string | null
+          id?: string
+          image_url?: string | null
+          is_active?: boolean
+          subtitle?: string | null
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          cta_link?: string | null
+          cta_text?: string | null
+          description?: string | null
+          display_order?: number | null
+          highlight?: string | null
+          id?: string
+          image_url?: string | null
+          is_active?: boolean
+          subtitle?: string | null
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       media: {
         Row: {
           alt_text: string | null
@@ -209,6 +287,48 @@ export type Database = {
           updated_at?: string
           valid_from?: string | null
           valid_until?: string | null
+        }
+        Relationships: []
+      }
+      page_sections: {
+        Row: {
+          content: string | null
+          created_at: string
+          display_order: number | null
+          id: string
+          image_url: string | null
+          is_visible: boolean
+          metadata: Json | null
+          page: string
+          section_key: string
+          title: string | null
+          updated_at: string
+        }
+        Insert: {
+          content?: string | null
+          created_at?: string
+          display_order?: number | null
+          id?: string
+          image_url?: string | null
+          is_visible?: boolean
+          metadata?: Json | null
+          page?: string
+          section_key: string
+          title?: string | null
+          updated_at?: string
+        }
+        Update: {
+          content?: string | null
+          created_at?: string
+          display_order?: number | null
+          id?: string
+          image_url?: string | null
+          is_visible?: boolean
+          metadata?: Json | null
+          page?: string
+          section_key?: string
+          title?: string | null
+          updated_at?: string
         }
         Relationships: []
       }

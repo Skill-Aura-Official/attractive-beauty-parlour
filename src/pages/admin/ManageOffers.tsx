@@ -11,6 +11,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { toast } from "sonner";
 import { Plus, Pencil, Trash2 } from "lucide-react";
+import { ImageUpload } from "@/components/admin/ImageUpload";
 import type { Tables } from "@/integrations/supabase/types";
 
 type Offer = Tables<"offers">;
@@ -67,7 +68,7 @@ const ManageOffers = () => {
             <form onSubmit={submit} className="space-y-4">
               <div><Label>Title</Label><Input value={form.title} onChange={(e) => setForm({ ...form, title: e.target.value })} required /></div>
               <div><Label>Description</Label><Textarea value={form.description} onChange={(e) => setForm({ ...form, description: e.target.value })} /></div>
-              <div><Label>Image URL</Label><Input value={form.image_url} onChange={(e) => setForm({ ...form, image_url: e.target.value })} /></div>
+              <div><Label>Image</Label><ImageUpload value={form.image_url} onChange={(url) => setForm({ ...form, image_url: url })} folder="offers" /></div>
               <div className="flex gap-6">
                 <div className="flex items-center gap-2"><Switch checked={form.is_active} onCheckedChange={(v) => setForm({ ...form, is_active: v })} /><Label>Active</Label></div>
                 <div className="flex items-center gap-2"><Switch checked={form.is_bridal} onCheckedChange={(v) => setForm({ ...form, is_bridal: v })} /><Label>Bridal</Label></div>
@@ -80,10 +81,11 @@ const ManageOffers = () => {
       </div>
       <Card><CardContent className="p-0">
         <Table>
-          <TableHeader><TableRow><TableHead>Title</TableHead><TableHead>Type</TableHead><TableHead>Active</TableHead><TableHead className="text-right">Actions</TableHead></TableRow></TableHeader>
+          <TableHeader><TableRow><TableHead>Image</TableHead><TableHead>Title</TableHead><TableHead>Type</TableHead><TableHead>Active</TableHead><TableHead className="text-right">Actions</TableHead></TableRow></TableHeader>
           <TableBody>
-            {isLoading ? <TableRow><TableCell colSpan={4} className="text-center py-8">Loading...</TableCell></TableRow> : offers?.map((o) => (
+            {isLoading ? <TableRow><TableCell colSpan={5} className="text-center py-8">Loading...</TableCell></TableRow> : offers?.map((o) => (
               <TableRow key={o.id}>
+                <TableCell>{o.image_url ? <img src={o.image_url} alt={o.title} className="h-10 w-10 rounded object-cover" /> : <div className="h-10 w-10 rounded bg-muted" />}</TableCell>
                 <TableCell className="font-medium">{o.title}</TableCell>
                 <TableCell>{o.is_bridal ? "Bridal" : o.is_party ? "Party" : "General"}</TableCell>
                 <TableCell><span className={`px-2 py-1 rounded text-xs ${o.is_active ? "bg-primary/20 text-primary" : "bg-muted text-muted-foreground"}`}>{o.is_active ? "Yes" : "No"}</span></TableCell>

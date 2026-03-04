@@ -1,37 +1,24 @@
 import { Navigate, Outlet, useLocation } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
 import {
-  Sidebar,
-  SidebarContent,
-  SidebarGroup,
-  SidebarGroupContent,
-  SidebarGroupLabel,
-  SidebarMenu,
-  SidebarMenuButton,
-  SidebarMenuItem,
-  SidebarProvider,
-  SidebarTrigger,
-  useSidebar,
+  Sidebar, SidebarContent, SidebarGroup, SidebarGroupContent, SidebarGroupLabel,
+  SidebarMenu, SidebarMenuButton, SidebarMenuItem, SidebarProvider, SidebarTrigger, useSidebar,
 } from "@/components/ui/sidebar";
 import { NavLink } from "@/components/NavLink";
 import {
-  LayoutDashboard,
-  Scissors,
-  Gift,
-  Star,
-  FileText,
-  Settings,
-  Image,
-  LogOut,
+  LayoutDashboard, Scissors, Gift, Star, FileText, Settings, Image, LogOut, Layers, HelpCircle, PanelTop,
 } from "lucide-react";
 import logo from "@/assets/logo.png";
 
 const navItems = [
   { title: "Dashboard", url: "/admin", icon: LayoutDashboard },
+  { title: "Hero Slides", url: "/admin/hero", icon: PanelTop },
   { title: "Services", url: "/admin/services", icon: Scissors },
   { title: "Offers", url: "/admin/offers", icon: Gift },
   { title: "Testimonials", url: "/admin/testimonials", icon: Star },
   { title: "Blog Posts", url: "/admin/blog", icon: FileText },
+  { title: "FAQ", url: "/admin/faq", icon: HelpCircle },
+  { title: "Page Content", url: "/admin/pages", icon: Layers },
   { title: "Media", url: "/admin/media", icon: Image },
   { title: "Contact Settings", url: "/admin/contact", icon: Settings },
 ];
@@ -40,7 +27,6 @@ function AdminSidebar() {
   const { state } = useSidebar();
   const collapsed = state === "collapsed";
   const { signOut } = useAuth();
-  const location = useLocation();
 
   return (
     <Sidebar collapsible="icon">
@@ -56,12 +42,7 @@ function AdminSidebar() {
               {navItems.map((item) => (
                 <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton asChild>
-                    <NavLink
-                      to={item.url}
-                      end={item.url === "/admin"}
-                      className="hover:bg-sidebar-accent/50"
-                      activeClassName="bg-sidebar-accent text-sidebar-primary font-medium"
-                    >
+                    <NavLink to={item.url} end={item.url === "/admin"} className="hover:bg-sidebar-accent/50" activeClassName="bg-sidebar-accent text-sidebar-primary font-medium">
                       <item.icon className="mr-2 h-4 w-4" />
                       {!collapsed && <span>{item.title}</span>}
                     </NavLink>
