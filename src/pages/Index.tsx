@@ -5,16 +5,27 @@ import { TestimonialsSection } from "@/components/home/TestimonialsSection";
 import { OffersPreview } from "@/components/home/OffersPreview";
 import { KidsPreview } from "@/components/home/KidsPreview";
 import { CTASection } from "@/components/home/CTASection";
+import { ScrollReveal } from "@/components/ui/scroll-reveal";
 
 const Index = () => {
   return (
     <Layout>
       <HeroSection />
-      <ServicesPreview />
-      <OffersPreview />
-      <TestimonialsSection />
-      <KidsPreview />
-      <CTASection />
+      <ScrollReveal>
+        <ServicesPreview />
+      </ScrollReveal>
+      <ScrollReveal direction="left">
+        <OffersPreview />
+      </ScrollReveal>
+      <ScrollReveal>
+        <TestimonialsSection />
+      </ScrollReveal>
+      <ScrollReveal direction="right">
+        <KidsPreview />
+      </ScrollReveal>
+      <ScrollReveal direction="scale">
+        <CTASection />
+      </ScrollReveal>
     </Layout>
   );
 };
