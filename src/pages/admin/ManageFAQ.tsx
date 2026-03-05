@@ -10,7 +10,8 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { toast } from "sonner";
-import { Plus, Pencil, Trash2 } from "lucide-react";
+import { Plus, Pencil } from "lucide-react";
+import { ConfirmDelete } from "@/components/admin/ConfirmDelete";
 
 const empty = { question: "", answer: "", category: "General", display_order: 0, is_visible: true };
 
@@ -39,7 +40,7 @@ const ManageFAQ = () => {
         if (error) throw error;
       }
     },
-    onSuccess: () => { qc.invalidateQueries({ queryKey: ["admin-faq"] }); toast.success("Saved"); close(); },
+    onSuccess: () => { qc.invalidateQueries({ queryKey: ["admin-faq"] }); toast.success("Saved"); closeDialog(); },
     onError: (e: Error) => toast.error(e.message),
   });
 
@@ -55,7 +56,7 @@ const ManageFAQ = () => {
     setForm({ question: f.question, answer: f.answer, category: f.category, display_order: f.display_order || 0, is_visible: f.is_visible });
     setOpen(true);
   };
-  const close = () => { setOpen(false); setEditing(null); };
+  const closeDialog = () => { setOpen(false); setEditing(null); };
   const submit = (e: React.FormEvent) => { e.preventDefault(); upsert.mutate(editing ? { ...form, id: editing.id } : form); };
 
   return (
@@ -63,7 +64,7 @@ const ManageFAQ = () => {
       <div className="flex items-center justify-between mb-6">
         <div>
           <h2 className="font-display text-2xl text-foreground">FAQ Management</h2>
-          <p className="text-sm text-muted-foreground mt-1">Manage frequently asked questions on your FAQ page</p>
+          <p className="text-sm text-muted-foreground mt-1">{items?.length ?? 0} questions total</p>
         </div>
         <Dialog open={open} onOpenChange={setOpen}>
           <DialogTrigger asChild><Button onClick={openCreate}><Plus className="mr-2 h-4 w-4" />Add FAQ</Button></DialogTrigger>
@@ -87,7 +88,9 @@ const ManageFAQ = () => {
         <Table>
           <TableHeader><TableRow><TableHead>Category</TableHead><TableHead>Question</TableHead><TableHead>Order</TableHead><TableHead>Visible</TableHead><TableHead className="text-right">Actions</TableHead></TableRow></TableHeader>
           <TableBody>
-            {isLoading ? <TableRow><TableCell colSpan={5} className="text-center py-8">Loading...</TableCell></TableRow> : items?.map((f) => (
+            {isLoading ? <TableRow><TableCell colSpan={5} className="text-center py-8">Loading...</TableCell></TableRow> : 
+            items?.length === 0 ? <TableRow><TableCell colSpan={5} className="text-center py-8 text-muted-foreground">No FAQs yet.</TableCell></TableRow> :
+            items?.map((f) => (
               <TableRow key={f.id}>
                 <TableCell><span className="px-2 py-1 rounded text-xs bg-accent text-accent-foreground">{f.category}</span></TableCell>
                 <TableCell className="font-medium max-w-xs truncate">{f.question}</TableCell>
@@ -95,7 +98,7 @@ const ManageFAQ = () => {
                 <TableCell><span className={`px-2 py-1 rounded text-xs ${f.is_visible ? "bg-primary/20 text-primary" : "bg-muted text-muted-foreground"}`}>{f.is_visible ? "Yes" : "No"}</span></TableCell>
                 <TableCell className="text-right">
                   <Button variant="ghost" size="icon" onClick={() => openEdit(f)}><Pencil className="h-4 w-4" /></Button>
-                  <Button variant="ghost" size="icon" onClick={() => remove.mutate(f.id)}><Trash2 className="h-4 w-4 text-destructive" /></Button>
+                  <ConfirmDelete onConfirm={() => remove.mutate(f.id)} isPending={remove.isPending} />
                 </TableCell>
               </TableRow>
             ))}

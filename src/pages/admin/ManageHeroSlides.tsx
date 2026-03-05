@@ -9,8 +9,9 @@ import { Switch } from "@/components/ui/switch";
 import { Card, CardContent } from "@/components/ui/card";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { toast } from "sonner";
-import { Plus, Pencil, Trash2, GripVertical } from "lucide-react";
+import { Plus, Pencil } from "lucide-react";
 import { ImageUpload } from "@/components/admin/ImageUpload";
+import { ConfirmDelete } from "@/components/admin/ConfirmDelete";
 
 const empty = { title: "", highlight: "", subtitle: "", description: "", image_url: "", cta_text: "", cta_link: "", display_order: 0, is_active: true };
 
@@ -39,13 +40,13 @@ const ManageHeroSlides = () => {
         if (error) throw error;
       }
     },
-    onSuccess: () => { qc.invalidateQueries({ queryKey: ["admin-hero-slides"] }); toast.success("Saved"); close(); },
+    onSuccess: () => { qc.invalidateQueries({ queryKey: ["admin-hero-slides"] }); qc.invalidateQueries({ queryKey: ["hero-slides"] }); toast.success("Saved"); closeDialog(); },
     onError: (e: Error) => toast.error(e.message),
   });
 
   const remove = useMutation({
     mutationFn: async (id: string) => { const { error } = await supabase.from("hero_slides").delete().eq("id", id); if (error) throw error; },
-    onSuccess: () => { qc.invalidateQueries({ queryKey: ["admin-hero-slides"] }); toast.success("Deleted"); },
+    onSuccess: () => { qc.invalidateQueries({ queryKey: ["admin-hero-slides"] }); qc.invalidateQueries({ queryKey: ["hero-slides"] }); toast.success("Deleted"); },
     onError: (e: Error) => toast.error(e.message),
   });
 
@@ -55,7 +56,7 @@ const ManageHeroSlides = () => {
     setForm({ title: s.title, highlight: s.highlight || "", subtitle: s.subtitle || "", description: s.description || "", image_url: s.image_url || "", cta_text: s.cta_text || "", cta_link: s.cta_link || "", display_order: s.display_order || 0, is_active: s.is_active });
     setOpen(true);
   };
-  const close = () => { setOpen(false); setEditing(null); };
+  const closeDialog = () => { setOpen(false); setEditing(null); };
   const submit = (e: React.FormEvent) => { e.preventDefault(); upsert.mutate(editing ? { ...form, id: editing.id } : form); };
 
   return (
@@ -63,7 +64,7 @@ const ManageHeroSlides = () => {
       <div className="flex items-center justify-between mb-6">
         <div>
           <h2 className="font-display text-2xl text-foreground">Hero Slides</h2>
-          <p className="text-sm text-muted-foreground mt-1">Manage the homepage hero carousel</p>
+          <p className="text-sm text-muted-foreground mt-1">Manage the homepage hero carousel • {slides?.length ?? 0} slides</p>
         </div>
         <Dialog open={open} onOpenChange={setOpen}>
           <DialogTrigger asChild><Button onClick={openCreate}><Plus className="mr-2 h-4 w-4" />Add Slide</Button></DialogTrigger>
@@ -105,7 +106,7 @@ const ManageHeroSlides = () => {
                 <div className="flex items-center gap-1 pr-4">
                   <span className="text-xs text-muted-foreground mr-2">#{s.display_order}</span>
                   <Button variant="ghost" size="icon" onClick={() => openEdit(s)}><Pencil className="h-4 w-4" /></Button>
-                  <Button variant="ghost" size="icon" onClick={() => remove.mutate(s.id)}><Trash2 className="h-4 w-4 text-destructive" /></Button>
+                  <ConfirmDelete onConfirm={() => remove.mutate(s.id)} isPending={remove.isPending} />
                 </div>
               </CardContent>
             </Card>

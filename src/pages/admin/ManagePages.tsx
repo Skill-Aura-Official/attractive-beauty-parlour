@@ -11,8 +11,9 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { toast } from "sonner";
-import { Plus, Pencil, Trash2 } from "lucide-react";
+import { Plus, Pencil } from "lucide-react";
 import { ImageUpload } from "@/components/admin/ImageUpload";
+import { ConfirmDelete } from "@/components/admin/ConfirmDelete";
 
 const empty = { page: "about", section_key: "", title: "", content: "", image_url: "", display_order: 0, is_visible: true };
 
@@ -44,7 +45,7 @@ const ManagePages = () => {
         if (error) throw error;
       }
     },
-    onSuccess: () => { qc.invalidateQueries({ queryKey: ["admin-page-sections"] }); toast.success("Saved"); close(); },
+    onSuccess: () => { qc.invalidateQueries({ queryKey: ["admin-page-sections"] }); toast.success("Saved"); closeDialog(); },
     onError: (e: Error) => toast.error(e.message),
   });
 
@@ -60,7 +61,7 @@ const ManagePages = () => {
     setForm({ page: s.page, section_key: s.section_key, title: s.title || "", content: s.content || "", image_url: s.image_url || "", display_order: s.display_order || 0, is_visible: s.is_visible });
     setOpen(true);
   };
-  const close = () => { setOpen(false); setEditing(null); };
+  const closeDialog = () => { setOpen(false); setEditing(null); };
   const submit = (e: React.FormEvent) => { e.preventDefault(); upsert.mutate(editing ? { ...form, id: editing.id } : form); };
 
   return (
@@ -68,7 +69,7 @@ const ManagePages = () => {
       <div className="flex items-center justify-between mb-6">
         <div>
           <h2 className="font-display text-2xl text-foreground">Page Content</h2>
-          <p className="text-sm text-muted-foreground mt-1">Manage content sections across all pages</p>
+          <p className="text-sm text-muted-foreground mt-1">{sections?.length ?? 0} sections total</p>
         </div>
         <div className="flex items-center gap-3">
           <Select value={filterPage} onValueChange={setFilterPage}>
@@ -119,7 +120,9 @@ const ManagePages = () => {
         <Table>
           <TableHeader><TableRow><TableHead>Page</TableHead><TableHead>Section</TableHead><TableHead>Title</TableHead><TableHead>Order</TableHead><TableHead>Visible</TableHead><TableHead className="text-right">Actions</TableHead></TableRow></TableHeader>
           <TableBody>
-            {isLoading ? <TableRow><TableCell colSpan={6} className="text-center py-8">Loading...</TableCell></TableRow> : filtered?.map((s) => (
+            {isLoading ? <TableRow><TableCell colSpan={6} className="text-center py-8">Loading...</TableCell></TableRow> : 
+            filtered?.length === 0 ? <TableRow><TableCell colSpan={6} className="text-center py-8 text-muted-foreground">No sections yet.</TableCell></TableRow> :
+            filtered?.map((s) => (
               <TableRow key={s.id}>
                 <TableCell><span className="px-2 py-1 rounded text-xs bg-accent text-accent-foreground capitalize">{s.page}</span></TableCell>
                 <TableCell className="font-medium">{s.section_key}</TableCell>
@@ -128,7 +131,7 @@ const ManagePages = () => {
                 <TableCell><span className={`px-2 py-1 rounded text-xs ${s.is_visible ? "bg-primary/20 text-primary" : "bg-muted text-muted-foreground"}`}>{s.is_visible ? "Yes" : "No"}</span></TableCell>
                 <TableCell className="text-right">
                   <Button variant="ghost" size="icon" onClick={() => openEdit(s)}><Pencil className="h-4 w-4" /></Button>
-                  <Button variant="ghost" size="icon" onClick={() => remove.mutate(s.id)}><Trash2 className="h-4 w-4 text-destructive" /></Button>
+                  <ConfirmDelete onConfirm={() => remove.mutate(s.id)} isPending={remove.isPending} />
                 </TableCell>
               </TableRow>
             ))}
