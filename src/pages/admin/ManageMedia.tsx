@@ -2,12 +2,11 @@ import { useState, useRef } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { Card, CardContent } from "@/components/ui/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { toast } from "sonner";
-import { Plus, Trash2, Copy, Upload } from "lucide-react";
+import { Copy, Upload } from "lucide-react";
+import { ConfirmDelete } from "@/components/admin/ConfirmDelete";
 
 const ManageMedia = () => {
   const qc = useQueryClient();
@@ -94,15 +93,17 @@ const ManageMedia = () => {
         </div>
       </div>
 
-      {isLoading ? <p className="text-muted-foreground">Loading...</p> : (
+      {isLoading ? <p className="text-muted-foreground">Loading...</p> : filtered?.length === 0 ? (
+        <p className="text-center text-muted-foreground py-16">No media files yet. Upload your first file!</p>
+      ) : (
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
           {filtered?.map((m) => (
             <Card key={m.id} className="overflow-hidden group">
               <div className="aspect-square bg-muted relative">
-                <img src={m.file_url} alt={m.alt_text || m.file_name} className="w-full h-full object-cover" />
+                <img src={m.file_url} alt={m.alt_text || m.file_name} className="w-full h-full object-cover" loading="lazy" />
                 <div className="absolute inset-0 bg-background/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
                   <Button size="icon" variant="secondary" onClick={() => copyUrl(m.file_url)}><Copy className="h-4 w-4" /></Button>
-                  <Button size="icon" variant="destructive" onClick={() => remove.mutate(m.id)}><Trash2 className="h-4 w-4" /></Button>
+                  <ConfirmDelete onConfirm={() => remove.mutate(m.id)} isPending={remove.isPending} />
                 </div>
               </div>
               <CardContent className="p-3">
