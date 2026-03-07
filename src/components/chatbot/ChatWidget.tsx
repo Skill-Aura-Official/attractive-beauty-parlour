@@ -1,10 +1,11 @@
 import { useState, useRef, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { MessageCircle, X, Send, Minimize2, Bot, User, Calendar } from "lucide-react";
+import { X, Send, Minimize2, User, Calendar, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import ReactMarkdown from "react-markdown";
 import { CONTACT_INFO } from "@/lib/constants";
+import glamGenieAvatar from "@/assets/glam-genie-avatar.png";
 
 type Msg = { role: "user" | "assistant"; content: string };
 
