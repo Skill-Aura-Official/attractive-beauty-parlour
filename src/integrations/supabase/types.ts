@@ -98,6 +98,33 @@ export type Database = {
         }
         Relationships: []
       }
+      chatbot_leads: {
+        Row: {
+          created_at: string
+          id: string
+          name: string
+          notes: string | null
+          phone: string
+          preferred_service: string | null
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          name: string
+          notes?: string | null
+          phone: string
+          preferred_service?: string | null
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          name?: string
+          notes?: string | null
+          phone?: string
+          preferred_service?: string | null
+        }
+        Relationships: []
+      }
       contact_settings: {
         Row: {
           address: string | null
