@@ -140,10 +140,10 @@ export const ChatWidget = () => {
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.95 }}
             onClick={() => setIsOpen(true)}
-            className="fixed bottom-6 right-6 z-50 w-14 h-14 rounded-full bg-primary text-primary-foreground shadow-elegant flex items-center justify-center"
+            className="fixed bottom-6 right-6 z-50 w-16 h-16 rounded-full shadow-elegant flex items-center justify-center overflow-hidden border-2 border-primary"
             aria-label="Open chat"
           >
-            <Bot size={26} />
+            <img src={glamGenieAvatar} alt="Glam Genie" className="w-full h-full object-cover" />
           </motion.button>
         )}
       </AnimatePresence>
@@ -162,9 +162,9 @@ export const ChatWidget = () => {
             {/* Header */}
             <div className="flex items-center justify-between px-4 py-3 bg-primary text-primary-foreground">
               <div className="flex items-center gap-2">
-                <Bot size={20} />
+                <img src={glamGenieAvatar} alt="Glam Genie" className="w-8 h-8 rounded-full object-cover border border-primary-foreground/30" />
                 <div>
-                  <p className="text-sm font-semibold font-heading">GlowBot ✨</p>
+                  <p className="text-sm font-semibold font-heading">Glam Genie 💫</p>
                   <p className="text-[10px] opacity-80">Your Beauty Guide</p>
                 </div>
               </div>
@@ -194,8 +194,8 @@ export const ChatWidget = () => {
                   className={`flex gap-2 ${msg.role === "user" ? "justify-end" : "justify-start"}`}
                 >
                   {msg.role === "assistant" && (
-                    <div className="w-7 h-7 rounded-full bg-primary/20 flex items-center justify-center shrink-0 mt-1">
-                      <Bot size={14} className="text-primary" />
+                    <div className="w-7 h-7 rounded-full overflow-hidden shrink-0 mt-1 border border-primary/30">
+                      <img src={glamGenieAvatar} alt="Glam Genie" className="w-full h-full object-cover" />
                     </div>
                   )}
                   <div
@@ -223,8 +223,8 @@ export const ChatWidget = () => {
 
               {isLoading && messages[messages.length - 1]?.role !== "assistant" && (
                 <div className="flex gap-2 items-start">
-                  <div className="w-7 h-7 rounded-full bg-primary/20 flex items-center justify-center shrink-0">
-                    <Bot size={14} className="text-primary" />
+                  <div className="w-7 h-7 rounded-full overflow-hidden shrink-0 border border-primary/30">
+                    <img src={glamGenieAvatar} alt="Glam Genie" className="w-full h-full object-cover" />
                   </div>
                   <div className="bg-muted rounded-2xl rounded-bl-md px-4 py-3">
                     <div className="flex gap-1">
