@@ -3,6 +3,7 @@ import { Navbar } from "./Navbar";
 import { Footer } from "./Footer";
 import { FloatingCTA } from "../ui/floating-cta";
 import { PageTransition } from "./PageTransition";
+import { ChatWidget } from "../chatbot/ChatWidget";
 
 interface LayoutProps {
   children: ReactNode;
@@ -17,6 +18,7 @@ export const Layout = ({ children }: LayoutProps) => {
       </PageTransition>
       <Footer />
       <FloatingCTA />
+      <ChatWidget />
     </div>
   );
 };
