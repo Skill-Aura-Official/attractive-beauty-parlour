@@ -26,7 +26,7 @@ export const ChatWidget = () => {
     {
       role: "assistant",
       content:
-        "Hey there! ✨ I'm **GlowBot**, your beauty guide at Attractive Beauty Parlour. How can I help you today?",
+        "Hey there! 💫 I'm **Glam Genie**, your personal beauty guide at Attractive Beauty Parlour. How can I help you today?",
     },
   ]);
   const [input, setInput] = useState("");
