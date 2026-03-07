@@ -25,7 +25,7 @@ export const ChatWidget = () => {
     {
       role: "assistant",
       content:
-        "Hello! ✨ Welcome to Attractive Beauty Parlour. How can I help you today?",
+        "Hey there! ✨ I'm **GlowBot**, your beauty guide at Attractive Beauty Parlour. How can I help you today?",
     },
   ]);
   const [input, setInput] = useState("");
@@ -139,7 +139,7 @@ export const ChatWidget = () => {
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.95 }}
             onClick={() => setIsOpen(true)}
-            className="fixed bottom-6 left-6 z-50 w-14 h-14 rounded-full bg-primary text-primary-foreground shadow-elegant flex items-center justify-center"
+            className="fixed bottom-6 right-6 z-50 w-14 h-14 rounded-full bg-primary text-primary-foreground shadow-elegant flex items-center justify-center"
             aria-label="Open chat"
           >
             <Bot size={26} />
@@ -155,7 +155,7 @@ export const ChatWidget = () => {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.95 }}
             transition={{ duration: 0.25 }}
-            className="fixed bottom-4 left-4 right-4 sm:left-6 sm:right-auto sm:w-[380px] z-50 flex flex-col rounded-2xl border border-border bg-card shadow-2xl overflow-hidden"
+            className="fixed bottom-4 left-4 right-4 sm:right-6 sm:left-auto sm:w-[380px] z-50 flex flex-col rounded-2xl border border-border bg-card shadow-2xl overflow-hidden"
             style={{ maxHeight: "min(600px, calc(100vh - 2rem))" }}
           >
             {/* Header */}
@@ -163,8 +163,8 @@ export const ChatWidget = () => {
               <div className="flex items-center gap-2">
                 <Bot size={20} />
                 <div>
-                  <p className="text-sm font-semibold font-heading">Beauty Assistant</p>
-                  <p className="text-[10px] opacity-80">Attractive Beauty Parlour</p>
+                  <p className="text-sm font-semibold font-heading">GlowBot ✨</p>
+                  <p className="text-[10px] opacity-80">Your Beauty Guide</p>
                 </div>
               </div>
               <div className="flex gap-1">
