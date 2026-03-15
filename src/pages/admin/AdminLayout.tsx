@@ -6,7 +6,7 @@ import {
 } from "@/components/ui/sidebar";
 import { NavLink } from "@/components/NavLink";
 import {
-  LayoutDashboard, Scissors, Gift, Star, FileText, Settings, Image, LogOut, Layers, HelpCircle, PanelTop,
+  LayoutDashboard, Scissors, Gift, Star, FileText, Settings, Image, LogOut, Layers, HelpCircle, PanelTop, Users,
 } from "lucide-react";
 import logo from "@/assets/logo.png";
 
