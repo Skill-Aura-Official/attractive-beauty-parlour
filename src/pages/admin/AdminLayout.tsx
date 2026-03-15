@@ -6,7 +6,7 @@ import {
 } from "@/components/ui/sidebar";
 import { NavLink } from "@/components/NavLink";
 import {
-  LayoutDashboard, Scissors, Gift, Star, FileText, Settings, Image, LogOut, Layers, HelpCircle, PanelTop,
+  LayoutDashboard, Scissors, Gift, Star, FileText, Settings, Image, LogOut, Layers, HelpCircle, PanelTop, Users,
 } from "lucide-react";
 import logo from "@/assets/logo.png";
 
@@ -19,6 +19,7 @@ const navItems = [
   { title: "Blog Posts", url: "/admin/blog", icon: FileText },
   { title: "FAQ", url: "/admin/faq", icon: HelpCircle },
   { title: "Page Content", url: "/admin/pages", icon: Layers },
+  { title: "Chatbot Leads", url: "/admin/leads", icon: Users },
   { title: "Media", url: "/admin/media", icon: Image },
   { title: "Contact Settings", url: "/admin/contact", icon: Settings },
 ];
