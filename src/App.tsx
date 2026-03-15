@@ -25,6 +25,7 @@ import ManageContact from "./pages/admin/ManageContact";
 import ManageHeroSlides from "./pages/admin/ManageHeroSlides";
 import ManageFAQ from "./pages/admin/ManageFAQ";
 import ManagePages from "./pages/admin/ManagePages";
+import ManageLeads from "./pages/admin/ManageLeads";
 
 const queryClient = new QueryClient();
 
