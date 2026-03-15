@@ -210,20 +210,34 @@
 
   /* Scrollbar styling */
   ::-webkit-scrollbar {
-    width: 8px;
+    width: 6px;
   }
 
   ::-webkit-scrollbar-track {
-    background: hsl(30 10% 6%);
+    background: transparent;
   }
 
   ::-webkit-scrollbar-thumb {
-    background: hsl(43 60% 35%);
-    border-radius: 4px;
+    background: hsl(43 60% 35% / 0.5);
+    border-radius: 3px;
   }
 
   ::-webkit-scrollbar-thumb:hover {
-    background: hsl(43 60% 45%);
+    background: hsl(43 60% 45% / 0.7);
+  }
+
+  /* Chat scrollbar */
+  .scrollbar-thin::-webkit-scrollbar {
+    width: 4px;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar-thumb {
+    background: hsl(var(--border));
+    border-radius: 2px;
   }
 }
 

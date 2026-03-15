@@ -83,11 +83,12 @@ export const ServicesPreview = () => {
                 >
                   <Link to="/services" className="luxury-card group block h-full">
                     <div className="relative overflow-hidden rounded-md mb-5 aspect-[3/4]">
-                      <img
-                        src={service.image_url || serviceBridalMakeup}
-                        alt={service.name}
-                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                      />
+                        <img
+                          src={service.image_url || serviceBridalMakeup}
+                          alt={service.name}
+                          loading="lazy"
+                          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                        />
                       <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-background/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                       <div className="absolute bottom-4 left-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
                         <span className="text-primary text-sm font-medium flex items-center gap-2">

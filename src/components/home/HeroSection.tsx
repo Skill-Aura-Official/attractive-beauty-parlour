@@ -55,7 +55,7 @@ export const HeroSection = () => {
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
       <AnimatePresence mode="wait">
         <motion.div key={currentSlide} className="absolute inset-0" initial={{ opacity: 0, scale: 1.1 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0 }} transition={{ duration: 1.2, ease: "easeOut" }}>
-          <img src={slide.image} alt="Luxury beauty salon" className="w-full h-full object-cover" />
+          <img src={slide.image} alt="Luxury beauty salon" className="w-full h-full object-cover" loading="eager" />
           <div className="absolute inset-0 bg-gradient-to-b from-background/90 via-background/70 to-background" />
           <div className="absolute inset-0 bg-gradient-glow opacity-50" />
         </motion.div>
