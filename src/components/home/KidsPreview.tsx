@@ -23,7 +23,6 @@ export const KidsPreview = () => {
                 className="w-full h-auto rounded-lg"
                 loading="lazy"
               />
-              />
               <div className="absolute inset-0 bg-gradient-to-r from-background/30 to-transparent" />
             </div>
             {/* Decorative floating elements */}
