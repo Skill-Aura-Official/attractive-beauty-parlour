@@ -1,7 +1,6 @@
 import { ReactNode } from "react";
 import { Navbar } from "./Navbar";
 import { Footer } from "./Footer";
-import { FloatingCTA } from "../ui/floating-cta";
 import { PageTransition } from "./PageTransition";
 import { ChatWidget } from "../chatbot/ChatWidget";
 
@@ -17,7 +16,6 @@ export const Layout = ({ children }: LayoutProps) => {
         <main className="flex-1">{children}</main>
       </PageTransition>
       <Footer />
-      <FloatingCTA />
       <ChatWidget />
     </div>
   );

@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, Send, Minimize2, User, Calendar, Sparkles } from "lucide-react";
+import { X, Send, Minimize2, User, Calendar, Sparkles, Phone, MessageCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import ReactMarkdown from "react-markdown";
@@ -10,15 +10,22 @@ import glamGenieAvatar from "@/assets/glam-genie-avatar.png";
 type Msg = { role: "user" | "assistant"; content: string };
 
 const QUICK_QUESTIONS = [
-  "What services do you offer?",
-  "How can I book an appointment?",
-  "Where are you located?",
-  "What are your business hours?",
-  "Tell me about bridal packages",
+  "💇 Services offered?",
+  "📅 Book appointment",
+  "📍 Location & hours",
+  "💍 Bridal packages",
+  "🎉 Current offers",
 ];
 
+const QUICK_FULL: Record<string, string> = {
+  "💇 Services offered?": "What services do you offer?",
+  "📅 Book appointment": "How can I book an appointment?",
+  "📍 Location & hours": "Where are you located and what are your business hours?",
+  "💍 Bridal packages": "Tell me about bridal packages",
+  "🎉 Current offers": "What special offers do you have right now?",
+};
+
 const CHAT_URL = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/chat`;
-const LEAD_URL = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/save-lead`;
 
 export const ChatWidget = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -26,7 +33,7 @@ export const ChatWidget = () => {
     {
       role: "assistant",
       content:
-        "Hey there! 💫 I'm **Glam Genie**, your personal beauty guide at Attractive Beauty Parlour. How can I help you today?",
+        "Hey there! 💫 I'm **Glam Genie**, your personal beauty guide at Attractive Beauty Parlour.\n\nHow can I help you today?",
     },
   ]);
   const [input, setInput] = useState("");
@@ -43,7 +50,7 @@ export const ChatWidget = () => {
   }, [messages, scrollToBottom]);
 
   useEffect(() => {
-    if (isOpen) inputRef.current?.focus();
+    if (isOpen) setTimeout(() => inputRef.current?.focus(), 300);
   }, [isOpen]);
 
   const sendMessage = async (text: string) => {
@@ -129,22 +136,51 @@ export const ChatWidget = () => {
 
   return (
     <>
-      {/* Floating button */}
+      {/* Floating buttons - show call/whatsapp + chatbot */}
       <AnimatePresence>
         {!isOpen && (
-          <motion.button
-            initial={{ scale: 0, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            exit={{ scale: 0, opacity: 0 }}
-            transition={{ delay: 1.5, duration: 0.3 }}
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.95 }}
-            onClick={() => setIsOpen(true)}
-            className="fixed bottom-6 right-6 z-50 w-16 h-16 rounded-full shadow-elegant flex items-center justify-center overflow-hidden border-2 border-primary"
-            aria-label="Open chat"
+          <motion.div
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.8 }}
+            transition={{ delay: 1, duration: 0.4 }}
+            className="fixed bottom-6 right-6 z-50 flex flex-col items-center gap-3"
           >
-            <img src={glamGenieAvatar} alt="Glam Genie" className="w-full h-full object-cover" />
-          </motion.button>
+            {/* Quick action buttons - visible on mobile */}
+            <div className="flex flex-col gap-2 lg:hidden">
+              <motion.a
+                href={CONTACT_INFO.phoneLink}
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.95 }}
+                className="w-12 h-12 flex items-center justify-center rounded-full bg-secondary text-secondary-foreground shadow-elegant border border-border/50"
+                aria-label="Call now"
+              >
+                <Phone size={20} />
+              </motion.a>
+              <motion.a
+                href={CONTACT_INFO.whatsappLink}
+                target="_blank"
+                rel="noopener noreferrer"
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.95 }}
+                className="w-12 h-12 flex items-center justify-center rounded-full bg-accent text-accent-foreground shadow-elegant border border-border/50"
+                aria-label="WhatsApp"
+              >
+                <MessageCircle size={20} />
+              </motion.a>
+            </div>
+
+            {/* Chat button */}
+            <motion.button
+              whileHover={{ scale: 1.08 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={() => setIsOpen(true)}
+              className="w-16 h-16 rounded-full shadow-elegant flex items-center justify-center overflow-hidden border-2 border-primary animate-pulse-gold"
+              aria-label="Open chat"
+            >
+              <img src={glamGenieAvatar} alt="Glam Genie" className="w-full h-full object-cover" />
+            </motion.button>
+          </motion.div>
         )}
       </AnimatePresence>
 
@@ -152,61 +188,70 @@ export const ChatWidget = () => {
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            initial={{ opacity: 0, y: 20, scale: 0.95 }}
+            initial={{ opacity: 0, y: 30, scale: 0.9 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 20, scale: 0.95 }}
-            transition={{ duration: 0.25 }}
-            className="fixed bottom-4 left-4 right-4 sm:right-6 sm:left-auto sm:w-[380px] z-50 flex flex-col rounded-2xl border border-border bg-card shadow-2xl overflow-hidden"
-            style={{ maxHeight: "min(600px, calc(100vh - 2rem))" }}
+            exit={{ opacity: 0, y: 30, scale: 0.9 }}
+            transition={{ duration: 0.3, ease: "easeOut" }}
+            className="fixed bottom-4 left-4 right-4 sm:right-6 sm:left-auto sm:w-[400px] z-50 flex flex-col rounded-2xl border border-border bg-card shadow-2xl overflow-hidden"
+            style={{ maxHeight: "min(620px, calc(100vh - 2rem))" }}
           >
             {/* Header */}
-            <div className="flex items-center justify-between px-4 py-3 bg-primary text-primary-foreground">
-              <div className="flex items-center gap-2">
-                <img src={glamGenieAvatar} alt="Glam Genie" className="w-8 h-8 rounded-full object-cover border border-primary-foreground/30" />
+            <div className="flex items-center justify-between px-4 py-3 bg-gradient-to-r from-primary to-gold-dark">
+              <div className="flex items-center gap-3">
+                <div className="relative">
+                  <img src={glamGenieAvatar} alt="Glam Genie" className="w-10 h-10 rounded-full object-cover border-2 border-primary-foreground/30" />
+                  <span className="absolute -bottom-0.5 -right-0.5 w-3 h-3 bg-green-400 rounded-full border-2 border-primary" />
+                </div>
                 <div>
-                  <p className="text-sm font-semibold font-heading">Glam Genie 💫</p>
-                  <p className="text-[10px] opacity-80">Your Beauty Guide</p>
+                  <p className="text-sm font-bold font-display text-primary-foreground">Glam Genie 💫</p>
+                  <p className="text-[11px] text-primary-foreground/70 font-body">Online • Your Beauty Guide</p>
                 </div>
               </div>
               <div className="flex gap-1">
                 <button
                   onClick={() => setIsOpen(false)}
-                  className="p-1.5 rounded-md hover:bg-primary-foreground/20 transition-colors"
+                  className="p-2 rounded-lg hover:bg-primary-foreground/20 transition-colors"
                   aria-label="Minimize"
                 >
-                  <Minimize2 size={16} />
+                  <Minimize2 size={16} className="text-primary-foreground" />
                 </button>
                 <button
                   onClick={() => setIsOpen(false)}
-                  className="p-1.5 rounded-md hover:bg-primary-foreground/20 transition-colors"
+                  className="p-2 rounded-lg hover:bg-primary-foreground/20 transition-colors"
                   aria-label="Close"
                 >
-                  <X size={16} />
+                  <X size={16} className="text-primary-foreground" />
                 </button>
               </div>
             </div>
 
             {/* Messages */}
-            <div className="flex-1 overflow-y-auto px-4 py-3 space-y-3" style={{ minHeight: "200px" }}>
+            <div
+              className="flex-1 overflow-y-auto px-4 py-4 space-y-4 scrollbar-thin"
+              style={{ minHeight: "220px" }}
+            >
               {messages.map((msg, i) => (
-                <div
+                <motion.div
                   key={i}
-                  className={`flex gap-2 ${msg.role === "user" ? "justify-end" : "justify-start"}`}
+                  initial={{ opacity: 0, y: 8 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.2 }}
+                  className={`flex gap-2.5 ${msg.role === "user" ? "justify-end" : "justify-start"}`}
                 >
                   {msg.role === "assistant" && (
-                    <div className="w-7 h-7 rounded-full overflow-hidden shrink-0 mt-1 border border-primary/30">
+                    <div className="w-8 h-8 rounded-full overflow-hidden shrink-0 mt-1 border border-primary/40 shadow-sm">
                       <img src={glamGenieAvatar} alt="Glam Genie" className="w-full h-full object-cover" />
                     </div>
                   )}
                   <div
-                    className={`max-w-[80%] rounded-2xl px-3 py-2 text-sm leading-relaxed ${
+                    className={`max-w-[78%] rounded-2xl px-3.5 py-2.5 text-sm leading-relaxed ${
                       msg.role === "user"
-                        ? "bg-primary text-primary-foreground rounded-br-md"
-                        : "bg-muted text-foreground rounded-bl-md"
+                        ? "bg-primary text-primary-foreground rounded-br-sm"
+                        : "bg-muted text-foreground rounded-bl-sm border border-border/30"
                     }`}
                   >
                     {msg.role === "assistant" ? (
-                      <div className="prose prose-sm prose-invert max-w-none [&_p]:m-0 [&_ul]:m-0 [&_ol]:m-0">
+                      <div className="prose prose-sm max-w-none [&_p]:m-0 [&_p]:mb-1.5 [&_p:last-child]:mb-0 [&_ul]:m-0 [&_ul]:mb-1.5 [&_ol]:m-0 [&_ol]:mb-1.5 [&_li]:text-foreground [&_strong]:text-foreground [&_a]:text-primary">
                         <ReactMarkdown>{msg.content}</ReactMarkdown>
                       </div>
                     ) : (
@@ -214,53 +259,60 @@ export const ChatWidget = () => {
                     )}
                   </div>
                   {msg.role === "user" && (
-                    <div className="w-7 h-7 rounded-full bg-secondary flex items-center justify-center shrink-0 mt-1">
+                    <div className="w-8 h-8 rounded-full bg-secondary flex items-center justify-center shrink-0 mt-1 border border-border/30">
                       <User size={14} className="text-secondary-foreground" />
                     </div>
                   )}
-                </div>
+                </motion.div>
               ))}
 
               {isLoading && messages[messages.length - 1]?.role !== "assistant" && (
-                <div className="flex gap-2 items-start">
-                  <div className="w-7 h-7 rounded-full overflow-hidden shrink-0 border border-primary/30">
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  className="flex gap-2.5 items-start"
+                >
+                  <div className="w-8 h-8 rounded-full overflow-hidden shrink-0 border border-primary/40">
                     <img src={glamGenieAvatar} alt="Glam Genie" className="w-full h-full object-cover" />
                   </div>
-                  <div className="bg-muted rounded-2xl rounded-bl-md px-4 py-3">
-                    <div className="flex gap-1">
-                      <span className="w-2 h-2 rounded-full bg-muted-foreground/50 animate-bounce" style={{ animationDelay: "0ms" }} />
-                      <span className="w-2 h-2 rounded-full bg-muted-foreground/50 animate-bounce" style={{ animationDelay: "150ms" }} />
-                      <span className="w-2 h-2 rounded-full bg-muted-foreground/50 animate-bounce" style={{ animationDelay: "300ms" }} />
+                  <div className="bg-muted rounded-2xl rounded-bl-sm px-4 py-3 border border-border/30">
+                    <div className="flex gap-1.5">
+                      <span className="w-2 h-2 rounded-full bg-primary/60 animate-bounce" style={{ animationDelay: "0ms" }} />
+                      <span className="w-2 h-2 rounded-full bg-primary/60 animate-bounce" style={{ animationDelay: "150ms" }} />
+                      <span className="w-2 h-2 rounded-full bg-primary/60 animate-bounce" style={{ animationDelay: "300ms" }} />
                     </div>
                   </div>
-                </div>
+                </motion.div>
               )}
               <div ref={messagesEndRef} />
             </div>
 
-            {/* Quick questions - show only when few messages */}
+            {/* Quick questions */}
             {messages.length <= 2 && (
-              <div className="px-4 pb-2 flex flex-wrap gap-1.5">
-                {QUICK_QUESTIONS.map((q) => (
-                  <button
-                    key={q}
-                    onClick={() => sendMessage(q)}
-                    disabled={isLoading}
-                    className="text-[11px] px-2.5 py-1 rounded-full border border-border bg-muted/50 text-muted-foreground hover:bg-primary/10 hover:text-primary hover:border-primary/30 transition-colors disabled:opacity-50"
-                  >
-                    {q}
-                  </button>
-                ))}
+              <div className="px-4 pb-3">
+                <p className="text-[10px] uppercase tracking-wider text-muted-foreground mb-2 font-body">Quick questions</p>
+                <div className="flex flex-wrap gap-1.5">
+                  {QUICK_QUESTIONS.map((q) => (
+                    <button
+                      key={q}
+                      onClick={() => sendMessage(QUICK_FULL[q] || q)}
+                      disabled={isLoading}
+                      className="text-xs px-3 py-1.5 rounded-full border border-primary/30 bg-card text-foreground hover:bg-primary/10 hover:text-primary hover:border-primary/50 transition-all duration-200 disabled:opacity-50 font-body"
+                    >
+                      {q}
+                    </button>
+                  ))}
+                </div>
               </div>
             )}
 
             {/* Book appointment CTA */}
-            <div className="px-4 pb-2">
+            <div className="px-4 pb-3">
               <a
                 href={CONTACT_INFO.whatsappLink}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center justify-center gap-2 w-full py-2 rounded-lg bg-accent/30 text-accent-foreground text-xs font-medium hover:bg-accent/50 transition-colors"
+                className="flex items-center justify-center gap-2 w-full py-2.5 rounded-xl bg-primary/10 border border-primary/20 text-primary text-xs font-semibold hover:bg-primary/20 transition-all duration-200 font-body uppercase tracking-wider"
               >
                 <Calendar size={14} />
                 Book Appointment via WhatsApp
@@ -268,20 +320,20 @@ export const ChatWidget = () => {
             </div>
 
             {/* Input */}
-            <form onSubmit={handleSubmit} className="flex gap-2 p-3 border-t border-border">
+            <form onSubmit={handleSubmit} className="flex gap-2 p-3 border-t border-border bg-card">
               <Input
                 ref={inputRef}
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
-                placeholder="Type a message..."
+                placeholder="Ask me anything..."
                 disabled={isLoading}
-                className="flex-1 text-sm h-9 bg-muted border-none"
+                className="flex-1 text-sm h-10 bg-muted/50 border-border/50 rounded-xl focus-visible:ring-primary/50"
               />
               <Button
                 type="submit"
                 size="icon"
                 disabled={isLoading || !input.trim()}
-                className="h-9 w-9 shrink-0"
+                className="h-10 w-10 shrink-0 rounded-xl"
               >
                 <Send size={16} />
               </Button>
