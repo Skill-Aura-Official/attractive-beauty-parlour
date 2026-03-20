@@ -192,8 +192,8 @@ export const ChatWidget = () => {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 30, scale: 0.9 }}
             transition={{ duration: 0.3, ease: "easeOut" }}
-            className="fixed bottom-4 left-4 right-4 sm:right-6 sm:left-auto sm:w-[400px] z-50 flex flex-col rounded-2xl border border-border bg-card shadow-2xl overflow-hidden"
-            style={{ maxHeight: "min(620px, calc(100vh - 2rem))" }}
+            className="fixed bottom-3 left-3 right-3 sm:right-6 sm:left-auto sm:bottom-6 sm:w-[380px] z-50 flex flex-col rounded-2xl border border-border/50 bg-card shadow-2xl overflow-hidden"
+            style={{ maxHeight: "min(600px, calc(100svh - 1.5rem))" }}
           >
             {/* Header */}
             <div className="flex items-center justify-between px-4 py-3 bg-gradient-to-r from-primary to-gold-dark">
