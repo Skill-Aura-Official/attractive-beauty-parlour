@@ -179,7 +179,7 @@
 
   /* Section styling */
   .section-padding {
-    @apply py-20 px-4 md:py-28 lg:py-32;
+    @apply py-16 px-4 md:py-24 lg:py-28;
   }
 
   /* Elegant divider */
