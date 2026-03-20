@@ -134,7 +134,7 @@
 
   /* Hero button styles */
   .btn-hero {
-    @apply relative overflow-hidden px-8 py-4 text-sm font-semibold uppercase tracking-widest transition-all duration-500;
+    @apply relative overflow-hidden px-8 py-3.5 text-sm font-semibold uppercase tracking-widest transition-all duration-500;
     @apply border border-primary text-primary hover:text-primary-foreground;
     background: transparent;
   }
