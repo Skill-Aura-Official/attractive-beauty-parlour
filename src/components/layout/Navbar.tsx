@@ -48,7 +48,7 @@ export const Navbar = () => {
       }`}
     >
       <div className="container mx-auto px-4 sm:px-6">
-        <nav className="flex items-center justify-between h-18 lg:h-20">
+        <nav className="flex items-center justify-between h-[72px] lg:h-20">
           {/* Logo */}
           <Link to="/" className="relative z-10 shrink-0">
             <motion.img
@@ -66,9 +66,9 @@ export const Navbar = () => {
               <Link
                 key={link.path}
                 to={link.path}
-                className={`relative px-4 py-2 font-body text-[13px] uppercase tracking-[0.15em] rounded-lg transition-all duration-300 ${
+                className={`relative px-4 py-2 font-body text-[13px] uppercase tracking-[0.12em] rounded-full transition-all duration-300 ${
                   location.pathname === link.path
-                    ? "text-primary bg-primary/8"
+                    ? "text-primary bg-primary/10"
                     : "text-foreground/70 hover:text-foreground hover:bg-muted/50"
                 }`}
               >
@@ -88,7 +88,7 @@ export const Navbar = () => {
           <div className="hidden lg:flex items-center gap-3">
             <a
               href={CONTACT_INFO.phoneLink}
-              className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-primary border border-primary/30 rounded-full hover:bg-primary/10 transition-all duration-300 active:scale-[0.97]"
+              className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-primary border border-primary/30 rounded-full hover:bg-primary/10 hover:shadow-gold transition-all duration-300 active:scale-[0.97]"
             >
               <Phone size={15} />
               <span>Call Now</span>
@@ -97,7 +97,7 @@ export const Navbar = () => {
               href={CONTACT_INFO.whatsappLink}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-2 px-5 py-2 text-sm font-medium bg-primary text-primary-foreground rounded-full hover:shadow-gold transition-all duration-300 active:scale-[0.97]"
+              className="flex items-center gap-2 px-5 py-2 text-sm font-medium bg-primary text-primary-foreground rounded-full shadow-gold hover:shadow-glow-gold transition-all duration-300 active:scale-[0.97]"
             >
               <MessageCircle size={15} />
               <span>WhatsApp</span>
@@ -133,7 +133,7 @@ export const Navbar = () => {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
-            className="fixed inset-0 top-[72px] bg-background/98 backdrop-blur-lg z-40 lg:hidden"
+            className="fixed inset-0 top-[72px] bg-background/98 backdrop-blur-xl z-40 lg:hidden"
           >
             <div className="flex flex-col items-center justify-center h-full gap-6 px-6 pb-20">
               {navLinks.map((link, index) => (

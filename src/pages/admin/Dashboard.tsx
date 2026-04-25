@@ -38,15 +38,15 @@ const Dashboard = () => {
   });
 
   const stats = [
-    { label: "Hero Slides", count: counts?.heroSlides ?? 0, icon: PanelTop, link: "/admin/hero", color: "text-amber-500", bg: "bg-amber-500/10" },
+    { label: "Hero Slides", count: counts?.heroSlides ?? 0, icon: PanelTop, link: "/admin/hero", color: "text-primary", bg: "bg-primary/10" },
     { label: "Services", count: counts?.services ?? 0, icon: Scissors, link: "/admin/services", color: "text-primary", bg: "bg-primary/10" },
-    { label: "Offers", count: counts?.offers ?? 0, icon: Gift, link: "/admin/offers", color: "text-rose-400", bg: "bg-rose-400/10" },
-    { label: "Testimonials", count: counts?.testimonials ?? 0, icon: Star, link: "/admin/testimonials", color: "text-yellow-400", bg: "bg-yellow-400/10" },
-    { label: "Blog Posts", count: counts?.blogPosts ?? 0, icon: FileText, link: "/admin/blog", color: "text-sky-400", bg: "bg-sky-400/10" },
-    { label: "FAQ Items", count: counts?.faqItems ?? 0, icon: HelpCircle, link: "/admin/faq", color: "text-emerald-400", bg: "bg-emerald-400/10" },
-    { label: "Page Sections", count: counts?.pageSections ?? 0, icon: Layers, link: "/admin/pages", color: "text-violet-400", bg: "bg-violet-400/10" },
-    { label: "Media Files", count: counts?.media ?? 0, icon: Image, link: "/admin/media", color: "text-orange-400", bg: "bg-orange-400/10" },
-    { label: "Chatbot Leads", count: counts?.leads ?? 0, icon: Users, link: "/admin/leads", color: "text-teal-400", bg: "bg-teal-400/10" },
+    { label: "Offers", count: counts?.offers ?? 0, icon: Gift, link: "/admin/offers", color: "text-accent", bg: "bg-accent/10" },
+    { label: "Testimonials", count: counts?.testimonials ?? 0, icon: Star, link: "/admin/testimonials", color: "text-gold-light", bg: "bg-primary/10" },
+    { label: "Blog Posts", count: counts?.blogPosts ?? 0, icon: FileText, link: "/admin/blog", color: "text-champagne", bg: "bg-secondary/60" },
+    { label: "FAQ Items", count: counts?.faqItems ?? 0, icon: HelpCircle, link: "/admin/faq", color: "text-primary", bg: "bg-primary/10" },
+    { label: "Page Sections", count: counts?.pageSections ?? 0, icon: Layers, link: "/admin/pages", color: "text-accent", bg: "bg-accent/10" },
+    { label: "Media Files", count: counts?.media ?? 0, icon: Image, link: "/admin/media", color: "text-gold-light", bg: "bg-primary/10" },
+    { label: "Chatbot Leads", count: counts?.leads ?? 0, icon: Users, link: "/admin/leads", color: "text-champagne", bg: "bg-secondary/60" },
   ];
 
   return (
@@ -67,7 +67,7 @@ const Dashboard = () => {
             ))
           : stats.map((stat) => (
               <Link key={stat.label} to={stat.link} className="group">
-                <Card className="border-border/40 hover:border-primary/40 transition-all duration-300 group-hover:shadow-lg group-hover:shadow-primary/5">
+        <Card className="border-border/50 bg-card/90 hover:border-primary/40 transition-all duration-300 group-hover:shadow-gold">
                   <CardContent className="p-5 flex items-center justify-between">
                     <div className="flex items-center gap-4">
                       <div className={`p-2.5 rounded-xl ${stat.bg}`}>

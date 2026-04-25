@@ -109,10 +109,10 @@ const Services = () => {
               <button
                 key={category}
                 onClick={() => setActiveCategory(category)}
-                className={`px-6 py-2 text-sm font-medium uppercase tracking-wider transition-all duration-300 ${
+                className={`px-5 py-2.5 rounded-full text-xs sm:text-sm font-medium uppercase tracking-wider transition-all duration-300 ${
                   activeCategory === category
-                    ? "bg-primary text-primary-foreground"
-                    : "border border-border text-muted-foreground hover:border-primary hover:text-primary"
+                    ? "bg-primary text-primary-foreground shadow-gold"
+                    : "border border-border text-muted-foreground hover:border-primary hover:text-primary hover:bg-primary/5"
                 }`}
               >
                 {category}
@@ -146,7 +146,7 @@ const Services = () => {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, margin: "-50px" }}
                   transition={{ duration: 0.5, delay: index * 0.05 }}
-                  className="luxury-card group"
+                  className="luxury-card group flex flex-col"
                 >
                   <div className="relative overflow-hidden rounded-md mb-5 aspect-[4/3]">
                     <img
@@ -163,13 +163,13 @@ const Services = () => {
                   <h3 className="font-display text-xl text-foreground mb-3">
                     {service.name}
                   </h3>
-                  <p className="text-muted-foreground text-sm mb-5 line-clamp-3">
+                  <p className="text-muted-foreground text-sm mb-5 line-clamp-3 leading-relaxed flex-1">
                     {service.description}
                   </p>
                   <div className="flex gap-3">
                     <a
                       href={CONTACT_INFO.phoneLink}
-                      className="flex-1 flex items-center justify-center gap-2 px-4 py-2 border border-primary/30 text-primary text-sm hover:bg-primary/10 transition-all duration-300"
+                      className="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 rounded-full border border-primary/30 text-primary text-sm hover:bg-primary/10 transition-all duration-300"
                     >
                       <Phone size={14} />
                       Call
@@ -178,7 +178,7 @@ const Services = () => {
                       href={`${CONTACT_INFO.whatsappLink}?text=${encodeURIComponent(`Hi, I'm interested in ${service.name}`)}`}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex-1 flex items-center justify-center gap-2 px-4 py-2 bg-primary text-primary-foreground text-sm hover:shadow-gold transition-all duration-300"
+                      className="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 rounded-full bg-primary text-primary-foreground text-sm hover:shadow-gold transition-all duration-300"
                     >
                       <MessageCircle size={14} />
                       WhatsApp

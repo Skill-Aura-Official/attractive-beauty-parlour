@@ -144,7 +144,7 @@ export const ChatWidget = () => {
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.8 }}
             transition={{ delay: 1, duration: 0.4 }}
-            className="fixed bottom-6 right-6 z-50 flex flex-col items-center gap-3"
+            className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-50 flex flex-col items-center gap-2.5 sm:gap-3"
           >
             {/* Quick action buttons - visible on mobile */}
             <div className="flex flex-col gap-2 lg:hidden">
@@ -152,7 +152,7 @@ export const ChatWidget = () => {
                 href={CONTACT_INFO.phoneLink}
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.95 }}
-                className="w-12 h-12 flex items-center justify-center rounded-full bg-secondary text-secondary-foreground shadow-elegant border border-border/50"
+                className="w-11 h-11 sm:w-12 sm:h-12 flex items-center justify-center rounded-full bg-secondary text-secondary-foreground shadow-elegant border border-border/50"
                 aria-label="Call now"
               >
                 <Phone size={20} />
@@ -163,7 +163,7 @@ export const ChatWidget = () => {
                 rel="noopener noreferrer"
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.95 }}
-                className="w-12 h-12 flex items-center justify-center rounded-full bg-accent text-accent-foreground shadow-elegant border border-border/50"
+                className="w-11 h-11 sm:w-12 sm:h-12 flex items-center justify-center rounded-full bg-accent text-accent-foreground shadow-elegant border border-border/50"
                 aria-label="WhatsApp"
               >
                 <MessageCircle size={20} />
@@ -175,7 +175,7 @@ export const ChatWidget = () => {
               whileHover={{ scale: 1.08 }}
               whileTap={{ scale: 0.95 }}
               onClick={() => setIsOpen(true)}
-              className="w-16 h-16 rounded-full shadow-elegant flex items-center justify-center overflow-hidden border-2 border-primary animate-pulse-gold"
+              className="w-14 h-14 sm:w-16 sm:h-16 rounded-full shadow-elegant flex items-center justify-center overflow-hidden border-2 border-primary animate-pulse-gold"
               aria-label="Open chat"
             >
               <img src={glamGenieAvatar} alt="Glam Genie" className="w-full h-full object-cover" />
@@ -192,7 +192,7 @@ export const ChatWidget = () => {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 30, scale: 0.9 }}
             transition={{ duration: 0.3, ease: "easeOut" }}
-            className="fixed bottom-3 left-3 right-3 sm:right-6 sm:left-auto sm:bottom-6 sm:w-[380px] z-50 flex flex-col rounded-2xl border border-border/50 bg-card shadow-2xl overflow-hidden"
+            className="fixed bottom-2 left-2 right-2 sm:right-6 sm:left-auto sm:bottom-6 sm:w-[380px] z-50 flex flex-col rounded-2xl border border-border/50 bg-card shadow-2xl overflow-hidden"
             style={{ maxHeight: "min(600px, calc(100svh - 1.5rem))" }}
           >
             {/* Header */}
@@ -200,7 +200,7 @@ export const ChatWidget = () => {
               <div className="flex items-center gap-3">
                 <div className="relative">
                   <img src={glamGenieAvatar} alt="Glam Genie" className="w-10 h-10 rounded-full object-cover border-2 border-primary-foreground/30" />
-                  <span className="absolute -bottom-0.5 -right-0.5 w-3 h-3 rounded-full border-2 border-primary" style={{ backgroundColor: 'hsl(142 71% 45%)' }} />
+                  <span className="absolute -bottom-0.5 -right-0.5 w-3 h-3 rounded-full border-2 border-primary bg-primary" />
                 </div>
                 <div>
                   <p className="text-sm font-bold font-display text-primary-foreground">Glam Genie 💫</p>

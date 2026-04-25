@@ -10,6 +10,8 @@ import serviceFacial from "@/assets/service-facial.jpg";
 import serviceManicure from "@/assets/service-manicure.jpg";
 import serviceHairColor from "@/assets/service-hair-color.jpg";
 import serviceWaxing from "@/assets/service-waxing-new.jpg";
+import serviceHairSpa from "@/assets/service-hair-spa.jpg";
+import serviceSkinBrightening from "@/assets/service-skin-brightening.jpg";
 
 const fallbackServices = [
   { id: "1", name: "Makeup Artistry", description: "Bridal & party makeup with HD finish", image_url: serviceBridalMakeup, category: "Makeup" },
@@ -18,6 +20,8 @@ const fallbackServices = [
   { id: "4", name: "Nail Care", description: "Manicures, pedicures & nail art", image_url: serviceManicure, category: "Nails" },
   { id: "5", name: "Hair Coloring", description: "Highlights, balayage & global", image_url: serviceHairColor, category: "Hair" },
   { id: "6", name: "Waxing & Threading", description: "Premium waxing for smooth skin", image_url: serviceWaxing, category: "Waxing" },
+  { id: "7", name: "Hair Spa", description: "Restorative rituals for glossy, healthy hair", image_url: serviceHairSpa, category: "Hair" },
+  { id: "8", name: "Skin Brightening", description: "Glow-focused treatments for fresh radiance", image_url: serviceSkinBrightening, category: "Skin" },
 ];
 
 export const ServicesPreview = () => {
@@ -82,7 +86,7 @@ export const ServicesPreview = () => {
                   transition={{ duration: 0.5, delay: index * 0.1 }}
                 >
                   <Link to="/services" className="luxury-card group block h-full">
-                    <div className="relative overflow-hidden rounded-md mb-5 aspect-[3/4]">
+                    <div className="relative overflow-hidden rounded-md mb-5 aspect-[4/5] bg-muted">
                         <img
                           src={service.image_url || serviceBridalMakeup}
                           alt={service.name}
@@ -99,8 +103,8 @@ export const ServicesPreview = () => {
                     <span className="text-primary text-xs uppercase tracking-widest mb-2 block">
                       {service.category}
                     </span>
-                    <h3 className="font-display text-xl text-foreground mb-2">{service.name}</h3>
-                    <p className="text-muted-foreground text-sm">{service.description}</p>
+                    <h3 className="font-display text-xl text-foreground mb-2 leading-tight">{service.name}</h3>
+                    <p className="text-muted-foreground text-sm leading-relaxed">{service.description}</p>
                   </Link>
                 </motion.div>
               ))}
