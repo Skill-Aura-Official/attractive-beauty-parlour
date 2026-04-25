@@ -106,6 +106,9 @@
   body {
     @apply bg-background text-foreground antialiased;
     font-family: 'Montserrat', sans-serif;
+    background-image:
+      linear-gradient(180deg, hsl(var(--background)), hsl(var(--charcoal-dark))),
+      radial-gradient(ellipse at top, hsl(var(--accent) / 0.14), transparent 55%);
   }
 
   h1, h2, h3, h4, h5, h6 {
@@ -162,9 +165,18 @@
 
   /* Luxury card */
   .luxury-card {
-    @apply relative overflow-hidden rounded-lg border border-border/50 bg-card p-6;
-    background: linear-gradient(145deg, hsl(30 8% 12%), hsl(30 8% 8%));
-    box-shadow: 0 4px 20px hsl(0 0% 0% / 0.3);
+    @apply relative overflow-hidden rounded-lg border border-border/60 bg-card p-6 transition-all duration-300;
+    background: linear-gradient(145deg, hsl(var(--card)), hsl(var(--charcoal-light)));
+    box-shadow: var(--shadow-card);
+  }
+
+  .luxury-card:hover {
+    @apply border-primary/35 -translate-y-1;
+    box-shadow: var(--shadow-gold);
+  }
+
+  .premium-surface {
+    @apply rounded-lg border border-border/60 bg-card/85 shadow-card backdrop-blur-md;
   }
 
   .luxury-card::before {
