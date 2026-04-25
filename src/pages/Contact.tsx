@@ -3,13 +3,16 @@ import { Layout } from "@/components/layout/Layout";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { Phone, MessageCircle, MapPin, Clock, Instagram, Facebook, Navigation } from "lucide-react";
 import { CONTACT_INFO } from "@/lib/constants";
+import contactSalon from "@/assets/hero-salon.jpg";
 
 const Contact = () => {
   return (
     <Layout>
       {/* Hero Section */}
-      <section className="pt-32 pb-16 bg-gradient-to-b from-charcoal-dark to-background">
-        <div className="container mx-auto px-4 text-center">
+      <section className="relative pt-32 pb-16 bg-gradient-to-b from-charcoal-dark to-background overflow-hidden">
+        <img src={contactSalon} alt="Attractive Beauty Parlour salon storefront and interiors" className="absolute inset-0 h-full w-full object-cover opacity-30" loading="eager" />
+        <div className="absolute inset-0 bg-gradient-to-b from-background/80 via-background/70 to-background" />
+        <div className="container mx-auto px-4 text-center relative z-10">
           <motion.span
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -30,7 +33,7 @@ const Contact = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="text-muted-foreground text-lg max-w-2xl mx-auto"
+            className="text-champagne/85 text-lg max-w-2xl mx-auto"
           >
             We'd love to hear from you! Reach out to book your appointment or ask any questions
           </motion.p>
@@ -124,7 +127,10 @@ const Contact = () => {
               transition={{ duration: 0.7 }}
               className="relative"
             >
-              <div className="aspect-[4/3] rounded-lg overflow-hidden border border-border/30">
+              <div className="premium-surface p-2">
+                <img src={contactSalon} alt="Premium salon reception and beauty workspace" loading="lazy" className="w-full aspect-[16/9] object-cover rounded-md mb-2" />
+              </div>
+              <div className="aspect-[4/3] rounded-lg overflow-hidden border border-border/30 mt-4">
                 <iframe
                   src={CONTACT_INFO.mapEmbedUrl}
                   width="100%"
