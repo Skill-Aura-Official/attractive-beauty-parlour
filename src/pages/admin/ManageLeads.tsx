@@ -77,10 +77,10 @@ const ManageLeads = () => {
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
         {[
           { label: "Total Leads", value: leads?.length ?? 0, icon: Users, color: "text-primary" },
-          { label: "Today", value: todayCount, icon: TrendingUp, color: "text-emerald-500" },
-          { label: "Service Interest", value: serviceCount, icon: Sparkles, color: "text-amber-500" },
+          { label: "Today", value: todayCount, icon: TrendingUp, color: "text-accent" },
+          { label: "Service Interest", value: serviceCount, icon: Sparkles, color: "text-primary" },
         ].map((stat) => (
-          <Card key={stat.label} className="border-border/50">
+          <Card key={stat.label} className="border-border/50 bg-card/90">
             <CardContent className="p-5 flex items-center gap-4">
               <div className={`p-2.5 rounded-lg bg-muted ${stat.color}`}>
                 <stat.icon className="h-5 w-5" />
@@ -95,7 +95,7 @@ const ManageLeads = () => {
       </div>
 
       {/* Table */}
-      <Card className="border-border/50 overflow-hidden">
+      <Card className="border-border/50 bg-card/90 overflow-hidden">
         <CardContent className="p-0">
           {isLoading ? (
             <div className="p-6 space-y-3">
