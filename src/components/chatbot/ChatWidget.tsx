@@ -200,7 +200,7 @@ export const ChatWidget = () => {
               <div className="flex items-center gap-3">
                 <div className="relative">
                   <img src={glamGenieAvatar} alt="Glam Genie" className="w-10 h-10 rounded-full object-cover border-2 border-primary-foreground/30" />
-                  <span className="absolute -bottom-0.5 -right-0.5 w-3 h-3 rounded-full border-2 border-primary" style={{ backgroundColor: 'hsl(142 71% 45%)' }} />
+                  <span className="absolute -bottom-0.5 -right-0.5 w-3 h-3 rounded-full border-2 border-primary bg-primary" />
                 </div>
                 <div>
                   <p className="text-sm font-bold font-display text-primary-foreground">Glam Genie 💫</p>
