@@ -6,49 +6,49 @@
 
 @layer base {
   :root {
-    /* Luxury Gold & Charcoal Palette */
-    --background: 30 10% 6%;
-    --foreground: 40 30% 92%;
+    /* Soft luxury salon palette */
+    --background: 28 22% 8%;
+    --foreground: 38 45% 94%;
 
-    --card: 30 8% 10%;
-    --card-foreground: 40 30% 92%;
+    --card: 28 20% 11%;
+    --card-foreground: 38 45% 94%;
 
-    --popover: 30 8% 8%;
-    --popover-foreground: 40 30% 92%;
+    --popover: 28 20% 10%;
+    --popover-foreground: 38 45% 94%;
 
-    /* Rich Gold Primary */
-    --primary: 43 60% 45%;
-    --primary-foreground: 30 10% 6%;
+    /* Champagne gold primary */
+    --primary: 40 68% 62%;
+    --primary-foreground: 28 22% 8%;
 
-    /* Muted Gold Secondary */
-    --secondary: 40 25% 20%;
-    --secondary-foreground: 40 30% 85%;
+    /* Blush beige secondary */
+    --secondary: 18 29% 22%;
+    --secondary-foreground: 38 45% 90%;
 
-    --muted: 30 10% 15%;
-    --muted-foreground: 40 15% 55%;
+    --muted: 26 18% 17%;
+    --muted-foreground: 35 28% 68%;
 
-    /* Accent - Warm Rose Gold */
-    --accent: 35 45% 30%;
-    --accent-foreground: 40 30% 92%;
+    /* Accent - soft rose gold */
+    --accent: 350 34% 48%;
+    --accent-foreground: 38 45% 96%;
 
     --destructive: 0 62% 50%;
     --destructive-foreground: 40 30% 92%;
 
-    --border: 40 15% 18%;
-    --input: 40 15% 18%;
-    --ring: 43 60% 45%;
+    --border: 32 23% 24%;
+    --input: 32 23% 24%;
+    --ring: 40 68% 62%;
 
     --radius: 0.5rem;
 
     /* Custom luxury tokens */
-    --gold: 43 60% 50%;
-    --gold-light: 43 50% 65%;
-    --gold-dark: 43 55% 35%;
-    --champagne: 40 35% 75%;
-    --cream: 45 40% 90%;
-    --charcoal: 30 10% 8%;
-    --charcoal-light: 30 8% 14%;
-    --charcoal-dark: 30 12% 4%;
+    --gold: 40 68% 62%;
+    --gold-light: 42 66% 76%;
+    --gold-dark: 34 48% 42%;
+    --champagne: 38 48% 82%;
+    --cream: 42 52% 93%;
+    --charcoal: 28 22% 9%;
+    --charcoal-light: 24 18% 15%;
+    --charcoal-dark: 28 24% 5%;
 
     /* Gradients */
     --gradient-gold: linear-gradient(135deg, hsl(43 60% 50%), hsl(35 50% 40%));
@@ -57,9 +57,9 @@
     --gradient-glow: radial-gradient(ellipse at center, hsl(43 60% 50% / 0.15), transparent 60%);
 
     /* Shadows */
-    --shadow-gold: 0 4px 30px hsl(43 60% 50% / 0.15);
-    --shadow-elegant: 0 25px 50px -12px hsl(0 0% 0% / 0.5);
-    --shadow-card: 0 4px 20px hsl(0 0% 0% / 0.3);
+    --shadow-gold: 0 16px 44px hsl(40 68% 62% / 0.18);
+    --shadow-elegant: 0 28px 70px -20px hsl(0 0% 0% / 0.62);
+    --shadow-card: 0 18px 45px hsl(0 0% 0% / 0.28);
 
     /* Sidebar (Admin) */
     --sidebar-background: 30 10% 6%;
