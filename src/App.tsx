@@ -26,6 +26,7 @@ import ManageHeroSlides from "./pages/admin/ManageHeroSlides";
 import ManageFAQ from "./pages/admin/ManageFAQ";
 import ManagePages from "./pages/admin/ManagePages";
 import ManageLeads from "./pages/admin/ManageLeads";
+import ManageGallery from "./pages/admin/ManageGallery";
 
 const queryClient = new QueryClient();
 
@@ -59,6 +60,7 @@ const App = () => (
             <Route path="faq" element={<ManageFAQ />} />
             <Route path="pages" element={<ManagePages />} />
             <Route path="leads" element={<ManageLeads />} />
+            <Route path="gallery" element={<ManageGallery />} />
             <Route path="media" element={<ManageMedia />} />
             <Route path="contact" element={<ManageContact />} />
           </Route>
