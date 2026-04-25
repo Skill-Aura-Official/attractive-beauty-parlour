@@ -4,14 +4,14 @@ import { Link } from "react-router-dom";
 import { ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
 import { SectionHeading } from "../ui/section-heading";
 import { useServices } from "@/hooks/useServices";
-import serviceBridalMakeup from "@/assets/service-bridal-makeup.jpg";
-import serviceHairStyling from "@/assets/service-hair-styling.jpg";
-import serviceFacial from "@/assets/service-facial.jpg";
-import serviceManicure from "@/assets/service-manicure.jpg";
-import serviceHairColor from "@/assets/service-hair-color.jpg";
-import serviceWaxing from "@/assets/service-waxing-new.jpg";
-import serviceHairSpa from "@/assets/service-hair-spa.jpg";
-import serviceSkinBrightening from "@/assets/service-skin-brightening.jpg";
+import serviceBridalMakeup from "@/assets/generated-bridal-makeup-closeup.jpg";
+import serviceHairStyling from "@/assets/generated-hair-styling-luxury.jpg";
+import serviceFacial from "@/assets/generated-skincare-room.jpg";
+import serviceManicure from "@/assets/generated-nail-art-luxury.jpg";
+import serviceHairColor from "@/assets/generated-hair-color-bar.jpg";
+import serviceWaxing from "@/assets/generated-waxing-room.jpg";
+import serviceHairSpa from "@/assets/generated-wash-station.jpg";
+import serviceSkinBrightening from "@/assets/generated-beauty-products.jpg";
 
 const fallbackServices = [
   { id: "1", name: "Makeup Artistry", description: "Bridal & party makeup with HD finish", image_url: serviceBridalMakeup, category: "Makeup" },
