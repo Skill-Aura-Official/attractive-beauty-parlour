@@ -121,14 +121,15 @@ const AdminLayout = () => {
       <div className="min-h-screen flex w-full bg-background">
         <AdminSidebar />
         <div className="flex-1 flex flex-col min-w-0">
-          <header className="h-14 flex items-center gap-4 border-b border-border/50 px-4 sm:px-6 bg-background/80 backdrop-blur-sm sticky top-0 z-10 shrink-0">
+          <header className="h-16 flex items-center gap-4 border-b border-border/50 px-4 sm:px-6 bg-background/90 backdrop-blur-xl sticky top-0 z-10 shrink-0">
             <SidebarTrigger />
             <div className="h-5 w-px bg-border/50" />
-            <h1 className="font-display text-base text-foreground truncate">
-              {currentNav?.title || "Admin Panel"}
-            </h1>
+            <div className="min-w-0">
+              <h1 className="font-display text-lg text-foreground truncate">{currentNav?.title || "Admin Panel"}</h1>
+              <p className="hidden sm:block text-xs text-muted-foreground">Manage your premium website content</p>
+            </div>
           </header>
-          <main className="flex-1 p-4 sm:p-6 lg:p-8 overflow-auto bg-muted/20">
+          <main className="flex-1 p-4 sm:p-6 lg:p-8 overflow-auto bg-muted/15">
             <Outlet />
           </main>
         </div>
