@@ -8,10 +8,14 @@ import heroBg2 from "@/assets/hero-bg.jpg";
 import bridalPackage from "@/assets/bridal-package-new.jpg";
 import logo from "@/assets/logo.png";
 import { CONTACT_INFO } from "@/lib/constants";
+import generatedHero from "@/assets/generated-salon-hero-banner.jpg";
+import generatedBridal from "@/assets/generated-bridal-makeup-closeup.jpg";
+import generatedReception from "@/assets/generated-reception-lounge.jpg";
 
 const fallbackSlides = [
-  { image: heroBg, subtitle: "Luxury Beauty & Wellness", title: "Where Beauty", highlight: "Meets Elegance", description: "Exclusive beauty experiences for discerning ladies & adorable kids" },
-  { image: heroBg2, subtitle: "Premium Bridal Services", title: "Your Dream", highlight: "Bridal Look", description: "Complete bridal makeover packages with pre-bridal care & HD makeup" },
+  { image: generatedHero, subtitle: "Luxury Beauty & Wellness", title: "Where Beauty", highlight: "Meets Elegance", description: "Exclusive beauty experiences for discerning ladies & adorable kids" },
+  { image: generatedBridal, subtitle: "Premium Bridal Services", title: "Your Dream", highlight: "Bridal Look", description: "Complete bridal makeover packages with pre-bridal care & HD makeup" },
+  { image: generatedReception, subtitle: "Signature Salon Experience", title: "Step Into", highlight: "Soft Luxury", description: "A calm, elegant space designed for flawless transformations" },
   { image: bridalPackage, subtitle: "Special Packages", title: "Glow This", highlight: "Festive Season", description: "Exclusive offers on facials, hair spa, and complete beauty packages" },
 ];
 

@@ -5,18 +5,18 @@ import { SectionHeading } from "@/components/ui/section-heading";
 import { Phone, MessageCircle } from "lucide-react";
 import { CONTACT_INFO } from "@/lib/constants";
 import { useServices } from "@/hooks/useServices";
-import serviceBridalMakeup from "@/assets/service-bridal-makeup.jpg";
-import servicePartyMakeup from "@/assets/service-party-makeup.jpg";
-import serviceHairStyling from "@/assets/service-hair-styling.jpg";
-import serviceHairColor from "@/assets/service-hair-color.jpg";
-import serviceHairSpa from "@/assets/service-hair-spa.jpg";
-import serviceFacial from "@/assets/service-facial.jpg";
-import serviceSkinBrightening from "@/assets/service-skin-brightening.jpg";
-import serviceManicure from "@/assets/service-manicure.jpg";
-import servicePedicure from "@/assets/service-pedicure.jpg";
-import serviceWaxing from "@/assets/service-waxing-new.jpg";
-import serviceThreading from "@/assets/service-threading.jpg";
-import serviceMehendi from "@/assets/service-mehendi-new.jpg";
+import serviceBridalMakeup from "@/assets/generated-bridal-makeup-closeup.jpg";
+import servicePartyMakeup from "@/assets/generated-party-glam.jpg";
+import serviceHairStyling from "@/assets/generated-hair-styling-luxury.jpg";
+import serviceHairColor from "@/assets/generated-hair-color-bar.jpg";
+import serviceHairSpa from "@/assets/generated-wash-station.jpg";
+import serviceFacial from "@/assets/generated-skincare-room.jpg";
+import serviceSkinBrightening from "@/assets/generated-beauty-products.jpg";
+import serviceManicure from "@/assets/generated-nail-art-luxury.jpg";
+import servicePedicure from "@/assets/generated-pedicure-spa.jpg";
+import serviceWaxing from "@/assets/generated-waxing-room.jpg";
+import serviceThreading from "@/assets/generated-threading-brow.jpg";
+import serviceMehendi from "@/assets/generated-mehendi-detail.jpg";
 
 const fallbackImageMap: Record<string, string> = {
   "Makeup": serviceBridalMakeup,

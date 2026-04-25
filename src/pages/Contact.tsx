@@ -3,7 +3,7 @@ import { Layout } from "@/components/layout/Layout";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { Phone, MessageCircle, MapPin, Clock, Instagram, Facebook, Navigation } from "lucide-react";
 import { CONTACT_INFO } from "@/lib/constants";
-import contactSalon from "@/assets/hero-salon.jpg";
+import contactSalon from "@/assets/generated-reception-lounge.jpg";
 
 const Contact = () => {
   return (

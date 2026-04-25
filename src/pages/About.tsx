@@ -2,9 +2,9 @@ import { motion } from "framer-motion";
 import { Layout } from "@/components/layout/Layout";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { Heart, Award, Users, Sparkles, Clock, Shield } from "lucide-react";
-import heroBg from "@/assets/hero-bg.jpg";
-import salonInterior from "@/assets/hero-salon.jpg";
-import teamWorkspace from "@/assets/blog-bridal-trends.jpg";
+import heroBg from "@/assets/generated-luxury-corridor.jpg";
+import salonInterior from "@/assets/generated-bridal-suite.jpg";
+import teamWorkspace from "@/assets/generated-team-workspace.jpg";
 
 const values = [
   {

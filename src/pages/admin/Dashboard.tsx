@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { Card, CardContent } from "@/components/ui/card";
-import { Scissors, Gift, Star, FileText, Image, PanelTop, HelpCircle, Layers, Users, TrendingUp, ArrowRight } from "lucide-react";
+import { Scissors, Gift, Star, FileText, Image, PanelTop, HelpCircle, Layers, Users, TrendingUp, ArrowRight, Images } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -12,7 +12,7 @@ const Dashboard = () => {
   const { data: counts, isLoading } = useQuery({
     queryKey: ["admin-counts"],
     queryFn: async () => {
-      const [services, offers, testimonials, blogPosts, media, heroSlides, faqItems, pageSections, leads] = await Promise.all([
+      const [services, offers, testimonials, blogPosts, media, heroSlides, faqItems, pageSections, leads, gallery] = await Promise.all([
         supabase.from("services").select("id", { count: "exact", head: true }),
         supabase.from("offers").select("id", { count: "exact", head: true }),
         supabase.from("testimonials").select("id", { count: "exact", head: true }),
@@ -22,6 +22,7 @@ const Dashboard = () => {
         supabase.from("faq_items").select("id", { count: "exact", head: true }),
         supabase.from("page_sections").select("id", { count: "exact", head: true }),
         supabase.from("chatbot_leads").select("id", { count: "exact", head: true }),
+        supabase.from("gallery_items" as never).select("id", { count: "exact", head: true }),
       ]);
       return {
         services: services.count ?? 0,
@@ -33,6 +34,7 @@ const Dashboard = () => {
         faqItems: faqItems.count ?? 0,
         pageSections: pageSections.count ?? 0,
         leads: leads.count ?? 0,
+        gallery: gallery.count ?? 0,
       };
     },
   });
@@ -47,6 +49,7 @@ const Dashboard = () => {
     { label: "Page Sections", count: counts?.pageSections ?? 0, icon: Layers, link: "/admin/pages", color: "text-accent", bg: "bg-accent/10" },
     { label: "Media Files", count: counts?.media ?? 0, icon: Image, link: "/admin/media", color: "text-gold-light", bg: "bg-primary/10" },
     { label: "Chatbot Leads", count: counts?.leads ?? 0, icon: Users, link: "/admin/leads", color: "text-champagne", bg: "bg-secondary/60" },
+    { label: "Gallery", count: counts?.gallery ?? 0, icon: Images, link: "/admin/gallery", color: "text-primary", bg: "bg-primary/10" },
   ];
 
   return (
