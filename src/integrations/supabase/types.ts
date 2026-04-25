@@ -197,6 +197,48 @@ export type Database = {
         }
         Relationships: []
       }
+      gallery_items: {
+        Row: {
+          created_at: string
+          description: string | null
+          display_order: number | null
+          file_name: string | null
+          file_size: number | null
+          id: string
+          is_visible: boolean
+          media_type: string
+          media_url: string
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          display_order?: number | null
+          file_name?: string | null
+          file_size?: number | null
+          id?: string
+          is_visible?: boolean
+          media_type: string
+          media_url: string
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          display_order?: number | null
+          file_name?: string | null
+          file_size?: number | null
+          id?: string
+          is_visible?: boolean
+          media_type?: string
+          media_url?: string
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       hero_slides: {
         Row: {
           created_at: string
