@@ -3,6 +3,8 @@ import { Layout } from "@/components/layout/Layout";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { Heart, Award, Users, Sparkles, Clock, Shield } from "lucide-react";
 import heroBg from "@/assets/hero-bg.jpg";
+import salonInterior from "@/assets/hero-salon.jpg";
+import teamWorkspace from "@/assets/blog-bridal-trends.jpg";
 
 const values = [
   {
@@ -122,7 +124,11 @@ const About = () => {
               transition={{ duration: 0.7, delay: 0.2 }}
               className="relative"
             >
-              <div className="luxury-card p-8">
+              <div className="relative overflow-hidden rounded-lg border border-border/60 bg-card shadow-card mb-6 aspect-[4/3]">
+                <img src={salonInterior} alt="Elegant Attractive Beauty Parlour salon interior" className="h-full w-full object-cover" loading="lazy" />
+                <div className="absolute inset-0 bg-gradient-to-t from-background/70 via-transparent to-transparent" />
+              </div>
+              <div className="luxury-card p-6 sm:p-8">
                 <div className="grid grid-cols-2 gap-6">
                   <div className="text-center p-6 border border-border/30 rounded-lg">
                     <span className="font-display text-4xl text-gradient-gold block mb-2">10+</span>
@@ -187,19 +193,20 @@ const About = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.7 }}
-            className="max-w-4xl mx-auto text-center"
+            className="max-w-5xl mx-auto grid lg:grid-cols-[0.9fr_1.1fr] gap-10 items-center"
           >
-            <span className="text-primary font-body text-sm uppercase tracking-[0.3em] mb-4 block">
-              Our Mission
-            </span>
-            <h2 className="font-display text-3xl md:text-4xl lg:text-5xl text-foreground mb-8">
-              "To make every woman and child feel <span className="text-gradient-gold italic">extraordinarily beautiful</span> through exceptional care and artistry"
-            </h2>
-            <p className="text-muted-foreground text-lg leading-relaxed">
-              We are committed to providing a sanctuary where beauty, relaxation, and confidence converge. 
-              Our team of skilled professionals works tirelessly to ensure that every visit leaves you 
-              feeling refreshed, radiant, and ready to conquer the world.
-            </p>
+            <img src={teamWorkspace} alt="Beauty team preparing a premium bridal look" loading="lazy" className="w-full aspect-[4/5] object-cover rounded-lg border border-border/60 shadow-card" />
+            <div className="text-center lg:text-left">
+              <span className="text-primary font-body text-sm uppercase tracking-[0.3em] mb-4 block">Our Mission</span>
+              <h2 className="font-display text-3xl md:text-4xl lg:text-5xl text-foreground mb-8">
+                "To make every woman and child feel <span className="text-gradient-gold italic">extraordinarily beautiful</span> through exceptional care and artistry"
+              </h2>
+              <p className="text-muted-foreground text-lg leading-relaxed">
+                We are committed to providing a sanctuary where beauty, relaxation, and confidence converge.
+                Our team of skilled professionals works tirelessly to ensure that every visit leaves you
+                feeling refreshed, radiant, and ready to conquer the world.
+              </p>
+            </div>
           </motion.div>
         </div>
       </section>
