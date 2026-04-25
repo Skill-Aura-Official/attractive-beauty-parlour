@@ -55,8 +55,9 @@ export const HeroSection = () => {
       {/* Background */}
       <AnimatePresence mode="wait">
         <motion.div key={currentSlide} className="absolute inset-0" initial={{ opacity: 0, scale: 1.05 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0 }} transition={{ duration: 1, ease: "easeOut" }}>
-          <img src={slide.image} alt="" className="w-full h-full object-cover" loading="eager" aria-hidden="true" />
-          <div className="absolute inset-0 bg-gradient-to-b from-background/85 via-background/60 to-background" />
+          <img src={slide.image} alt="" className="w-full h-full object-cover scale-105" loading="eager" aria-hidden="true" />
+          <div className="absolute inset-0 bg-gradient-to-b from-background/75 via-background/42 to-background" />
+          <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-background to-transparent" />
         </motion.div>
       </AnimatePresence>
 
@@ -68,12 +69,12 @@ export const HeroSection = () => {
 
         <AnimatePresence mode="wait">
           <motion.div key={currentSlide} initial={{ opacity: 0, y: 20, filter: "blur(4px)" }} animate={{ opacity: 1, y: 0, filter: "blur(0px)" }} exit={{ opacity: 0, y: -15, filter: "blur(4px)" }} transition={{ duration: 0.5 }}>
-            <span className="inline-block px-5 py-2 border border-primary/25 rounded-full text-primary font-body text-xs md:text-sm uppercase tracking-[0.2em] mb-5">{slide.subtitle}</span>
-            <h1 className="font-display text-4xl md:text-6xl lg:text-7xl text-foreground mb-4 leading-[1.1]" style={{ textWrap: "balance" }}>
+            <span className="inline-block px-5 py-2 border border-primary/35 bg-background/35 backdrop-blur-md rounded-full text-primary font-body text-xs md:text-sm uppercase tracking-[0.2em] mb-5 shadow-gold">{slide.subtitle}</span>
+            <h1 className="font-display text-4xl md:text-6xl lg:text-7xl text-foreground mb-4 leading-[1.05] drop-shadow-2xl" style={{ textWrap: "balance" }}>
               <span className="block">{slide.title}</span>
               <span className="text-gradient-gold italic">{slide.highlight}</span>
             </h1>
-            <p className="font-elegant text-lg md:text-xl lg:text-2xl text-foreground/60 mb-10 max-w-2xl mx-auto" style={{ textWrap: "pretty" }}>{slide.description}</p>
+            <p className="font-elegant text-xl md:text-2xl lg:text-3xl text-champagne/90 mb-10 max-w-2xl mx-auto" style={{ textWrap: "pretty" }}>{slide.description}</p>
           </motion.div>
         </AnimatePresence>
 
@@ -89,7 +90,7 @@ export const HeroSection = () => {
           <a href={CONTACT_INFO.phoneLink} className="btn-hero group w-full sm:w-auto rounded-full">
             <span className="relative z-10 flex items-center justify-center gap-2.5"><Phone size={16} />Call Now</span>
           </a>
-          <a href={CONTACT_INFO.whatsappLink} target="_blank" rel="noopener noreferrer" className="w-full sm:w-auto px-8 py-3.5 text-sm font-semibold uppercase tracking-widest bg-primary text-primary-foreground rounded-full hover:shadow-gold transition-all duration-300 active:scale-[0.97]">
+          <a href={CONTACT_INFO.whatsappLink} target="_blank" rel="noopener noreferrer" className="w-full sm:w-auto px-8 py-3.5 text-sm font-semibold uppercase tracking-widest bg-primary text-primary-foreground rounded-full shadow-gold hover:shadow-glow-gold transition-all duration-300 active:scale-[0.97]">
             <span className="flex items-center justify-center gap-2.5"><MessageCircle size={16} />Book via WhatsApp</span>
           </a>
         </motion.div>
