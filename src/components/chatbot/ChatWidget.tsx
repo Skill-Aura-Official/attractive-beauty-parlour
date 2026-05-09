@@ -294,19 +294,50 @@ export const ChatWidget = () => {
                       <img src={glamGenieAvatar} alt="Glam Genie" className="w-full h-full object-cover" />
                     </div>
                   )}
-                  <div
-                    className={`max-w-[78%] rounded-2xl px-3.5 py-2.5 text-sm leading-relaxed ${
-                      msg.role === "user"
-                        ? "bg-primary text-primary-foreground rounded-br-sm"
-                        : "bg-muted text-foreground rounded-bl-sm border border-border/30"
-                    }`}
-                  >
-                    {msg.role === "assistant" ? (
-                      <div className="prose prose-sm max-w-none [&_p]:m-0 [&_p]:mb-1.5 [&_p:last-child]:mb-0 [&_ul]:m-0 [&_ul]:mb-1.5 [&_ol]:m-0 [&_ol]:mb-1.5 [&_li]:text-foreground [&_strong]:text-foreground [&_a]:text-primary">
-                        <ReactMarkdown>{msg.content}</ReactMarkdown>
+                  <div className={`flex flex-col gap-2 max-w-[78%] ${msg.role === "user" ? "items-end" : "items-start"}`}>
+                    <div
+                      className={`rounded-2xl px-3.5 py-2.5 text-sm leading-relaxed ${
+                        msg.role === "user"
+                          ? "bg-primary text-primary-foreground rounded-br-sm"
+                          : "bg-muted text-foreground rounded-bl-sm border border-border/30"
+                      }`}
+                    >
+                      {msg.role === "assistant" ? (
+                        <div className="prose prose-sm max-w-none [&_p]:m-0 [&_p]:mb-1.5 [&_p:last-child]:mb-0 [&_ul]:m-0 [&_ul]:mb-1.5 [&_ol]:m-0 [&_ol]:mb-1.5 [&_li]:text-foreground [&_strong]:text-foreground [&_a]:text-primary">
+                          <ReactMarkdown>{msg.content || "…"}</ReactMarkdown>
+                        </div>
+                      ) : (
+                        msg.content
+                      )}
+                    </div>
+
+                    {msg.booking && (
+                      <div className="w-full rounded-xl border border-primary/40 bg-gradient-to-br from-primary/10 to-accent/10 p-3 shadow-sm">
+                        <div className="flex items-center gap-1.5 text-primary text-xs font-bold uppercase tracking-wider mb-2 font-body">
+                          <Check size={14} /> Booking ready
+                        </div>
+                        <div className="space-y-1 text-xs text-foreground font-body mb-3">
+                          <div><span className="text-muted-foreground">Name:</span> <span className="font-semibold">{msg.booking.name}</span></div>
+                          <div><span className="text-muted-foreground">Phone:</span> <span className="font-semibold">{msg.booking.phone}</span></div>
+                          <div><span className="text-muted-foreground">Service:</span> <span className="font-semibold">{msg.booking.service}</span></div>
+                          <div><span className="text-muted-foreground">When:</span> <span className="font-semibold">{msg.booking.datetime}</span></div>
+                        </div>
+                        <a
+                          href={buildOwnerWhatsAppLink(msg.booking)}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="flex items-center justify-center gap-2 w-full py-2.5 rounded-lg bg-primary text-primary-foreground text-xs font-semibold uppercase tracking-wider hover:opacity-90 transition-opacity"
+                        >
+                          <MessageCircle size={14} />
+                          Send to Salon on WhatsApp
+                        </a>
+                        <a
+                          href={CONTACT_INFO.phoneLink}
+                          className="flex items-center justify-center gap-2 w-full py-2 mt-1.5 rounded-lg border border-border bg-card text-foreground text-xs font-semibold uppercase tracking-wider hover:bg-muted transition-colors"
+                        >
+                          <Phone size={12} /> Or call directly
+                        </a>
                       </div>
-                    ) : (
-                      msg.content
                     )}
                   </div>
                   {msg.role === "user" && (
