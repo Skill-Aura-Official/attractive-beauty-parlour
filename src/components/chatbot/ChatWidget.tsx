@@ -262,14 +262,7 @@ export const ChatWidget = () => {
                 <button
                   onClick={() => setIsOpen(false)}
                   className="p-2 rounded-lg hover:bg-primary-foreground/20 transition-colors"
-                  aria-label="Minimize"
-                >
-                  <Minimize2 size={16} className="text-primary-foreground" />
-                </button>
-                <button
-                  onClick={() => setIsOpen(false)}
-                  className="p-2 rounded-lg hover:bg-primary-foreground/20 transition-colors"
-                  aria-label="Close"
+                  aria-label="Close chat"
                 >
                   <X size={16} className="text-primary-foreground" />
                 </button>
