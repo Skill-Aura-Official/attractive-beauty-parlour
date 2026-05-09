@@ -1,13 +1,15 @@
 import { useState, useRef, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, Send, Minimize2, User, Calendar, Sparkles, Phone, MessageCircle } from "lucide-react";
+import { X, Send, Minimize2, User, Calendar, Phone, MessageCircle, Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import ReactMarkdown from "react-markdown";
 import { CONTACT_INFO } from "@/lib/constants";
+import { supabase } from "@/integrations/supabase/client";
 import glamGenieAvatar from "@/assets/glam-genie-avatar.png";
 
-type Msg = { role: "user" | "assistant"; content: string };
+type BookingDetails = { name: string; phone: string; service: string; datetime: string };
+type Msg = { role: "user" | "assistant"; content: string; booking?: BookingDetails };
 
 const QUICK_QUESTIONS = [
   "💇 Services offered?",
@@ -19,13 +21,29 @@ const QUICK_QUESTIONS = [
 
 const QUICK_FULL: Record<string, string> = {
   "💇 Services offered?": "What services do you offer?",
-  "📅 Book appointment": "How can I book an appointment?",
+  "📅 Book appointment": "I'd like to book an appointment",
   "📍 Location & hours": "Where are you located and what are your business hours?",
   "💍 Bridal packages": "Tell me about bridal packages",
   "🎉 Current offers": "What special offers do you have right now?",
 };
 
 const CHAT_URL = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/chat`;
+
+const BOOKING_RE = /\[BOOKING\]([\s\S]*?)\[\/BOOKING\]/;
+
+const buildOwnerWhatsAppLink = (b: BookingDetails) => {
+  const msg = [
+    "🌸 *New Booking Request – Attractive Beauty Parlour*",
+    "",
+    `👤 *Name:* ${b.name}`,
+    `📞 *Phone:* ${b.phone}`,
+    `💆 *Service:* ${b.service}`,
+    `📅 *Preferred:* ${b.datetime}`,
+    "",
+    "_Sent via Glam Genie chatbot_",
+  ].join("\n");
+  return `${CONTACT_INFO.whatsappLink}?text=${encodeURIComponent(msg)}`;
+};
 
 export const ChatWidget = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -62,16 +80,23 @@ export const ChatWidget = () => {
     setIsLoading(true);
 
     let assistantSoFar = "";
+    const stripBookingTag = (s: string) => {
+      // Hide the [BOOKING]...[/BOOKING] marker (and any in-progress opening tag) from the user
+      const idx = s.indexOf("[BOOKING]");
+      if (idx === -1) return s;
+      return s.slice(0, idx).trimEnd();
+    };
     const upsertAssistant = (chunk: string) => {
       assistantSoFar += chunk;
+      const visible = stripBookingTag(assistantSoFar);
       setMessages((prev) => {
         const last = prev[prev.length - 1];
         if (last?.role === "assistant" && prev.length === allMessages.length + 1) {
           return prev.map((m, i) =>
-            i === prev.length - 1 ? { ...m, content: assistantSoFar } : m
+            i === prev.length - 1 ? { ...m, content: visible } : m
           );
         }
-        return [...prev, { role: "assistant", content: assistantSoFar }];
+        return [...prev, { role: "assistant", content: visible }];
       });
     };
 
@@ -125,6 +150,32 @@ export const ChatWidget = () => {
       console.error("Chat error:", e);
       upsertAssistant("Sorry, I'm having trouble responding right now. Please try again or contact us directly!");
     } finally {
+      const match = assistantSoFar.match(BOOKING_RE);
+      if (match) {
+        try {
+          const booking = JSON.parse(match[1].trim()) as BookingDetails;
+          const cleaned = assistantSoFar.replace(BOOKING_RE, "").trim();
+          setMessages((prev) =>
+            prev.map((m, i) =>
+              i === prev.length - 1 && m.role === "assistant"
+                ? { ...m, content: cleaned, booking }
+                : m
+            )
+          );
+          supabase.functions
+            .invoke("save-lead", {
+              body: {
+                name: booking.name,
+                phone: booking.phone,
+                preferred_service: booking.service,
+                notes: `Preferred: ${booking.datetime}`,
+              },
+            })
+            .catch((err) => console.warn("save-lead failed:", err));
+        } catch (err) {
+          console.warn("Failed to parse booking payload:", err);
+        }
+      }
       setIsLoading(false);
     }
   };
@@ -243,19 +294,50 @@ export const ChatWidget = () => {
                       <img src={glamGenieAvatar} alt="Glam Genie" className="w-full h-full object-cover" />
                     </div>
                   )}
-                  <div
-                    className={`max-w-[78%] rounded-2xl px-3.5 py-2.5 text-sm leading-relaxed ${
-                      msg.role === "user"
-                        ? "bg-primary text-primary-foreground rounded-br-sm"
-                        : "bg-muted text-foreground rounded-bl-sm border border-border/30"
-                    }`}
-                  >
-                    {msg.role === "assistant" ? (
-                      <div className="prose prose-sm max-w-none [&_p]:m-0 [&_p]:mb-1.5 [&_p:last-child]:mb-0 [&_ul]:m-0 [&_ul]:mb-1.5 [&_ol]:m-0 [&_ol]:mb-1.5 [&_li]:text-foreground [&_strong]:text-foreground [&_a]:text-primary">
-                        <ReactMarkdown>{msg.content}</ReactMarkdown>
+                  <div className={`flex flex-col gap-2 max-w-[78%] ${msg.role === "user" ? "items-end" : "items-start"}`}>
+                    <div
+                      className={`rounded-2xl px-3.5 py-2.5 text-sm leading-relaxed ${
+                        msg.role === "user"
+                          ? "bg-primary text-primary-foreground rounded-br-sm"
+                          : "bg-muted text-foreground rounded-bl-sm border border-border/30"
+                      }`}
+                    >
+                      {msg.role === "assistant" ? (
+                        <div className="prose prose-sm max-w-none [&_p]:m-0 [&_p]:mb-1.5 [&_p:last-child]:mb-0 [&_ul]:m-0 [&_ul]:mb-1.5 [&_ol]:m-0 [&_ol]:mb-1.5 [&_li]:text-foreground [&_strong]:text-foreground [&_a]:text-primary">
+                          <ReactMarkdown>{msg.content || "…"}</ReactMarkdown>
+                        </div>
+                      ) : (
+                        msg.content
+                      )}
+                    </div>
+
+                    {msg.booking && (
+                      <div className="w-full rounded-xl border border-primary/40 bg-gradient-to-br from-primary/10 to-accent/10 p-3 shadow-sm">
+                        <div className="flex items-center gap-1.5 text-primary text-xs font-bold uppercase tracking-wider mb-2 font-body">
+                          <Check size={14} /> Booking ready
+                        </div>
+                        <div className="space-y-1 text-xs text-foreground font-body mb-3">
+                          <div><span className="text-muted-foreground">Name:</span> <span className="font-semibold">{msg.booking.name}</span></div>
+                          <div><span className="text-muted-foreground">Phone:</span> <span className="font-semibold">{msg.booking.phone}</span></div>
+                          <div><span className="text-muted-foreground">Service:</span> <span className="font-semibold">{msg.booking.service}</span></div>
+                          <div><span className="text-muted-foreground">When:</span> <span className="font-semibold">{msg.booking.datetime}</span></div>
+                        </div>
+                        <a
+                          href={buildOwnerWhatsAppLink(msg.booking)}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="flex items-center justify-center gap-2 w-full py-2.5 rounded-lg bg-primary text-primary-foreground text-xs font-semibold uppercase tracking-wider hover:opacity-90 transition-opacity"
+                        >
+                          <MessageCircle size={14} />
+                          Send to Salon on WhatsApp
+                        </a>
+                        <a
+                          href={CONTACT_INFO.phoneLink}
+                          className="flex items-center justify-center gap-2 w-full py-2 mt-1.5 rounded-lg border border-border bg-card text-foreground text-xs font-semibold uppercase tracking-wider hover:bg-muted transition-colors"
+                        >
+                          <Phone size={12} /> Or call directly
+                        </a>
                       </div>
-                    ) : (
-                      msg.content
                     )}
                   </div>
                   {msg.role === "user" && (
