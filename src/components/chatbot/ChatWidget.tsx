@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, Send, Minimize2, User, Calendar, Phone, MessageCircle, Check } from "lucide-react";
+import { X, Send, User, Calendar, Phone, MessageCircle, Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import ReactMarkdown from "react-markdown";
@@ -262,14 +262,7 @@ export const ChatWidget = () => {
                 <button
                   onClick={() => setIsOpen(false)}
                   className="p-2 rounded-lg hover:bg-primary-foreground/20 transition-colors"
-                  aria-label="Minimize"
-                >
-                  <Minimize2 size={16} className="text-primary-foreground" />
-                </button>
-                <button
-                  onClick={() => setIsOpen(false)}
-                  className="p-2 rounded-lg hover:bg-primary-foreground/20 transition-colors"
-                  aria-label="Close"
+                  aria-label="Close chat"
                 >
                   <X size={16} className="text-primary-foreground" />
                 </button>
