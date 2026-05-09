@@ -1,13 +1,15 @@
 import { useState, useRef, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, Send, Minimize2, User, Calendar, Sparkles, Phone, MessageCircle } from "lucide-react";
+import { X, Send, Minimize2, User, Calendar, Phone, MessageCircle, Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import ReactMarkdown from "react-markdown";
 import { CONTACT_INFO } from "@/lib/constants";
+import { supabase } from "@/integrations/supabase/client";
 import glamGenieAvatar from "@/assets/glam-genie-avatar.png";
 
-type Msg = { role: "user" | "assistant"; content: string };
+type BookingDetails = { name: string; phone: string; service: string; datetime: string };
+type Msg = { role: "user" | "assistant"; content: string; booking?: BookingDetails };
 
 const QUICK_QUESTIONS = [
   "💇 Services offered?",
@@ -19,13 +21,29 @@ const QUICK_QUESTIONS = [
 
 const QUICK_FULL: Record<string, string> = {
   "💇 Services offered?": "What services do you offer?",
-  "📅 Book appointment": "How can I book an appointment?",
+  "📅 Book appointment": "I'd like to book an appointment",
   "📍 Location & hours": "Where are you located and what are your business hours?",
   "💍 Bridal packages": "Tell me about bridal packages",
   "🎉 Current offers": "What special offers do you have right now?",
 };
 
 const CHAT_URL = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/chat`;
+
+const BOOKING_RE = /\[BOOKING\]([\s\S]*?)\[\/BOOKING\]/;
+
+const buildOwnerWhatsAppLink = (b: BookingDetails) => {
+  const msg = [
+    "🌸 *New Booking Request – Attractive Beauty Parlour*",
+    "",
+    `👤 *Name:* ${b.name}`,
+    `📞 *Phone:* ${b.phone}`,
+    `💆 *Service:* ${b.service}`,
+    `📅 *Preferred:* ${b.datetime}`,
+    "",
+    "_Sent via Glam Genie chatbot_",
+  ].join("\n");
+  return `${CONTACT_INFO.whatsappLink}?text=${encodeURIComponent(msg)}`;
+};
 
 export const ChatWidget = () => {
   const [isOpen, setIsOpen] = useState(false);
