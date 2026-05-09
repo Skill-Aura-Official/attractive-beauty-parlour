@@ -143,6 +143,32 @@ export const ChatWidget = () => {
       console.error("Chat error:", e);
       upsertAssistant("Sorry, I'm having trouble responding right now. Please try again or contact us directly!");
     } finally {
+      const match = assistantSoFar.match(BOOKING_RE);
+      if (match) {
+        try {
+          const booking = JSON.parse(match[1].trim()) as BookingDetails;
+          const cleaned = assistantSoFar.replace(BOOKING_RE, "").trim();
+          setMessages((prev) =>
+            prev.map((m, i) =>
+              i === prev.length - 1 && m.role === "assistant"
+                ? { ...m, content: cleaned, booking }
+                : m
+            )
+          );
+          supabase.functions
+            .invoke("save-lead", {
+              body: {
+                name: booking.name,
+                phone: booking.phone,
+                preferred_service: booking.service,
+                notes: `Preferred: ${booking.datetime}`,
+              },
+            })
+            .catch((err) => console.warn("save-lead failed:", err));
+        } catch (err) {
+          console.warn("Failed to parse booking payload:", err);
+        }
+      }
       setIsLoading(false);
     }
   };
