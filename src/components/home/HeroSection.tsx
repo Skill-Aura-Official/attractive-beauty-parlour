@@ -55,11 +55,30 @@ export const HeroSection = () => {
   const slide = slides[currentSlide] || slides[0];
 
   return (
-    <section className="relative min-h-[100svh] flex items-center justify-center overflow-hidden">
+    <section className="relative min-h-[100svh] flex items-center justify-center overflow-hidden bg-background">
+      {/* Solid base color so there's no white flash before the image paints */}
+      <div className="absolute inset-0 bg-gradient-to-b from-charcoal-deep via-charcoal to-background" aria-hidden="true" />
+
+      {/* Preload non-active slides in the background so transitions are instant */}
+      <div className="hidden">
+        {slides.map((s, i) => (
+          <img key={i} src={s.image} alt="" loading="eager" decoding="async" />
+        ))}
+      </div>
+
       {/* Background */}
       <AnimatePresence mode="wait">
         <motion.div key={currentSlide} className="absolute inset-0" initial={{ opacity: 0, scale: 1.05 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0 }} transition={{ duration: 1, ease: "easeOut" }}>
-          <img src={slide.image} alt="" className="w-full h-full object-cover scale-105" loading="eager" aria-hidden="true" />
+          <img
+            src={slide.image}
+            alt=""
+            className="w-full h-full object-cover scale-105"
+            loading="eager"
+            decoding="async"
+            // @ts-expect-error - fetchpriority is a valid HTML attribute
+            fetchpriority="high"
+            aria-hidden="true"
+          />
           <div className="absolute inset-0 bg-gradient-to-b from-background/75 via-background/42 to-background" />
           <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-background to-transparent" />
         </motion.div>
