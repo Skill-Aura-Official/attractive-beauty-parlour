@@ -31,13 +31,101 @@ const SYSTEM_PROMPT = `You are a friendly and professional AI assistant for Attr
 - Use a warm, welcoming tone
 - When a user seems interested in booking, ask for their name, phone number, and preferred service to help facilitate the booking`;
 
+// Limits
+const MAX_BODY_BYTES = 32 * 1024; // 32 KB
+const MAX_MESSAGES = 30;
+const MAX_MESSAGE_CHARS = 2000;
+const ALLOWED_ROLES = new Set(["user", "assistant"]);
+
+// In-memory IP rate limiter (per isolate): 30 req / 60s
+const RATE_LIMIT = 30;
+const RATE_WINDOW_MS = 60_000;
+const ipHits = new Map<string, number[]>();
+
+function getIp(req: Request): string {
+  const fwd = req.headers.get("x-forwarded-for") || "";
+  return fwd.split(",")[0].trim() || "unknown";
+}
+
+function rateLimited(ip: string): boolean {
+  const now = Date.now();
+  const arr = (ipHits.get(ip) || []).filter((t) => now - t < RATE_WINDOW_MS);
+  arr.push(now);
+  ipHits.set(ip, arr);
+  return arr.length > RATE_LIMIT;
+}
+
 serve(async (req) => {
   if (req.method === "OPTIONS") {
     return new Response(null, { headers: corsHeaders });
   }
 
   try {
-    const { messages } = await req.json();
+    const ip = getIp(req);
+    if (rateLimited(ip)) {
+      return new Response(
+        JSON.stringify({ error: "Too many requests. Please slow down." }),
+        { status: 429, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
+
+    // Body size check
+    const cl = Number(req.headers.get("content-length") || "0");
+    if (cl && cl > MAX_BODY_BYTES) {
+      return new Response(
+        JSON.stringify({ error: "Payload too large" }),
+        { status: 413, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
+    const raw = await req.text();
+    if (raw.length > MAX_BODY_BYTES) {
+      return new Response(
+        JSON.stringify({ error: "Payload too large" }),
+        { status: 413, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
+
+    let parsed: unknown;
+    try { parsed = JSON.parse(raw); } catch {
+      return new Response(JSON.stringify({ error: "Invalid JSON" }), {
+        status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
+
+    const messages = (parsed as { messages?: unknown })?.messages;
+    if (!Array.isArray(messages) || messages.length === 0) {
+      return new Response(JSON.stringify({ error: "messages must be a non-empty array" }), {
+        status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
+    if (messages.length > MAX_MESSAGES) {
+      return new Response(JSON.stringify({ error: `Too many messages (max ${MAX_MESSAGES})` }), {
+        status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
+
+    const sanitized: { role: string; content: string }[] = [];
+    for (const m of messages) {
+      if (!m || typeof m !== "object") {
+        return new Response(JSON.stringify({ error: "Invalid message entry" }), {
+          status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" },
+        });
+      }
+      const role = (m as { role?: unknown }).role;
+      const content = (m as { content?: unknown }).content;
+      if (typeof role !== "string" || !ALLOWED_ROLES.has(role)) {
+        return new Response(JSON.stringify({ error: "Invalid message role" }), {
+          status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" },
+        });
+      }
+      if (typeof content !== "string" || content.length === 0) {
+        return new Response(JSON.stringify({ error: "Invalid message content" }), {
+          status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" },
+        });
+      }
+      sanitized.push({ role, content: content.slice(0, MAX_MESSAGE_CHARS) });
+    }
+
     const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
     if (!LOVABLE_API_KEY) throw new Error("LOVABLE_API_KEY is not configured");
 
@@ -53,7 +141,7 @@ serve(async (req) => {
           model: "google/gemini-3-flash-preview",
           messages: [
             { role: "system", content: SYSTEM_PROMPT },
-            ...messages,
+            ...sanitized,
           ],
           stream: true,
         }),
