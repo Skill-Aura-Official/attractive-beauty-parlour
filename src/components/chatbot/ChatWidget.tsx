@@ -80,16 +80,23 @@ export const ChatWidget = () => {
     setIsLoading(true);
 
     let assistantSoFar = "";
+    const stripBookingTag = (s: string) => {
+      // Hide the [BOOKING]...[/BOOKING] marker (and any in-progress opening tag) from the user
+      const idx = s.indexOf("[BOOKING]");
+      if (idx === -1) return s;
+      return s.slice(0, idx).trimEnd();
+    };
     const upsertAssistant = (chunk: string) => {
       assistantSoFar += chunk;
+      const visible = stripBookingTag(assistantSoFar);
       setMessages((prev) => {
         const last = prev[prev.length - 1];
         if (last?.role === "assistant" && prev.length === allMessages.length + 1) {
           return prev.map((m, i) =>
-            i === prev.length - 1 ? { ...m, content: assistantSoFar } : m
+            i === prev.length - 1 ? { ...m, content: visible } : m
           );
         }
-        return [...prev, { role: "assistant", content: assistantSoFar }];
+        return [...prev, { role: "assistant", content: visible }];
       });
     };
 
