@@ -56,14 +56,14 @@ export const ServicesPreview = () => {
           description="Indulge in our curated collection of luxury treatments designed to enhance your natural beauty"
         />
 
-        <div className="relative mt-16">
+        <div className="relative mt-10 sm:mt-16">
           {totalPages > 1 && (
-            <div className="absolute -top-12 right-0 flex items-center gap-2">
-              <button onClick={prevPage} className="w-10 h-10 flex items-center justify-center rounded-full border border-primary/30 text-primary hover:bg-primary hover:text-primary-foreground transition-all">
+            <div className="flex sm:absolute sm:-top-12 sm:right-0 items-center justify-center sm:justify-end gap-2 mb-6 sm:mb-0">
+              <button onClick={prevPage} aria-label="Previous services" className="w-10 h-10 flex items-center justify-center rounded-full border border-primary/30 text-primary hover:bg-primary hover:text-primary-foreground transition-all">
                 <ChevronLeft size={18} />
               </button>
               <span className="text-muted-foreground text-sm font-body">{currentPage + 1}/{totalPages}</span>
-              <button onClick={nextPage} className="w-10 h-10 flex items-center justify-center rounded-full border border-primary/30 text-primary hover:bg-primary hover:text-primary-foreground transition-all">
+              <button onClick={nextPage} aria-label="Next services" className="w-10 h-10 flex items-center justify-center rounded-full border border-primary/30 text-primary hover:bg-primary hover:text-primary-foreground transition-all">
                 <ChevronRight size={18} />
               </button>
             </div>

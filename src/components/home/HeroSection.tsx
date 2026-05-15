@@ -92,12 +92,12 @@ export const HeroSection = () => {
 
         <AnimatePresence mode="wait">
           <motion.div key={currentSlide} initial={{ opacity: 0, y: 20, filter: "blur(4px)" }} animate={{ opacity: 1, y: 0, filter: "blur(0px)" }} exit={{ opacity: 0, y: -15, filter: "blur(4px)" }} transition={{ duration: 0.5 }}>
-            <span className="inline-block px-5 py-2 border border-primary/35 bg-background/35 backdrop-blur-md rounded-full text-primary font-body text-xs md:text-sm uppercase tracking-[0.2em] mb-5 shadow-gold">{slide.subtitle}</span>
-            <h1 className="font-display text-4xl md:text-6xl lg:text-7xl text-foreground mb-4 leading-[1.05] drop-shadow-2xl" style={{ textWrap: "balance" }}>
+            <span className="inline-block px-4 sm:px-5 py-1.5 sm:py-2 border border-primary/35 bg-background/35 backdrop-blur-md rounded-full text-primary font-body text-[10px] sm:text-xs md:text-sm uppercase tracking-[0.2em] mb-4 sm:mb-5 shadow-gold">{slide.subtitle}</span>
+            <h1 className="font-display text-[2rem] sm:text-4xl md:text-6xl lg:text-7xl text-foreground mb-3 sm:mb-4 leading-[1.05] drop-shadow-2xl" style={{ textWrap: "balance" }}>
               <span className="block">{slide.title}</span>
               <span className="text-gradient-gold italic">{slide.highlight}</span>
             </h1>
-            <p className="font-elegant text-xl md:text-2xl lg:text-3xl text-champagne/90 mb-10 max-w-2xl mx-auto" style={{ textWrap: "pretty" }}>{slide.description}</p>
+            <p className="font-elegant text-lg sm:text-xl md:text-2xl lg:text-3xl text-champagne/90 mb-8 sm:mb-10 max-w-2xl mx-auto px-2" style={{ textWrap: "pretty" }}>{slide.description}</p>
           </motion.div>
         </AnimatePresence>
 

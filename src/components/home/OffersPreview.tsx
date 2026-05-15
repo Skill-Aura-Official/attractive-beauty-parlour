@@ -29,27 +29,27 @@ export const OffersPreview = () => {
             transition={{ duration: 0.7 }}
             className="relative group"
           >
-            <div className="relative overflow-hidden rounded-lg aspect-[4/3]">
+            <div className="relative overflow-hidden rounded-lg aspect-[4/5] sm:aspect-[4/3]">
               <img
                 src={bridalPackage}
                 alt="Bridal Package"
                 loading="lazy"
                 className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-background via-background/50 to-transparent" />
-              <div className="absolute bottom-0 left-0 right-0 p-8">
-                <div className="flex items-center gap-2 mb-3">
-                  <Crown size={20} className="text-primary" />
-                  <span className="text-primary text-sm uppercase tracking-widest">Bridal Special</span>
+              <div className="absolute inset-0 bg-gradient-to-t from-background via-background/55 to-transparent" />
+              <div className="absolute bottom-0 left-0 right-0 p-5 sm:p-7 lg:p-8">
+                <div className="flex items-center gap-2 mb-2 sm:mb-3">
+                  <Crown size={18} className="text-primary" />
+                  <span className="text-primary text-xs sm:text-sm uppercase tracking-widest">Bridal Special</span>
                 </div>
-                <h3 className="font-display text-3xl text-foreground mb-3">Bridal Bliss Package</h3>
-                <p className="text-muted-foreground mb-6">
-                  Complete bridal makeover including pre-bridal treatments, HD makeup, 
+                <h3 className="font-display text-2xl sm:text-3xl text-foreground mb-2 sm:mb-3">Bridal Bliss Package</h3>
+                <p className="text-muted-foreground text-sm sm:text-base mb-5 sm:mb-6 line-clamp-3 sm:line-clamp-none">
+                  Complete bridal makeover including pre-bridal treatments, HD makeup,
                   hair styling, and mehendi services for your magical day.
                 </p>
                 <button
                   onClick={() => handleWhatsAppClick("Bridal Bliss Package")}
-                  className="inline-flex items-center gap-2 px-6 py-3 bg-primary text-primary-foreground font-medium text-sm uppercase tracking-wider hover:shadow-gold transition-all duration-300 cursor-pointer"
+                  className="inline-flex items-center gap-2 px-5 sm:px-6 py-2.5 sm:py-3 rounded-full bg-primary text-primary-foreground font-medium text-xs sm:text-sm uppercase tracking-wider hover:shadow-gold transition-all duration-300 cursor-pointer"
                 >
                   <MessageCircle size={16} />
                   Enquire Now

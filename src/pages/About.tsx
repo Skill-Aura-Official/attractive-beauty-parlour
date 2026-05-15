@@ -128,23 +128,23 @@ const About = () => {
                 <img src={salonInterior} alt="Elegant Attractive Beauty Parlour salon interior" className="h-full w-full object-cover" loading="lazy" />
                 <div className="absolute inset-0 bg-gradient-to-t from-background/70 via-transparent to-transparent" />
               </div>
-              <div className="luxury-card p-6 sm:p-8">
-                <div className="grid grid-cols-2 gap-6">
-                  <div className="text-center p-6 border border-border/30 rounded-lg">
-                    <span className="font-display text-4xl text-gradient-gold block mb-2">10+</span>
-                    <span className="text-muted-foreground text-sm">Years Experience</span>
+              <div className="luxury-card p-4 sm:p-6 lg:p-8">
+                <div className="grid grid-cols-2 gap-3 sm:gap-5">
+                  <div className="text-center p-3 sm:p-5 border border-border/30 rounded-lg">
+                    <span className="font-display text-3xl sm:text-4xl text-gradient-gold block mb-1.5 sm:mb-2">10+</span>
+                    <span className="text-muted-foreground text-xs sm:text-sm">Years Experience</span>
                   </div>
-                  <div className="text-center p-6 border border-border/30 rounded-lg">
-                    <span className="font-display text-4xl text-gradient-gold block mb-2">5000+</span>
-                    <span className="text-muted-foreground text-sm">Happy Clients</span>
+                  <div className="text-center p-3 sm:p-5 border border-border/30 rounded-lg">
+                    <span className="font-display text-3xl sm:text-4xl text-gradient-gold block mb-1.5 sm:mb-2">5000+</span>
+                    <span className="text-muted-foreground text-xs sm:text-sm">Happy Clients</span>
                   </div>
-                  <div className="text-center p-6 border border-border/30 rounded-lg">
-                    <span className="font-display text-4xl text-gradient-gold block mb-2">500+</span>
-                    <span className="text-muted-foreground text-sm">Bridal Makeovers</span>
+                  <div className="text-center p-3 sm:p-5 border border-border/30 rounded-lg">
+                    <span className="font-display text-3xl sm:text-4xl text-gradient-gold block mb-1.5 sm:mb-2">500+</span>
+                    <span className="text-muted-foreground text-xs sm:text-sm">Bridal Makeovers</span>
                   </div>
-                  <div className="text-center p-6 border border-border/30 rounded-lg">
-                    <span className="font-display text-4xl text-gradient-gold block mb-2">15+</span>
-                    <span className="text-muted-foreground text-sm">Expert Stylists</span>
+                  <div className="text-center p-3 sm:p-5 border border-border/30 rounded-lg">
+                    <span className="font-display text-3xl sm:text-4xl text-gradient-gold block mb-1.5 sm:mb-2">15+</span>
+                    <span className="text-muted-foreground text-xs sm:text-sm">Expert Stylists</span>
                   </div>
                 </div>
               </div>
