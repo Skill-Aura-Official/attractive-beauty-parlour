@@ -128,7 +128,7 @@ const Contact = () => {
               className="relative"
             >
               <div className="premium-surface p-2">
-                <img src={contactSalon} alt="Premium salon reception and beauty workspace" loading="lazy" className="w-full aspect-[16/9] object-cover rounded-md mb-2" />
+                <img src={contactSalon} alt="Premium salon reception and beauty workspace" loading="lazy" className="w-full aspect-[16/9] object-cover rounded-md" />
               </div>
               <div className="aspect-[4/3] rounded-lg overflow-hidden border border-border/30 mt-4">
                 <iframe
@@ -146,7 +146,7 @@ const Contact = () => {
                 href={CONTACT_INFO.mapDirectionsUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="absolute bottom-4 left-4 right-4 flex items-center justify-center gap-2 px-6 py-3 bg-primary text-primary-foreground text-sm font-medium hover:shadow-gold transition-all duration-300"
+                className="mt-4 w-full flex items-center justify-center gap-2 px-6 py-3 rounded-full bg-primary text-primary-foreground text-sm font-medium hover:shadow-gold transition-all duration-300"
               >
                 <Navigation size={16} />
                 Get Directions
