@@ -41,8 +41,10 @@ export const Navbar = () => {
       initial={{ y: -100 }}
       animate={{ y: 0 }}
       transition={{ duration: 0.6, ease: "easeOut" }}
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-        scrolled
+      className={`fixed top-0 left-0 right-0 z-[60] transition-all duration-500 ${
+        isOpen
+          ? "bg-background border-b border-border/50"
+          : scrolled
           ? "bg-background/95 backdrop-blur-md border-b border-border/50 shadow-elegant"
           : "bg-background/30 backdrop-blur-sm"
       }`}
