@@ -135,7 +135,7 @@ export const Navbar = () => {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
-            className="fixed inset-0 top-[72px] bg-background/98 backdrop-blur-xl z-40 lg:hidden"
+            className="fixed inset-0 top-[72px] bg-background z-[55] lg:hidden overflow-y-auto"
           >
             <div className="flex flex-col items-center justify-center h-full gap-6 px-6 pb-20">
               {navLinks.map((link, index) => (
