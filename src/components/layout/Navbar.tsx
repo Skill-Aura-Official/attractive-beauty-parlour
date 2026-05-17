@@ -41,8 +41,10 @@ export const Navbar = () => {
       initial={{ y: -100 }}
       animate={{ y: 0 }}
       transition={{ duration: 0.6, ease: "easeOut" }}
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-        scrolled
+      className={`fixed top-0 left-0 right-0 z-[60] transition-all duration-500 ${
+        isOpen
+          ? "bg-background border-b border-border/50"
+          : scrolled
           ? "bg-background/95 backdrop-blur-md border-b border-border/50 shadow-elegant"
           : "bg-background/30 backdrop-blur-sm"
       }`}
@@ -133,7 +135,7 @@ export const Navbar = () => {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
-            className="fixed inset-0 top-[72px] bg-background/98 backdrop-blur-xl z-40 lg:hidden"
+            className="fixed inset-0 top-[72px] bg-background z-[55] lg:hidden overflow-y-auto"
           >
             <div className="flex flex-col items-center justify-center h-full gap-6 px-6 pb-20">
               {navLinks.map((link, index) => (
