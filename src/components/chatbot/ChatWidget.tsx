@@ -156,7 +156,15 @@ export const ChatWidget = () => {
       const match = assistantSoFar.match(BOOKING_RE);
       if (match) {
         try {
-          const booking = JSON.parse(match[1].trim()) as BookingDetails;
+          // Tolerate code-fenced JSON or trailing prose around the JSON object.
+          let raw = match[1].trim().replace(/^```(?:json)?\s*/i, "").replace(/```$/, "").trim();
+          const first = raw.indexOf("{");
+          const last = raw.lastIndexOf("}");
+          if (first !== -1 && last !== -1) raw = raw.slice(first, last + 1);
+          const booking = JSON.parse(raw) as BookingDetails;
+          if (!booking?.name || !booking?.phone || !booking?.service || !booking?.datetime) {
+            throw new Error("Incomplete booking payload");
+          }
           const cleaned = assistantSoFar.replace(BOOKING_RE, "").trim();
           setMessages((prev) =>
             prev.map((m, i) =>
