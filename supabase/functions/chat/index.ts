@@ -44,8 +44,12 @@ const RATE_WINDOW_MS = 60_000;
 const ipHits = new Map<string, number[]>();
 
 function getIp(req: Request): string {
+  const cf = req.headers.get("cf-connecting-ip");
+  if (cf) return cf.trim();
   const fwd = req.headers.get("x-forwarded-for") || "";
-  return fwd.split(",")[0].trim() || "unknown";
+  const parts = fwd.split(",").map((s) => s.trim()).filter(Boolean);
+  // Use the last entry — appended by the outermost trusted proxy, not forgeable by the client.
+  return parts.at(-1) || "unknown";
 }
 
 function rateLimited(ip: string): boolean {
@@ -176,7 +180,7 @@ serve(async (req) => {
   } catch (e) {
     console.error("chat error:", e);
     return new Response(
-      JSON.stringify({ error: e instanceof Error ? e.message : "Unknown error" }),
+      JSON.stringify({ error: "Internal server error" }),
       { status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" } }
     );
   }
