@@ -13,8 +13,11 @@ const RATE_WINDOW_MS = 60_000;
 const ipHits = new Map<string, number[]>();
 
 function getIp(req: Request): string {
+  const cf = req.headers.get("cf-connecting-ip");
+  if (cf) return cf.trim();
   const fwd = req.headers.get("x-forwarded-for") || "";
-  return fwd.split(",")[0].trim() || "unknown";
+  const parts = fwd.split(",").map((s) => s.trim()).filter(Boolean);
+  return parts.at(-1) || "unknown";
 }
 
 function rateLimited(ip: string): boolean {
