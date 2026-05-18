@@ -9,7 +9,7 @@ import { toast } from "sonner";
 import logo from "@/assets/logo.png";
 
 const AdminLogin = () => {
-  const { user, isAdmin, loading, signIn } = useAuth();
+  const { user, isAdmin, loading, signIn, signOut } = useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [submitting, setSubmitting] = useState(false);
