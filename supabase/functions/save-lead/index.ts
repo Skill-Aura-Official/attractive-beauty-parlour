@@ -83,6 +83,6 @@ serve(async (req) => {
     return j(200, { success: true });
   } catch (e) {
     console.error("save-lead error:", e);
-    return j(500, { error: e instanceof Error ? e.message : "Unknown error" });
+    return j(500, { error: "Internal server error" });
   }
 });
