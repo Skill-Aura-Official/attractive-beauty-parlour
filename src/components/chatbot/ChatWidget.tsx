@@ -81,10 +81,13 @@ export const ChatWidget = () => {
 
     let assistantSoFar = "";
     const stripBookingTag = (s: string) => {
-      // Hide the [BOOKING]...[/BOOKING] marker (and any in-progress opening tag) from the user
-      const idx = s.indexOf("[BOOKING]");
-      if (idx === -1) return s;
-      return s.slice(0, idx).trimEnd();
+      // Hide the full [BOOKING]...[/BOOKING] block, or any in-progress opening tag like "[", "[B", "[BOOK".
+      const fullIdx = s.indexOf("[BOOKING]");
+      if (fullIdx !== -1) return s.slice(0, fullIdx).trimEnd();
+      // Detect a partial opening tag at the tail to avoid leaking "[", "[B", "[BOOKI" mid-stream.
+      const partial = s.match(/\[B?O?O?K?I?N?G?$/);
+      if (partial) return s.slice(0, partial.index).trimEnd();
+      return s;
     };
     const upsertAssistant = (chunk: string) => {
       assistantSoFar += chunk;
