@@ -81,10 +81,13 @@ export const ChatWidget = () => {
 
     let assistantSoFar = "";
     const stripBookingTag = (s: string) => {
-      // Hide the [BOOKING]...[/BOOKING] marker (and any in-progress opening tag) from the user
-      const idx = s.indexOf("[BOOKING]");
-      if (idx === -1) return s;
-      return s.slice(0, idx).trimEnd();
+      // Hide the full [BOOKING]...[/BOOKING] block, or any in-progress opening tag like "[", "[B", "[BOOK".
+      const fullIdx = s.indexOf("[BOOKING]");
+      if (fullIdx !== -1) return s.slice(0, fullIdx).trimEnd();
+      // Detect a partial opening tag at the tail to avoid leaking "[", "[B", "[BOOKI" mid-stream.
+      const partial = s.match(/\[B?O?O?K?I?N?G?$/);
+      if (partial) return s.slice(0, partial.index).trimEnd();
+      return s;
     };
     const upsertAssistant = (chunk: string) => {
       assistantSoFar += chunk;
@@ -153,7 +156,15 @@ export const ChatWidget = () => {
       const match = assistantSoFar.match(BOOKING_RE);
       if (match) {
         try {
-          const booking = JSON.parse(match[1].trim()) as BookingDetails;
+          // Tolerate code-fenced JSON or trailing prose around the JSON object.
+          let raw = match[1].trim().replace(/^```(?:json)?\s*/i, "").replace(/```$/, "").trim();
+          const first = raw.indexOf("{");
+          const last = raw.lastIndexOf("}");
+          if (first !== -1 && last !== -1) raw = raw.slice(first, last + 1);
+          const booking = JSON.parse(raw) as BookingDetails;
+          if (!booking?.name || !booking?.phone || !booking?.service || !booking?.datetime) {
+            throw new Error("Incomplete booking payload");
+          }
           const cleaned = assistantSoFar.replace(BOOKING_RE, "").trim();
           setMessages((prev) =>
             prev.map((m, i) =>
