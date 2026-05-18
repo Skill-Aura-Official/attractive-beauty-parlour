@@ -19,16 +19,20 @@ export const Footer = () => {
               {[
                 { href: CONTACT_INFO.instagramUrl, icon: Instagram, label: "Instagram" },
                 { href: CONTACT_INFO.facebookUrl, icon: Facebook, label: "Facebook" },
-              ].map((social) => (
-                <a
-                  key={social.label}
-                  href={social.href}
-                  aria-label={social.label}
-                  className="w-9 h-9 flex items-center justify-center rounded-full border border-border/40 text-muted-foreground hover:border-primary hover:text-primary hover:bg-primary/5 transition-all duration-300"
-                >
-                  <social.icon size={16} />
-                </a>
-              ))}
+              ]
+                .filter((s) => s.href && s.href !== "#")
+                .map((social) => (
+                  <a
+                    key={social.label}
+                    href={social.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={social.label}
+                    className="w-9 h-9 flex items-center justify-center rounded-full border border-border/40 text-muted-foreground hover:border-primary hover:text-primary hover:bg-primary/5 transition-all duration-300"
+                  >
+                    <social.icon size={16} />
+                  </a>
+                ))}
             </div>
           </div>
 
