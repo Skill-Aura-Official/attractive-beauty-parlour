@@ -73,9 +73,14 @@ const AdminLogin = () => {
             </Button>
           </form>
           {user && !isAdmin && (
-            <p className="text-destructive text-sm text-center mt-4">
-              You don't have admin access. Contact the super admin.
-            </p>
+            <div className="mt-4 space-y-2 text-center">
+              <p className="text-destructive text-sm">
+                Signed in as {user.email} — no admin access. Contact the super admin.
+              </p>
+              <Button variant="outline" size="sm" onClick={signOut} className="w-full">
+                Sign out
+              </Button>
+            </div>
           )}
         </CardContent>
       </Card>
