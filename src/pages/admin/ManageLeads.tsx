@@ -33,14 +33,19 @@ const ManageLeads = () => {
       return;
     }
     const headers = ["Name", "Phone", "Preferred Service", "Notes", "Date"];
+    // Prevent CSV formula injection: prefix cells starting with =, +, -, @, tab, or CR with a single quote
+    const sanitize = (v: string) =>
+      /^[=+\-@\t\r]/.test(v) ? `'${v}` : v;
     const rows = leads.map((l) => [
-      l.name,
-      l.phone,
-      l.preferred_service || "",
-      (l.notes || "").replace(/"/g, '""'),
+      sanitize(l.name || ""),
+      sanitize(l.phone || ""),
+      sanitize(l.preferred_service || ""),
+      sanitize(l.notes || ""),
       new Date(l.created_at).toISOString(),
     ]);
-    const csv = [headers, ...rows].map((r) => r.map((c) => `"${c}"`).join(",")).join("\n");
+    const csv = [headers, ...rows]
+      .map((r) => r.map((c) => `"${String(c).replace(/"/g, '""')}"`).join(","))
+      .join("\n");
     const blob = new Blob([csv], { type: "text/csv" });
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
