@@ -225,6 +225,8 @@ const Contact = () => {
                   </a>
                 </div>
               </div>
+
+              <CallbackRequestForm />
             </motion.div>
           </div>
         </div>
