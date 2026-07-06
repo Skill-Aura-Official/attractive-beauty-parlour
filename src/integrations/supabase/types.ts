@@ -401,6 +401,33 @@ export type Database = {
         }
         Relationships: []
       }
+      queries: {
+        Row: {
+          created_at: string
+          customer_name: string
+          customer_phone: string
+          id: string
+          query_text: string
+          status: string
+        }
+        Insert: {
+          created_at?: string
+          customer_name: string
+          customer_phone: string
+          id?: string
+          query_text: string
+          status?: string
+        }
+        Update: {
+          created_at?: string
+          customer_name?: string
+          customer_phone?: string
+          id?: string
+          query_text?: string
+          status?: string
+        }
+        Relationships: []
+      }
       services: {
         Row: {
           category: string
