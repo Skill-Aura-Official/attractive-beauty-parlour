@@ -1,0 +1,13 @@
+{
+  "version": "7",
+  "dialect": "postgresql",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "7",
+      "when": 1792773786589,
+      "tag": "0000_festive_campaigns_and_packages",
+      "breakpoints": true
+    }
+  ]
+}

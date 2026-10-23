@@ -98,6 +98,99 @@ export type Database = {
         }
         Relationships: []
       }
+      campaign_services: {
+        Row: {
+          campaign_id: string
+          created_at: string
+          discount_pct: number
+          id: string
+          service_id: string
+        }
+        Insert: {
+          campaign_id: string
+          created_at?: string
+          discount_pct?: number
+          id?: string
+          service_id: string
+        }
+        Update: {
+          campaign_id?: string
+          created_at?: string
+          discount_pct?: number
+          id?: string
+          service_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "campaign_services_campaign_id_fkey"
+            columns: ["campaign_id"]
+            isOneToOne: false
+            referencedRelation: "campaigns"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "campaign_services_service_id_fkey"
+            columns: ["service_id"]
+            isOneToOne: false
+            referencedRelation: "services"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      campaigns: {
+        Row: {
+          campaign_key: string
+          created_at: string
+          cta_text: string | null
+          daily_end_time: string | null
+          daily_start_time: string | null
+          description: string | null
+          end_date: string | null
+          id: string
+          image_url: string | null
+          is_published: boolean
+          start_date: string | null
+          subtitle: string | null
+          terms: string | null
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          campaign_key: string
+          created_at?: string
+          cta_text?: string | null
+          daily_end_time?: string | null
+          daily_start_time?: string | null
+          description?: string | null
+          end_date?: string | null
+          id?: string
+          image_url?: string | null
+          is_published?: boolean
+          start_date?: string | null
+          subtitle?: string | null
+          terms?: string | null
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          campaign_key?: string
+          created_at?: string
+          cta_text?: string | null
+          daily_end_time?: string | null
+          daily_start_time?: string | null
+          description?: string | null
+          end_date?: string | null
+          id?: string
+          image_url?: string | null
+          is_published?: boolean
+          start_date?: string | null
+          subtitle?: string | null
+          terms?: string | null
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       chatbot_leads: {
         Row: {
           created_at: string
@@ -284,6 +377,51 @@ export type Database = {
         }
         Relationships: []
       }
+      kc_packages: {
+        Row: {
+          created_at: string
+          description: string | null
+          display_name: string
+          display_order: number | null
+          id: string
+          image_url: string | null
+          inclusions: Json
+          is_published: boolean
+          price_inr: number
+          terms: string | null
+          tier: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          display_name: string
+          display_order?: number | null
+          id?: string
+          image_url?: string | null
+          inclusions?: Json
+          is_published?: boolean
+          price_inr: number
+          terms?: string | null
+          tier: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          display_name?: string
+          display_order?: number | null
+          id?: string
+          image_url?: string | null
+          inclusions?: Json
+          is_published?: boolean
+          price_inr?: number
+          terms?: string | null
+          tier?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       media: {
         Row: {
           alt_text: string | null
@@ -401,38 +539,113 @@ export type Database = {
         }
         Relationships: []
       }
+      queries: {
+        Row: {
+          created_at: string
+          customer_name: string
+          customer_phone: string
+          id: string
+          query_text: string
+          status: string
+        }
+        Insert: {
+          created_at?: string
+          customer_name: string
+          customer_phone: string
+          id?: string
+          query_text: string
+          status?: string
+        }
+        Update: {
+          created_at?: string
+          customer_name?: string
+          customer_phone?: string
+          id?: string
+          query_text?: string
+          status?: string
+        }
+        Relationships: []
+      }
+      service_categories: {
+        Row: {
+          category_key: string
+          created_at: string
+          description: string | null
+          display_name: string
+          display_order: number | null
+          id: string
+          image_url: string | null
+          updated_at: string
+        }
+        Insert: {
+          category_key: string
+          created_at?: string
+          description?: string | null
+          display_name: string
+          display_order?: number | null
+          id?: string
+          image_url?: string | null
+          updated_at?: string
+        }
+        Update: {
+          category_key?: string
+          created_at?: string
+          description?: string | null
+          display_name?: string
+          display_order?: number | null
+          id?: string
+          image_url?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
       services: {
         Row: {
           category: string
           created_at: string
           description: string | null
+          detailed_description: string | null
+          display_name: string | null
           display_order: number | null
+          duration: string | null
           id: string
           image_url: string | null
           is_active: boolean
+          is_featured: boolean
           name: string
+          price: number | null
           updated_at: string
         }
         Insert: {
           category: string
           created_at?: string
           description?: string | null
+          detailed_description?: string | null
+          display_name?: string | null
           display_order?: number | null
+          duration?: string | null
           id?: string
           image_url?: string | null
           is_active?: boolean
+          is_featured?: boolean
           name: string
+          price?: number | null
           updated_at?: string
         }
         Update: {
           category?: string
           created_at?: string
           description?: string | null
+          detailed_description?: string | null
+          display_name?: string | null
           display_order?: number | null
+          duration?: string | null
           id?: string
           image_url?: string | null
           is_active?: boolean
+          is_featured?: boolean
           name?: string
+          price?: number | null
           updated_at?: string
         }
         Relationships: []
@@ -494,12 +707,12 @@ export type Tables<
   DefaultSchemaTableNameOrOptions extends
     | keyof (DefaultSchema["Tables"] & DefaultSchema["Views"])
     | { schema: keyof DatabaseWithoutInternals },
-  TableName extends DefaultSchemaTableNameOrOptions extends {
+  TableName extends (DefaultSchemaTableNameOrOptions extends {
     schema: keyof DatabaseWithoutInternals
   }
     ? keyof (DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"] &
         DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Views"])
-    : never = never,
+    : never) = never,
 > = DefaultSchemaTableNameOrOptions extends {
   schema: keyof DatabaseWithoutInternals
 }
@@ -523,11 +736,11 @@ export type TablesInsert<
   DefaultSchemaTableNameOrOptions extends
     | keyof DefaultSchema["Tables"]
     | { schema: keyof DatabaseWithoutInternals },
-  TableName extends DefaultSchemaTableNameOrOptions extends {
+  TableName extends (DefaultSchemaTableNameOrOptions extends {
     schema: keyof DatabaseWithoutInternals
   }
     ? keyof DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"]
-    : never = never,
+    : never) = never,
 > = DefaultSchemaTableNameOrOptions extends {
   schema: keyof DatabaseWithoutInternals
 }
@@ -548,11 +761,11 @@ export type TablesUpdate<
   DefaultSchemaTableNameOrOptions extends
     | keyof DefaultSchema["Tables"]
     | { schema: keyof DatabaseWithoutInternals },
-  TableName extends DefaultSchemaTableNameOrOptions extends {
+  TableName extends (DefaultSchemaTableNameOrOptions extends {
     schema: keyof DatabaseWithoutInternals
   }
     ? keyof DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"]
-    : never = never,
+    : never) = never,
 > = DefaultSchemaTableNameOrOptions extends {
   schema: keyof DatabaseWithoutInternals
 }
@@ -573,11 +786,11 @@ export type Enums<
   DefaultSchemaEnumNameOrOptions extends
     | keyof DefaultSchema["Enums"]
     | { schema: keyof DatabaseWithoutInternals },
-  EnumName extends DefaultSchemaEnumNameOrOptions extends {
+  EnumName extends (DefaultSchemaEnumNameOrOptions extends {
     schema: keyof DatabaseWithoutInternals
   }
     ? keyof DatabaseWithoutInternals[DefaultSchemaEnumNameOrOptions["schema"]]["Enums"]
-    : never = never,
+    : never) = never,
 > = DefaultSchemaEnumNameOrOptions extends {
   schema: keyof DatabaseWithoutInternals
 }
@@ -590,11 +803,11 @@ export type CompositeTypes<
   PublicCompositeTypeNameOrOptions extends
     | keyof DefaultSchema["CompositeTypes"]
     | { schema: keyof DatabaseWithoutInternals },
-  CompositeTypeName extends PublicCompositeTypeNameOrOptions extends {
+  CompositeTypeName extends (PublicCompositeTypeNameOrOptions extends {
     schema: keyof DatabaseWithoutInternals
   }
     ? keyof DatabaseWithoutInternals[PublicCompositeTypeNameOrOptions["schema"]]["CompositeTypes"]
-    : never = never,
+    : never) = never,
 > = PublicCompositeTypeNameOrOptions extends {
   schema: keyof DatabaseWithoutInternals
 }
