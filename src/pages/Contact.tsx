@@ -4,7 +4,6 @@ import { SectionHeading } from "@/components/ui/section-heading";
 import { Phone, MessageCircle, MapPin, Clock, Instagram, Facebook, Navigation } from "lucide-react";
 import { CONTACT_INFO } from "@/lib/constants";
 import contactSalon from "@/assets/generated-reception-lounge.jpg";
-import { CallbackRequestForm } from "@/components/contact/CallbackRequestForm";
 
 const Contact = () => {
   return (
@@ -225,8 +224,6 @@ const Contact = () => {
                   </a>
                 </div>
               </div>
-
-              <CallbackRequestForm />
             </motion.div>
           </div>
         </div>
