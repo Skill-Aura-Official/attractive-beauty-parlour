@@ -98,6 +98,99 @@ export type Database = {
         }
         Relationships: []
       }
+      campaign_services: {
+        Row: {
+          campaign_id: string
+          created_at: string
+          discount_pct: number
+          id: string
+          service_id: string
+        }
+        Insert: {
+          campaign_id: string
+          created_at?: string
+          discount_pct?: number
+          id?: string
+          service_id: string
+        }
+        Update: {
+          campaign_id?: string
+          created_at?: string
+          discount_pct?: number
+          id?: string
+          service_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "campaign_services_campaign_id_fkey"
+            columns: ["campaign_id"]
+            isOneToOne: false
+            referencedRelation: "campaigns"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "campaign_services_service_id_fkey"
+            columns: ["service_id"]
+            isOneToOne: false
+            referencedRelation: "services"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      campaigns: {
+        Row: {
+          campaign_key: string
+          created_at: string
+          cta_text: string | null
+          daily_end_time: string | null
+          daily_start_time: string | null
+          description: string | null
+          end_date: string | null
+          id: string
+          image_url: string | null
+          is_published: boolean
+          start_date: string | null
+          subtitle: string | null
+          terms: string | null
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          campaign_key: string
+          created_at?: string
+          cta_text?: string | null
+          daily_end_time?: string | null
+          daily_start_time?: string | null
+          description?: string | null
+          end_date?: string | null
+          id?: string
+          image_url?: string | null
+          is_published?: boolean
+          start_date?: string | null
+          subtitle?: string | null
+          terms?: string | null
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          campaign_key?: string
+          created_at?: string
+          cta_text?: string | null
+          daily_end_time?: string | null
+          daily_start_time?: string | null
+          description?: string | null
+          end_date?: string | null
+          id?: string
+          image_url?: string | null
+          is_published?: boolean
+          start_date?: string | null
+          subtitle?: string | null
+          terms?: string | null
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       chatbot_leads: {
         Row: {
           created_at: string
@@ -284,6 +377,51 @@ export type Database = {
         }
         Relationships: []
       }
+      kc_packages: {
+        Row: {
+          created_at: string
+          description: string | null
+          display_name: string
+          display_order: number | null
+          id: string
+          image_url: string | null
+          inclusions: Json
+          is_published: boolean
+          price_inr: number
+          terms: string | null
+          tier: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          display_name: string
+          display_order?: number | null
+          id?: string
+          image_url?: string | null
+          inclusions?: Json
+          is_published?: boolean
+          price_inr: number
+          terms?: string | null
+          tier: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          display_name?: string
+          display_order?: number | null
+          id?: string
+          image_url?: string | null
+          inclusions?: Json
+          is_published?: boolean
+          price_inr?: number
+          terms?: string | null
+          tier?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       media: {
         Row: {
           alt_text: string | null
@@ -428,38 +566,86 @@ export type Database = {
         }
         Relationships: []
       }
+      service_categories: {
+        Row: {
+          category_key: string
+          created_at: string
+          description: string | null
+          display_name: string
+          display_order: number | null
+          id: string
+          image_url: string | null
+          updated_at: string
+        }
+        Insert: {
+          category_key: string
+          created_at?: string
+          description?: string | null
+          display_name: string
+          display_order?: number | null
+          id?: string
+          image_url?: string | null
+          updated_at?: string
+        }
+        Update: {
+          category_key?: string
+          created_at?: string
+          description?: string | null
+          display_name?: string
+          display_order?: number | null
+          id?: string
+          image_url?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
       services: {
         Row: {
           category: string
           created_at: string
           description: string | null
+          detailed_description: string | null
+          display_name: string | null
           display_order: number | null
+          duration: string | null
           id: string
           image_url: string | null
           is_active: boolean
+          is_featured: boolean
           name: string
+          price: number | null
           updated_at: string
         }
         Insert: {
           category: string
           created_at?: string
           description?: string | null
+          detailed_description?: string | null
+          display_name?: string | null
           display_order?: number | null
+          duration?: string | null
           id?: string
           image_url?: string | null
           is_active?: boolean
+          is_featured?: boolean
           name: string
+          price?: number | null
           updated_at?: string
         }
         Update: {
           category?: string
           created_at?: string
           description?: string | null
+          detailed_description?: string | null
+          display_name?: string | null
           display_order?: number | null
+          duration?: string | null
           id?: string
           image_url?: string | null
           is_active?: boolean
+          is_featured?: boolean
           name?: string
+          price?: number | null
           updated_at?: string
         }
         Relationships: []
