@@ -1,5 +1,8 @@
 import { Layout } from "@/components/layout/Layout";
 import { HeroSection } from "@/components/home/HeroSection";
+import { KarwaChauthSection } from "@/components/home/KarwaChauthSection";
+import { HappyHoursSection } from "@/components/home/HappyHoursSection";
+import { FacialOffersSection } from "@/components/home/FacialOffersSection";
 import { ServicesPreview } from "@/components/home/ServicesPreview";
 import { TestimonialsSection } from "@/components/home/TestimonialsSection";
 import { OffersPreview } from "@/components/home/OffersPreview";
@@ -12,6 +15,13 @@ const Index = () => {
   return (
     <Layout>
       <HeroSection />
+      <KarwaChauthSection />
+      <ScrollReveal direction="left">
+        <HappyHoursSection />
+      </ScrollReveal>
+      <ScrollReveal>
+        <FacialOffersSection />
+      </ScrollReveal>
       <ScrollReveal>
         <ServicesPreview />
       </ScrollReveal>
