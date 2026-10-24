@@ -4,6 +4,9 @@ import { SectionHeading } from "@/components/ui/section-heading";
 import { Crown, Sparkles, Gift, Star, MessageCircle } from "lucide-react";
 import { CONTACT_INFO } from "@/lib/constants";
 import bridalPackage from "@/assets/bridal-package-new.jpg";
+import { KarwaChauthSection } from "@/components/home/KarwaChauthSection";
+import { HappyHoursSection } from "@/components/home/HappyHoursSection";
+import { FacialOffersSection } from "@/components/home/FacialOffersSection";
 
 const packages = [
   {
@@ -140,6 +143,15 @@ const Offers = () => {
           </motion.p>
         </div>
       </section>
+
+      {/* Karwa Chauth Campaign */}
+      <KarwaChauthSection />
+
+      {/* Happy Hours Campaign */}
+      <HappyHoursSection />
+
+      {/* Selected Facials Campaign */}
+      <FacialOffersSection />
 
       {/* Featured Package */}
       <section className="section-padding bg-background">
